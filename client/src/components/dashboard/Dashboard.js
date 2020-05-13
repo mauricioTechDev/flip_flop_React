@@ -22,7 +22,6 @@ const Dashboard = ({ setAuth }) => {
 
   const [avatarImg, setAvatarImg] = useState('')
 
-
   const getProfile = async () => {
     try {
       const res = await fetch("http://localhost:5000/dashboard/", {
@@ -61,7 +60,7 @@ const Dashboard = ({ setAuth }) => {
   useEffect(() => {
     getProfile();
     setUploadNewImg(false);
-  }, [setUploadNewImg]);
+  }, [uploadNewImg]);
 
   return (
     <div>

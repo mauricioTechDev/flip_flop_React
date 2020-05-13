@@ -55,7 +55,7 @@ const Caption = ({ setCaption }) => {
 
   return (
     <Fragment>
-    <span className='text-white'>Add a caption</span>
+    <span className='text-white'>Add/Edit caption</span>
     <form onSubmit={onSubmitForm}>
       <input value={caption} onChange={e => setNewCaption(e.target.value)} ></input>
       <button>SUBMIT</button>

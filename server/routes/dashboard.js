@@ -402,6 +402,29 @@ router.post('/commentReply',authorize, async (req, res) => {
     }
   });
 
+  // ==============
+  // Send FriendRequest
+  // =============
+
+  router.post('/individualPicture/friendReguest', authorize, async (req, res) => {
+    try {
+      let requesterid = req.user.id;
+      let addresseeid = req.body.id_of_img_poster;
+      let status = 'PENDING'
+
+      //I must await to recieve the promise ;-]
+      const friendReguest = await pool.query(`
+        INSERT INTO
+        friends (requesterid, addresseeid, status)
+        VALUES ($1, $2, $3)`,
+        [requesterid, addresseeid, status])
+
+        res.json(friendReguest)
+    } catch (err) {
+      console.error(err.message);
+    }
+  })
+
 
 
 

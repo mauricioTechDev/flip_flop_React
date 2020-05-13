@@ -77,3 +77,4 @@ router.post("/verify", authorize, (req, res) => {
 });
 
 module.exports = router;
+ // inspired by https://github.com/l0609890/db-design-auth-todo-list

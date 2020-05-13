@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, useLocation } from "react-router-dom";
+import FriendRequestButton from './FriendRequestButton'
 
 const IndividualPicture = ({ setAuth }) => {
 
@@ -152,7 +153,7 @@ const deleteComment= async (id) => {
       userNames[0].user_id !== null &&
       userNames.map(e => (
         e.user_id === individualPicture.id_of_img_poster &&
-          <h1 key={e.user_id} className='text-white'>Posted by: {e.first_name}</h1>
+          <h1 key={e.user_id} className='text-white'>Posted by: {e.first_name} -- {individualPicture.description}</h1>
       ))}
       <div className='text-center'>
 
@@ -163,6 +164,10 @@ const deleteComment= async (id) => {
         </div>
       </div>
       <h1 className="text-center my-5 text-white">Is this picture a flip 👍 or a flop 👎 </h1>
+
+      <FriendRequestButton individualPicture={individualPicture}/>
+
+
       <form className="d-flex" onSubmit={onSubmitForm}>
         <input
           type="text"
@@ -175,13 +180,10 @@ const deleteComment= async (id) => {
       </form>
       <table className="table table-dark">
       <tbody>
-
-
         {individualPictureInfo .length !== 0 &&
           individualPictureInfo.map(post => (
             <tr key={post.comments_id}>
               <td className="font-weight-bold">{post.first_name}: {post.comment}</td>
-
               <td>
               {
                 post.first_name &&

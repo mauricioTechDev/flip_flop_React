@@ -6,7 +6,6 @@ const PersonalImg = ({ userInfo }) => {
 
   return (
     <Fragment>
-    <div>
       <div className="d-flex flex-wrap">
         <div className="p-2 flex-wrap mt-5">
           {userInfo.length !== 0 &&
@@ -18,7 +17,6 @@ const PersonalImg = ({ userInfo }) => {
             ))}
           </div>
         </div>
-      </div>
 
     </Fragment>
 

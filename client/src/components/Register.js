@@ -47,7 +47,7 @@ const Register = ({ setAuth }) => {
 
   return (
     <Fragment>
-      <h1 className="mt-5 text-center">Register</h1>
+      <h1 className="mt-5 text-center text-white">Register</h1>
       <Link className="badge badge-warning" to='/'>BACK</Link>
       <form onSubmit={onSubmitForm}>
         <input
