@@ -4,8 +4,6 @@ import { toast } from "react-toastify";
 
 //components
 import AvatarInput from './pictureUploads/AvatarInput'
-// import InputTodo from "./todolist/InputTodo";
-// import ListTodos from "./todolist/ListTodos";
 import UserInfo from './userInfo/UserInfo'
 import FriendRequest from './userInfo/friends/FriendRequest'
 import MyFriends from './userInfo/friends/MyFriends'
@@ -19,7 +17,6 @@ const Dashboard = ({ setAuth }) => {
   const [friendList, setFriendList] = useState([])
   const [commentCount, setCommentCount] = useState([])
 
-  // const [allTodos, setAllTodos] = useState([]);
   const [avatarChange, setAvatarChange] = useState(false);
   const [uploadNewImg, setUploadNewImg] = useState(false);
 
@@ -35,7 +32,6 @@ const Dashboard = ({ setAuth }) => {
 
       const parseData = await res.json();
 
-      // setAllTodos(parseData);
       setIndividualUser(parseData.userInfo[0])
       setUserInfo(parseData.userInfo);
       setFriendRequest(parseData.friendRequest)
@@ -95,10 +91,6 @@ const Dashboard = ({ setAuth }) => {
       <div class="row">
         <PersonalImg userInfo={userInfo}/>
       </div>
-
-
-      {/*<InputTodo setTodosChange={setTodosChange} />*/}
-      {/*<ListTodos allTodos={allTodos} setTodosChange={setTodosChange} />*/}
     </div>
   );
 };
