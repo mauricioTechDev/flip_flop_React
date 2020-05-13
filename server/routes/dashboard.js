@@ -132,6 +132,24 @@ router.post('/profileImg', [authorize, uploadS3.single('upload')], async (req, r
         console.error(err.message);
       }
 })
+// ADD A Caption
+router.put('/caption', authorize, async(req, res) =>{
+  try {
+    let { caption, pictureId } = req.body
+    const heartPicture = await pool.query(`
+      UPDATE img_post
+      SET description = $1
+      WHERE img_post_id = $2`, [caption, pictureId])
+      res.json(heartPicture)
+    // UPDATE counters SET current_value = current_value + 1 WHERE counter_name = 'whatever';
+  } catch (err) {
+    console.error(err.message);
+
+  }
+})
+
+
+
 // =======================
 // GET THE DATA FOR INDIVIDUAL USER IMG PAGE
 // =======================

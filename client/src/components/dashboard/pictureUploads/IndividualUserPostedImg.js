@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, useLocation } from "react-router-dom";
+import Caption from './Caption'
 
 
 const IndividualUserPostedImg = ({ setAuth }) =>{
@@ -8,6 +9,7 @@ const IndividualUserPostedImg = ({ setAuth }) =>{
   const [commentCount, setCommentCount] = useState('')
   const [individualUserImg, setIndividualUserImg] = useState([])
   const [userNames, setUserNames] = useState([])
+  const [newCaption, setCaption] = useState(false)
 
   // let imgId = this.props.match.params.id
   // console.log(imgId);
@@ -51,15 +53,23 @@ useEffect(() => {
   useEffect(() => {
     getProfile();
       }, [imgId])
-
-
-
+  useEffect(() => {
+    getProfile();
+    setCaption(false);
+      }, [newCaption])
 
   return(
     <Fragment>
-      <Link className="badge badge-warning" to='/dashboard'>BACK</Link>
-      <h1>THIS IS THE INDIVIDUAL PICTURE PAGE AYYYYYY</h1>
-      <img src={img.img} key={img.img_post_id} alt='user posted picture'/>
+      <Link className="btn btn-warning mb-5 mt-5" to='/dashboard'>BACK</Link>
+      <h1 className='text-white'>{img.description ? img.description : 'Caption'}</h1>
+      <button className="btn btn-danger mb-5 mt-5" >
+        DELETE PICTURE
+      </button>
+      <div>
+        <img src={img.img} key={img.img_post_id} alt='user posted picture'/>
+      </div>
+      <Caption setCaption={setCaption} />
+
 
     </Fragment>
   )
