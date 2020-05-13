@@ -1,7 +1,10 @@
 import React, { Fragment, useState } from "react";
+import { Link } from 'react-router-dom'
 
 
-const MyFriends = () => {
+
+
+const MyFriends = ({ friendsList }) => {
 
   return (
     <Fragment>
@@ -12,14 +15,18 @@ const MyFriends = () => {
       </p>
       <div class="collapse" id="friendsCollapse">
         <div class="card card-body">
-        <ul className='list-group'>
-          <li className='list-group-item'>
-            <a className='fropdown-item' href=''>SAM</a>
-          </li>
-          <li className='list-group-item'>
-            <a className='fropdown-item' href=''>FRED</a>
-          </li>
-        </ul>
+          <ul className='list-group'>
+            {
+              friendsList.length !== 0 &&
+              friendsList.map(e => (
+                  <li className='list-group-item'>
+                    <Link  to={`/friend/${e.requesterid}`}>
+                      <a className='fropdown-item' href=''>{ e.first_name }</a>
+                    </Link>
+                  </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
     </Fragment>

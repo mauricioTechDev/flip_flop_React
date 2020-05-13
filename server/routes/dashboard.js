@@ -76,9 +76,19 @@ router.get("/", authorize, async (req, res) => {
                                      .map(id => {
                                        return friendReguestRows.find(a => a.id === id)
                                      })
+      // let acceptedRequest = await pool.query(`SELECT * FROM friends WHERE status = 'ACCEPTED'`)
+      // let filteredAcceptedRequest = acceptedRequest.rows.reduce((acc, obj) => {
+      //                                 Object.keys(obj).forEach(e =>{
+      //                                   if (obj[e] === user_id){
+      //                                     // delete obj[e]
+      //                                     acc.push(obj)
+      //                                   }
+      //                                 })
+      //                                 return acc;
+      //                               }, []);
+      // console.log('filteredAcceptedRequest',acceptedRequest.rows);
 
-      console.log('filteredFriendRequest',filteredFriendRequest);
-      console.log('friendReguestRows',friendReguestRows);
+
 			let friendsList = await pool.query(`
 				SELECT
 				user_account.first_name, user_account.user_id, friends.friends_id, friends.requesterid, friends.addresseeid, friends.status, friends.friends_id
@@ -86,6 +96,7 @@ router.get("/", authorize, async (req, res) => {
 				INNER JOIN friends
 				ON  friends.requesterid = user_account.user_id
 				WHERE friends.addresseeid = $1 AND friends.status = 'ACCEPTED'`, [user_id])
+        console.log('FRIENDS LIST',friendsList.rows);
 
     res.json({
         userInfo: userInfo.rows,
@@ -425,6 +436,77 @@ router.post('/commentReply',authorize, async (req, res) => {
         [requesterid, addresseeid, status])
 
         res.json(friendReguest)
+    } catch (err) {
+      console.error(err.message);
+    }
+  })
+
+  // ==============
+  // Accept FriendRequest
+  // =============
+  router.put('/acceptRequest', async (req, res) => {
+    try {
+      let friends_id = Number(req.body.friends_id)
+      console.log(req.body);
+
+
+      const updateFriendStatus = await pool.query(`
+        UPDATE friends
+        SET status = 'ACCEPTED'
+        WHERE friends_id = $1`,
+        [friends_id])
+
+
+        res.json(updateFriendStatus)
+    } catch (err) {
+      console.error(err.message);
+    }
+  })
+  // ==============
+  // Decline FriendRequest
+  // =============
+  router.put('/declineRequest', async (req, res) => {
+    try {
+      let friends_id = req.body.friends_id
+
+      const updateFriendStatus = await pool.query(`
+        UPDATE friends
+        SET status = 'DECLINE'
+        WHERE friends_id = $1`,
+        [friends_id])
+    } catch (err) {
+      console.error(err.message);
+    }
+  })
+
+  router.get('/friend/:friendId', async(req, res) => {
+    try {
+      const { friendId } = req.params;
+      console.log('USER', friendId);
+      // let url = req._parsedOriginalUrl._raw
+      // let friendId;
+      // for(let i = url.length - 1; i > 0; i--){
+      //   if(url[i] == '/'){
+      //     friendId = url.slice(i+1)
+      //     break;
+      //   }
+      // }
+      const friend = await pool.query(`
+        SELECT * FROM user_account
+        WHERE user_id = $1`,[friendId])
+      const friendsPicture = await pool.query(`
+        SELECT * FROM img_post
+        WHERE id_of_img_poster = $1`, [friendId])
+      const commentCount = await pool.query(`
+        SELECT img_commented_on_id, count(img_commented_on_id)
+        FROM comments
+        GROUP BY img_commented_on_id`)
+      res.json({
+        // userData: req.user[0],
+        friend: friend.rows[0],
+        friendsPicture: friendsPicture.rows,
+        commentCount: commentCount.rows
+        })
     } catch (err) {
       console.error(err.message);
     }

@@ -20,6 +20,7 @@ import IndividualUserPostedImg from "./components/dashboard/pictureUploads/Indiv
 import NewsFeed from './components/dashboard/newsFeed/NewsFeed'
 import IndividualPicture from './components/dashboard/newsFeed/IndividualPicture'
 import CommentReplies from './components/dashboard/commentReplies/CommentReplies';
+import FriendsPage from './components/dashboard/userInfo/friends/FriendsPage'
 
 toast.configure();
 
@@ -137,6 +138,17 @@ function App() {
               render={props =>
                 isAuthenticated ? (
                   <CommentReplies {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/friend/:friendId"
+              render={props =>
+                isAuthenticated ? (
+                  <FriendsPage {...props} setAuth={setAuth} />
                 ) : (
                   <Redirect to="/login" />
                 )

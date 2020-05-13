@@ -14,15 +14,15 @@ const Dashboard = ({ setAuth }) => {
   const [individualUser, setIndividualUser] = useState({})
   const [userInfo, setUserInfo] = useState([]);
   const [friendRequest, setFriendRequest] = useState([])
-  const [friendList, setFriendList] = useState([])
+  const [friendsList, setFriendsList] = useState([])
   const [commentCount, setCommentCount] = useState([])
   console.log('userInfo', userInfo);
   console.log('friendRequest',friendRequest);
-  console.log('friendList', friendList);
-  console.log('commentCount', commentCount);
+  console.log('friensdList', friendsList);
 
   const [avatarChange, setAvatarChange] = useState(false);
   const [uploadNewImg, setUploadNewImg] = useState(false);
+  const [friendActivity, setFriendActivity] = useState(false)
   const [avatarImg, setAvatarImg] = useState('')
 
   const getProfile = async () => {
@@ -38,7 +38,7 @@ const Dashboard = ({ setAuth }) => {
       setIndividualUser(parseData.userInfo[0])
       setUserInfo(parseData.userInfo);
       setFriendRequest(parseData.friendRequest)
-      setFriendList(parseData.friendList)
+      setFriendsList(parseData.friendsList)
       setCommentCount(parseData.commentCount)
     } catch (err) {
       console.error(err.message);
@@ -65,6 +65,10 @@ const Dashboard = ({ setAuth }) => {
     getProfile();
     setUploadNewImg(false);
   }, [uploadNewImg]);
+  useEffect(() => {
+    getProfile();
+    setFriendActivity(false);
+  }, [friendActivity]);
 
   return (
     <div>
@@ -84,8 +88,8 @@ const Dashboard = ({ setAuth }) => {
           <AvatarInput setAvatarChange={setAvatarChange} />
         </div>
         <div className="col-4">
-          <FriendRequest friendRequest={friendRequest} />
-          <MyFriends />
+          <FriendRequest friendRequest={friendRequest} setFriendActivity={setFriendActivity}/>
+          <MyFriends friendsList={friendsList} />
         </div>
       </div>
       <div className="row justify-content-center">
