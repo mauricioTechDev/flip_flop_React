@@ -47,9 +47,9 @@ const AvatarInput = ({ setAvatarChange }) => {
             className="custom-file-input"
             name="uploadedAvatar"
             onChange={e => setUploadedAvatar(e.target.files[0])} />
-            <label className="custom-file-label" for="inputGroupFile04">Update Profile</label>
+            <label className="custom-file-label" htmlFor="inputGroupFile04">Update Profile</label>
           </div>
-          <div class="input-group-append">
+          <div className="input-group-append">
             <button className="btn btn-success ">Add</button>
           </div>
         </form>

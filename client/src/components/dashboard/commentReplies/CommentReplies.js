@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 const CommentReplies = ({ setAuth }) => {
@@ -33,7 +33,6 @@ const CommentReplies = ({ setAuth }) => {
         method: "GET",
         headers: { jwt_token: localStorage.token }
       });
-// CONDITIONALY SET DATA!!!!!!!!!
       const parseData = await res.json();
       console.log(parseData);
       setComment(parseData.comment[0])
@@ -76,9 +75,9 @@ const onSubmitForm = async e => {
     const parseResponse = await response.json();
 
     console.log(parseResponse);
-    setReplies(parseResponse.replies)
-    setComment(parseResponse.comment[0])
-    setUserNames(parseResponse.userNames)
+    // setReplies(parseResponse.replies)
+    // setComment(parseResponse.comment[0])
+    // setUserNames(parseResponse.userNames)
     if(parseResponse){
       getComments()
     }
@@ -87,6 +86,25 @@ const onSubmitForm = async e => {
     console.error(err.message);
   }
 };
+// =============
+// DELETE REPLY
+// =============
+const deleteComment= async (id) => {
+  try {
+    const response = await fetch(`http://localhost:5000/dashboard/deleteReply/${id}`, {
+      method: "DELETE",
+      headers: { jwt_token: localStorage.token }
+    });
+
+    const parseResponse = await response.json();
+    console.log(parseResponse);
+    if(parseResponse){
+      getComments()
+    }
+  } catch (err) {
+    console.error(err.message);
+  }
+}
 
 
 
@@ -94,7 +112,9 @@ const onSubmitForm = async e => {
 
   return (
     <Fragment>
-      <h1>{comment.comment}</h1>
+      <Link className="btn btn-warning mt-5 ml-5 mb-5" to={`/individualPicture/${comment.img_commented_on_id}`}>BACK</Link>
+      <Link className='btn btn-warning  mt-5 ml-5 mb-5'  to='/dashboard'>PROFILE</Link>
+      <h1 className='text-white'>{comment.comment}</h1>
       <form className="d-flex" onSubmit={onSubmitForm}>
         <input
           type="text"
@@ -112,23 +132,19 @@ const onSubmitForm = async e => {
         {fullReplyInfo .length !== 0 &&
           fullReplyInfo.map(post => (
             <tr key={post.comments_id}>
-              <td className="font-weight-bold">{post.first_name}: {post.reply}</td>
+              <td className="font-weight-bold" key={post.comments_id}>{post.first_name}: {post.reply}</td>
               <td>
             {  user_account.user_id === post.user_id &&
-                <button className="btn btn-danger" >
+                <button className="btn btn-danger" onClick={() => deleteComment(post.comment_reply_id)} >
                   DELETE
                 </button>
             }
               </td>
 
-
             </tr>
           ))}
       </tbody>
       </table>
-
-
-
 
 
     </Fragment>

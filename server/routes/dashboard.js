@@ -321,7 +321,7 @@ router.get('/replies/:commentRepliedToId', authorize, async(req, res) => {
       [commentRepliedToId])
       const fullReplyInfo = await pool.query(`
         SELECT
-        comment_replies.reply, comment_replies.reply_likes, comment_replies.reply_user_id, comment_replies.comment_replied_to_id, comment_replies.img_replied_to_id,
+        comment_replies.comment_reply_id, comment_replies.reply, comment_replies.reply_likes, comment_replies.reply_user_id, comment_replies.comment_replied_to_id, comment_replies.img_replied_to_id,
         user_account.user_id, user_account.first_name, user_account.last_name
         FROM comment_replies
         LEFT JOIN user_account
@@ -353,16 +353,6 @@ router.post('/commentReply',authorize, async (req, res) => {
       let img_replied_to_id = Number(req.body.img_replied_to_id)
       let comment_replied_to_id = req.body.comment_replied_to_id
 
-
-      // let url = req.headers.referer;
-      // let comment_replied_to_id;
-      // for(let i = url.length - 1; i > 0; i--){
-      //   if(url[i] == '/'){
-      //     comment_replied_to_id = Number(url.slice(i+1))
-      //     break;
-      //   }
-      // };
-
       const replyPost = await pool.query(`
         INSERT INTO comment_replies
         (reply, reply_user_id, comment_replied_to_id, img_replied_to_id)
@@ -374,6 +364,26 @@ router.post('/commentReply',authorize, async (req, res) => {
       console.error(err.message);
     }
   })
+
+  // DELETE A Comment
+  router.delete("/deleteReply/:id", authorize, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deleteComment = await pool.query(
+        "DELETE FROM comment_replies WHERE comment_reply_id = $1 AND reply_user_id = $2 RETURNING *",
+        [id, req.user.id]
+      );
+
+      if (deleteComment.rows.length === 0) {
+        return res.json("This is not your Reply");
+      }
+
+      res.json("Reply was deleted");
+    } catch (err) {
+      console.error(err.message);
+    }
+  });
+
 
 
 

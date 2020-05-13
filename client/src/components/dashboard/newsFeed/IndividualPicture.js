@@ -147,6 +147,7 @@ const deleteComment= async (id) => {
   return (
     <Fragment>
     <Link className="btn btn-warning mt-5 ml-5 mb-5" to={`/dashboard/newsfeed/${user_account.user_id}`}>BACK</Link>
+    <Link className='btn btn-warning  mt-5 ml-5 mb-5'  to='/dashboard'>PROFILE</Link>
     {userNames.length !== 0 &&
       userNames[0].user_id !== null &&
       userNames.map(e => (

@@ -55,7 +55,7 @@ useEffect(() =>{
       <div>
         <h1 className="text-center text-white">NEWS FEED</h1>
       </div>
-      <Link to='/dashboard' className='btn btn-warning mt-5 ml-5'>BACK</Link>
+      <Link to='/dashboard' className='btn btn-warning mt-5 ml-5'>PROFILE</Link>
 
       <div className="d-flex flex-wrap">
         <div className="p-2 flex-wrap mt-5">
