@@ -71,9 +71,14 @@ router.get("/", authorize, async (req, res) => {
 				WHERE friends.addresseeid = $1 AND friends.status = 'PENDING'`, [user_id])
 			// console.log('friend request', friendRequest.rows);
 			let friendReguestRows = friendRequest.rows
-			let filteredFriendRequest = friendReguestRows.filter(friend => {
-        return !this[friend.first_name] && (this[friend.first_name] = true);
-    	}, {});
+
+      const filteredFriendRequest = Array.from(new Set(friendReguestRows.map(a => a.id)))
+                                     .map(id => {
+                                       return friendReguestRows.find(a => a.id === id)
+                                     })
+
+      console.log('filteredFriendRequest',filteredFriendRequest);
+      console.log('friendReguestRows',friendReguestRows);
 			let friendsList = await pool.query(`
 				SELECT
 				user_account.first_name, user_account.user_id, friends.friends_id, friends.requesterid, friends.addresseeid, friends.status, friends.friends_id

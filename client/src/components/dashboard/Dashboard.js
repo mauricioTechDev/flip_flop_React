@@ -16,10 +16,13 @@ const Dashboard = ({ setAuth }) => {
   const [friendRequest, setFriendRequest] = useState([])
   const [friendList, setFriendList] = useState([])
   const [commentCount, setCommentCount] = useState([])
+  console.log('userInfo', userInfo);
+  console.log('friendRequest',friendRequest);
+  console.log('friendList', friendList);
+  console.log('commentCount', commentCount);
 
   const [avatarChange, setAvatarChange] = useState(false);
   const [uploadNewImg, setUploadNewImg] = useState(false);
-
   const [avatarImg, setAvatarImg] = useState('')
 
   const getProfile = async () => {
@@ -30,6 +33,7 @@ const Dashboard = ({ setAuth }) => {
       });
 
       const parseData = await res.json();
+      console.log(parseData);
 
       setIndividualUser(parseData.userInfo[0])
       setUserInfo(parseData.userInfo);
@@ -80,7 +84,7 @@ const Dashboard = ({ setAuth }) => {
           <AvatarInput setAvatarChange={setAvatarChange} />
         </div>
         <div className="col-4">
-          <FriendRequest />
+          <FriendRequest friendRequest={friendRequest} />
           <MyFriends />
         </div>
       </div>

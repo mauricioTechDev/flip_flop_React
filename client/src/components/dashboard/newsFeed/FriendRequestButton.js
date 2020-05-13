@@ -21,9 +21,6 @@ const FriendRequestButton = ({ individualPicture }) => {
         })
       })
       setButtonText('Sent')
-
-      console.log(response);
-
     } catch (err) {
         console.error(err.message);
     }
