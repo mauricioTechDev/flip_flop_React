@@ -4,6 +4,7 @@
 
 For this project I wanted to focus on using PostgreSQL for my database and on Schema Management/Database Architecture.  I also used S3 for image storage. In the back end I am running  Express with Node.js with a React front end.  Where I focused on using Hooks to manage my state and composability of functionality. 🚀
 
+### Hosted Site: https://flip-flop-photo-app.herokuapp.com/
 
 
 
@@ -13,15 +14,18 @@ For this project I wanted to focus on using PostgreSQL for my database and on Sc
 - PostgreSQL
 - React
 - AWS 3S
+- JWT Auth
 - HTML
 - CSS
 - Javascript
-- JWT Auth
+
 
 ## Installation
 
 1. Clone repo
 2. run `npm install`
+3. cd client
+4. run `npm install`
 
 ## Usage
 
