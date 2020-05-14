@@ -11,12 +11,9 @@ const IndividualUserPostedImg = ({ setAuth }) =>{
   const [userNames, setUserNames] = useState([])
   const [newCaption, setCaption] = useState(false)
 
-  // let imgId = this.props.match.params.id
-  // console.log(imgId);
 
-
-let location = useLocation();
-let path = location.pathname;
+  let location = useLocation();
+  let path = location.pathname;
 
 // ACTS LIKE COMPONENTDIDMOUTN BECOUASE OF BRACKETS AS SECOND PARAMATER
 useEffect(() => {
@@ -50,6 +47,27 @@ useEffect(() => {
     }
   };
 
+  const deletePicture = async () => {
+    try {
+      const myHeaders = new Headers();
+      // I want to ad more than one header in post so I can send the Token
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("jwt_token", localStorage.token);
+      const res = await fetch(`http://localhost:5000/dashboard/deletePicture/${img.img_post_id}`, {
+        method: "DELETE",
+        headers: myHeaders
+      });
+
+      const parseData = await res.json();
+      if(parseData){
+        getProfile()
+      }
+
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   useEffect(() => {
     getProfile();
       }, [imgId])
@@ -57,18 +75,27 @@ useEffect(() => {
     getProfile();
     setCaption(false);
       }, [newCaption])
+    const caption =  img ? <h1 className='text-white'>{img.description}</h1> : <h1 className='text-white'>{'Caption'}</h1>
+
 
   return(
     <Fragment>
       <Link className="btn btn-warning mb-5 mt-5" to='/dashboard'>BACK</Link>
-      <h1 className='text-white'>{img.description ? img.description : 'Caption'}</h1>
-      <button className="btn btn-danger mb-5 mt-5" >
+      { caption }
+      <button className="btn btn-danger mb-5 mt-5" onClick={deletePicture} >
         DELETE PICTURE
       </button>
-      <div>
-        <img src={img.img} key={img.img_post_id} alt='user posted picture'/>
+      <div class="text-center">
+        {
+          img &&
+          <img src={img.img } key={img.img_post_id} class="img-thumbnail rounded w-50"  alt='user posted picture'/>
+        }
+
       </div>
-      <Caption setCaption={setCaption} />
+      <div class="text-center mt-5">
+        <Caption setCaption={setCaption} />
+      </div>
+
 
 
     </Fragment>

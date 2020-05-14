@@ -26,11 +26,8 @@ const AvatarInput = ({ setAvatarChange }) => {
 
       const parseResponse = await response.json();
 
-      console.log(parseResponse);
-
       setAvatarChange(true);
       setUploadedAvatar("");
-      // window.location = "/";
     } catch (err) {
       console.error(err.message);
     }
@@ -47,11 +44,10 @@ const AvatarInput = ({ setAvatarChange }) => {
             className="custom-file-input"
             name="uploadedAvatar"
             onChange={e => setUploadedAvatar(e.target.files[0])} />
-            <label className="custom-file-label" htmlFor="inputGroupFile04">Update Profile</label>
-          </div>
-          <div className="input-group-append">
+            <label className="custom-file-label" htmlFor="inputGroupFile04">{uploadedAvatar.name}</label>
             <button className="btn btn-success ">Add</button>
           </div>
+
         </form>
       </div>
     </Fragment>

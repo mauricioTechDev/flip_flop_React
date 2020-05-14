@@ -45,7 +45,7 @@ const ImgFeedInput = ({ setUploadNewImg }) => {
             className="custom-file-input"
             name="uploadImg"
             onChange={e => setUploadImg(e.target.files[0])} />
-            <label class="custom-file-label" for="inputGroupFile04">Post to your feed</label>
+            <label class="custom-file-label" for="inputGroupFile04">{uploadImg.name}</label>
           </div>
           <div class="input-group-append">
             <button className="btn btn-success ">Add</button>

@@ -53,7 +53,7 @@ function App() {
   return (
     <Fragment>
       <Router>
-        <div className="container-fluid bg-dark">
+        <div className="container-fluid bg-dark pb-5 pl-5 pr-5 pt-5">
           <Switch>
             <Route
               exact

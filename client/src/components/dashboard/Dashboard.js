@@ -16,9 +16,6 @@ const Dashboard = ({ setAuth }) => {
   const [friendRequest, setFriendRequest] = useState([])
   const [friendsList, setFriendsList] = useState([])
   const [commentCount, setCommentCount] = useState([])
-  console.log('userInfo', userInfo);
-  console.log('friendRequest',friendRequest);
-  console.log('friensdList', friendsList);
 
   const [avatarChange, setAvatarChange] = useState(false);
   const [uploadNewImg, setUploadNewImg] = useState(false);
@@ -33,7 +30,6 @@ const Dashboard = ({ setAuth }) => {
       });
 
       const parseData = await res.json();
-      console.log(parseData);
 
       setIndividualUser(parseData.userInfo[0])
       setUserInfo(parseData.userInfo);

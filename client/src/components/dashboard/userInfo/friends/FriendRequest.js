@@ -12,7 +12,7 @@ const FriendRequest = ({ friendRequest, setFriendActivity }) => {
   useEffect(()=>{
     acceptFriend()
   },[friends_id])
-  console.log('friends_id',friends_id);
+
   const acceptFriend = async e => {
     try {
       const myHeaders = new Headers();
@@ -20,7 +20,6 @@ const FriendRequest = ({ friendRequest, setFriendActivity }) => {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwt_token", localStorage.token);
 
-      console.log(friends_id);
       const response = await fetch("http://localhost:5000/dashboard/acceptRequest", {
         method: "PUT",
         headers: myHeaders,
@@ -30,13 +29,11 @@ const FriendRequest = ({ friendRequest, setFriendActivity }) => {
       });
       const parseResponse = await response.json();
       setFriendActivity(true)
-      console.log(parseResponse);
     } catch (err) {
       console.error(err.message);
     }
   };
   const triggerRejectFriendRequest = (e) => {
-    console.log(e);
     setRejectedFriendId(prevState => prevState + Number(e))
   }
   useEffect(()=>{
@@ -50,7 +47,6 @@ const FriendRequest = ({ friendRequest, setFriendActivity }) => {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwt_token", localStorage.token);
 
-      console.log('rejected friend id',rejectedFriendId);
       const response = await fetch("http://localhost:5000/dashboard/declineRequest", {
         method: "PUT",
         headers: myHeaders,
@@ -60,7 +56,6 @@ const FriendRequest = ({ friendRequest, setFriendActivity }) => {
       });
       const parseResponse = await response.json();
       setFriendActivity(true)
-      console.log(parseResponse);
     } catch (err) {
       console.error(err.message);
     }

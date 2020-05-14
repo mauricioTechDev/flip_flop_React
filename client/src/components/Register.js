@@ -48,7 +48,7 @@ const Register = ({ setAuth }) => {
   return (
     <Fragment>
       <h1 className="mt-5 text-center text-white">Register</h1>
-      <Link className="badge badge-warning" to='/'>BACK</Link>
+      <Link className="btn btn-warning btn-lg mb-5"to='/'>BACK</Link>
       <form onSubmit={onSubmitForm}>
         <input
           type="text"
@@ -84,7 +84,7 @@ const Register = ({ setAuth }) => {
         />
         <button className="btn btn-success btn-block">Submit</button>
       </form>
-      <Link className="badge badge-warning" to="/login">LOGIN</Link>
+      <Link className="btn btn-warning btn-lg mt-5 mb-5" to="/login">LOGIN</Link>
     </Fragment>
   );
 };

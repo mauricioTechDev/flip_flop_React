@@ -148,6 +148,22 @@ router.post('/profileImg', [authorize, uploadS3.single('upload')], async (req, r
         console.error(err.message);
       }
 })
+// DELETE PICTURE
+router.delete("/deletePicture/:pictureId", async (req, res) => {
+    try {
+      let pictureId = Number(req.params.pictureId)
+      console.log('pictureId', pictureId);
+      // const { email, user_id } = req._passport.session.user[0]
+      const deleteTodo = await pool.query(
+        `DELETE FROM img_post
+        WHERE img_post_id = $1`,
+        [pictureId]
+      );
+      res.json("Picture was deleted")
+    } catch (err) {
+      console.error(err.message);
+    }
+  })
 // ADD A Caption
 router.put('/caption', authorize, async(req, res) =>{
   try {

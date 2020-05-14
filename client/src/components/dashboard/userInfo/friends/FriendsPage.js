@@ -36,7 +36,6 @@ const FriendsPage = () => {
       });
 
       const parseData = await res.json();
-      console.log(parseData);
 
       setFriend(parseData.friend)
       setFriendsPicture(parseData.friendsPicture);
@@ -45,12 +44,7 @@ const FriendsPage = () => {
       console.error(err.message);
     }
   };
-  const avatarSize = {
-    width: '40px',
-    border: '5px solid pink'
-  };
 
-console.log('friends pics',friendsPicture);
   return (
     <div>
       <div className="d-flex justify-content-center">
