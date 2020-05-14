@@ -4,9 +4,6 @@ const pool = require("../config/db");
 const AWS = require('aws-sdk')
 const multerS3 = require('multer-s3');
 var multer  = require('multer')
-
-require('dotenv').config();
-
 /*
  * Configure the AWS region of the target bucket.
  * Remember to change this to the relevant region.
@@ -17,15 +14,19 @@ AWS.config.region = 'us-east-1'
  */
 const S3_BUCKET = process.env.S3_BUCKET;
 
-//======================================
+// ======================================
 // USING MUTLER-S3 TO UPLOAD IMAGES TO AWS S3
-//======================================
+// ======================================
 const s3 = new AWS.S3({
   credentials : {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
   }
 });
+
+require('dotenv').config();
+
+
 // connect the AWS object instance with multer using the multer-s3 module as a storage object.
 const uploadS3 = multer({
 storage: multerS3({
@@ -509,5 +510,6 @@ router.post('/commentReply',authorize, async (req, res) => {
       console.error(err.message);
     }
   })
+
 
 module.exports = router;

@@ -15,11 +15,14 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 
+
 //routes
 
 app.use("/authentication", require("./routes/jwtAuth"));
 
 app.use("/dashboard", require("./routes/dashboard"));
+
+
 
 
 var port = process.env.PORT || 5000

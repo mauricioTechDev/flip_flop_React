@@ -47,7 +47,7 @@ const FriendsPage = () => {
 
   return (
     <div>
-    <Link className='btn btn-warning  mt-5 ml-5 mb-5'  to='/dashboard'>PROFILE</Link>
+      <Link className='btn btn-warning  mt-5 ml-5 mb-5'  to='/dashboard'>PROFILE</Link>
       <div className="d-flex justify-content-center">
         <h1 className='text-white mr-5'>Welcome to Flip - Flop </h1>
       </div>
@@ -58,7 +58,7 @@ const FriendsPage = () => {
       <div className="d-flex justify-content-center">
         <h2 className='text-white mr-5'>{friend.about_me}</h2>
       </div>
-      <div class="text-center">
+      <div className="text-center">
         <img src={friend.profile_img} key={friend.user_id}className='img-thumbnail rounded' style={{ "width" : "10%"}} alt='user profile'/>
       </div>
 
@@ -72,17 +72,6 @@ const FriendsPage = () => {
             ))}
           </div>
         </div>
-
-
-      <div className="row">
-
-      </div>
-      <div className="row">
-
-      </div>
-
-      <div class="row">
-      </div>
     </div>
   )
 };
