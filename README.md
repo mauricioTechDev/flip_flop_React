@@ -12,12 +12,13 @@ For this project I wanted to focus on using PostgreSQL for my database and on Sc
 - Node.js
 - Express
 - PostgreSQL
-- React
 - AWS 3S
+- React
+- React Router
 - JWT Auth
-- HTML
-- CSS
 - Javascript
+
+
 
 
 ## Installation
@@ -29,7 +30,7 @@ For this project I wanted to focus on using PostgreSQL for my database and on Sc
 
 ## Usage
 
-1. Client folder `npm start`
-2. Server folder `node server.js`
+1. Root directory `node server.js`
+2. Server folder `npm start`
 2. Navigate to `localhost:3000`
 3. Have fun ;)
