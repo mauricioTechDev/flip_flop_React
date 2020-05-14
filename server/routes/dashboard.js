@@ -58,10 +58,12 @@ router.get("/", authorize, async (req, res) => {
 				LEFT JOIN img_post
 				ON user_account.user_id = img_post.id_of_img_poster
 				WHERE user_account.user_id = $1`, [user_id])
-			// console.log(userInfo);
+
 			const commentCount = await pool.query(`
         SELECT img_commented_on_id, count(img_commented_on_id)
         FROM comments GROUP BY img_commented_on_id`)
+        console.log('commentCount', commentCount.rows);
+
 			let friendRequest = await pool.query(`
 				SELECT
 				user_account.first_name, user_account.user_id, friends.friends_id, friends.requesterid, friends.addresseeid, friends.status, friends.friends_id
@@ -69,25 +71,12 @@ router.get("/", authorize, async (req, res) => {
 				INNER JOIN friends
 				ON  friends.requesterid = user_account.user_id
 				WHERE friends.addresseeid = $1 AND friends.status = 'PENDING'`, [user_id])
-			// console.log('friend request', friendRequest.rows);
-			let friendReguestRows = friendRequest.rows
 
+			const friendReguestRows = friendRequest.rows
       const filteredFriendRequest = Array.from(new Set(friendReguestRows.map(a => a.id)))
                                      .map(id => {
                                        return friendReguestRows.find(a => a.id === id)
                                      })
-      // let acceptedRequest = await pool.query(`SELECT * FROM friends WHERE status = 'ACCEPTED'`)
-      // let filteredAcceptedRequest = acceptedRequest.rows.reduce((acc, obj) => {
-      //                                 Object.keys(obj).forEach(e =>{
-      //                                   if (obj[e] === user_id){
-      //                                     // delete obj[e]
-      //                                     acc.push(obj)
-      //                                   }
-      //                                 })
-      //                                 return acc;
-      //                               }, []);
-      // console.log('filteredAcceptedRequest',acceptedRequest.rows);
-
 
 			let friendsList = await pool.query(`
 				SELECT
@@ -96,7 +85,6 @@ router.get("/", authorize, async (req, res) => {
 				INNER JOIN friends
 				ON  friends.requesterid = user_account.user_id
 				WHERE friends.addresseeid = $1 AND friends.status = 'ACCEPTED'`, [user_id])
-        console.log('FRIENDS LIST',friendsList.rows);
 
     res.json({
         userInfo: userInfo.rows,
@@ -129,10 +117,7 @@ router.post('/avatar', [authorize, uploadS3.single('upload')], async (req, res, 
 router.post('/profileImg', [authorize, uploadS3.single('upload')], async (req, res, next) => {
       try {
         let  location  = req.file.location;
-        console.log(req.file);
         let user_id = req.user.id
-        // const { email, user_id } = req._passport.session.user[0]
-        // const { description } = req.body
         let date_ob = new Date();
         let date = date_ob.getDate();
         let month = date_ob.getMonth() + 1;
@@ -151,27 +136,29 @@ router.post('/profileImg', [authorize, uploadS3.single('upload')], async (req, r
 // DELETE PICTURE
 router.delete("/deletePicture/:pictureId", async (req, res) => {
     try {
-      let pictureId = Number(req.params.pictureId)
-      console.log('pictureId', pictureId);
-      // const { email, user_id } = req._passport.session.user[0]
+      const pictureId = Number(req.params.pictureId)
+
       const deleteTodo = await pool.query(
         `DELETE FROM img_post
         WHERE img_post_id = $1`,
         [pictureId]
       );
+
       res.json("Picture was deleted")
     } catch (err) {
       console.error(err.message);
     }
-  })
+  });
 // ADD A Caption
 router.put('/caption', authorize, async(req, res) =>{
   try {
     let { caption, pictureId } = req.body
+
     const heartPicture = await pool.query(`
       UPDATE img_post
       SET description = $1
       WHERE img_post_id = $2`, [caption, pictureId])
+
       res.json(heartPicture)
     // UPDATE counters SET current_value = current_value + 1 WHERE counter_name = 'whatever';
   } catch (err) {
@@ -179,9 +166,6 @@ router.put('/caption', authorize, async(req, res) =>{
 
   }
 })
-
-
-
 // =======================
 // GET THE DATA FOR INDIVIDUAL USER IMG PAGE
 // =======================
@@ -245,7 +229,6 @@ router.get('/individualUserImg/:id', authorize, async (req, res) => {
 router.get('/individualPicture/:picId', authorize, async (req, res) => {
   try {
     let id = Number(req.params.picId)
-    console.log(id);
     let user_id = req.user.id
 
     const user_account = await pool.query(`
@@ -318,7 +301,6 @@ router.get('/individualPicture/:picId', authorize, async (req, res) => {
         SET img_likes = img_likes + 1
         WHERE img_post_id = $1`, [pictureId])
         res.json(heartPicture)
-      // UPDATE counters SET current_value = current_value + 1 WHERE counter_name = 'whatever';
     } catch (err) {
       console.error(err.message);
 
@@ -369,15 +351,15 @@ router.get('/replies/:commentRepliedToId', authorize, async(req, res) => {
       FROM comment_replies
       WHERE comment_replied_to_id = $1`,
       [commentRepliedToId])
-      const fullReplyInfo = await pool.query(`
-        SELECT
-        comment_replies.comment_reply_id, comment_replies.reply, comment_replies.reply_likes, comment_replies.reply_user_id, comment_replies.comment_replied_to_id, comment_replies.img_replied_to_id,
-        user_account.user_id, user_account.first_name, user_account.last_name
-        FROM comment_replies
-        LEFT JOIN user_account
-        ON comment_replies.reply_user_id = user_account.user_id
-        WHERE comment_replies.comment_replied_to_id = $1`,
-        [commentRepliedToId])
+    const fullReplyInfo = await pool.query(`
+      SELECT
+      comment_replies.comment_reply_id, comment_replies.reply, comment_replies.reply_likes, comment_replies.reply_user_id, comment_replies.comment_replied_to_id, comment_replies.img_replied_to_id,
+      user_account.user_id, user_account.first_name, user_account.last_name
+      FROM comment_replies
+      LEFT JOIN user_account
+      ON comment_replies.reply_user_id = user_account.user_id
+      WHERE comment_replies.comment_replied_to_id = $1`,
+      [commentRepliedToId])
     const userNames = await pool.query(`
       SELECT user_id, first_name
       FROM user_account`)
@@ -395,13 +377,10 @@ router.get('/replies/:commentRepliedToId', authorize, async(req, res) => {
 
 router.post('/commentReply',authorize, async (req, res) => {
     try {
-      let reply_user_id = req.user.id
-
-      console.log(req);
-      console.log('USER ID BABABYYY',reply_user_id);
-      let reply = req.body.reply
-      let img_replied_to_id = Number(req.body.img_replied_to_id)
-      let comment_replied_to_id = req.body.comment_replied_to_id
+      const reply_user_id = req.user.id
+      const reply = req.body.reply
+      const img_replied_to_id = Number(req.body.img_replied_to_id)
+      const comment_replied_to_id = req.body.comment_replied_to_id
 
       const replyPost = await pool.query(`
         INSERT INTO comment_replies
@@ -440,9 +419,9 @@ router.post('/commentReply',authorize, async (req, res) => {
 
   router.post('/individualPicture/friendReguest', authorize, async (req, res) => {
     try {
-      let requesterid = req.user.id;
-      let addresseeid = req.body.id_of_img_poster;
-      let status = 'PENDING'
+      const requesterid = req.user.id;
+      const addresseeid = req.body.id_of_img_poster;
+      const status = 'PENDING'
 
       //I must await to recieve the promise ;-]
       const friendReguest = await pool.query(`
@@ -462,17 +441,12 @@ router.post('/commentReply',authorize, async (req, res) => {
   // =============
   router.put('/acceptRequest', async (req, res) => {
     try {
-      let friends_id = Number(req.body.friends_id)
-      console.log(req.body);
-
-
+      const friends_id = Number(req.body.friends_id)
       const updateFriendStatus = await pool.query(`
         UPDATE friends
         SET status = 'ACCEPTED'
         WHERE friends_id = $1`,
         [friends_id])
-
-
         res.json(updateFriendStatus)
     } catch (err) {
       console.error(err.message);
@@ -483,8 +457,7 @@ router.post('/commentReply',authorize, async (req, res) => {
   // =============
   router.put('/declineRequest', async (req, res) => {
     try {
-      let friends_id = req.body.friends_id
-
+      const friends_id = req.body.friends_id
       const updateFriendStatus = await pool.query(`
         UPDATE friends
         SET status = 'DECLINE'
@@ -494,19 +467,9 @@ router.post('/commentReply',authorize, async (req, res) => {
       console.error(err.message);
     }
   })
-
   router.get('/friend/:friendId', async(req, res) => {
     try {
       const { friendId } = req.params;
-      console.log('USER', friendId);
-      // let url = req._parsedOriginalUrl._raw
-      // let friendId;
-      // for(let i = url.length - 1; i > 0; i--){
-      //   if(url[i] == '/'){
-      //     friendId = url.slice(i+1)
-      //     break;
-      //   }
-      // }
       const friend = await pool.query(`
         SELECT * FROM user_account
         WHERE user_id = $1`,[friendId])
@@ -527,8 +490,5 @@ router.post('/commentReply',authorize, async (req, res) => {
       console.error(err.message);
     }
   })
-
-
-
 
 module.exports = router;

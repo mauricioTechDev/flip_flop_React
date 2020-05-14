@@ -75,9 +75,6 @@ const onSubmitForm = async e => {
     const parseResponse = await response.json();
 
     console.log(parseResponse);
-    // setReplies(parseResponse.replies)
-    // setComment(parseResponse.comment[0])
-    // setUserNames(parseResponse.userNames)
     if(parseResponse){
       getComments()
     }

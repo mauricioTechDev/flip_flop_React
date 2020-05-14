@@ -50,7 +50,7 @@ const IndividualPicture = ({ setAuth }) => {
       setUser_account(parseData.user_account[0])
 
       setUserNames(parseData.userNames)
-      setCommentCount(parseData.commentCount[0])
+      setCommentCount(parseData.commentCount)
 
     } catch (err) {
         console.error(err.message);
@@ -160,7 +160,13 @@ const deleteComment= async (id) => {
         <img src={individualPicture.img ? individualPicture.img : '#'} key={individualPicture.img_post_id ? individualPicture.img : ''} alt='user posted picture' className='img-thumbnail rounded w-50'/>
         <div className='mt-1'>
           <a href='#' onClick={addHeart} className='text-white'>{individualPicture.img_likes  ? individualPicture.img_likes : 0}❤️</a>
-          <span className='text-white'>{commentCount.count === individualPicture.img_post_id ? commentCount.count : 0}💬</span>
+          {
+            commentCount.map(e => (
+              e.img_commented_on_id === individualPicture.img_post_id &&
+              <span className='text-white'>{ e.count }💬</span>
+            ))
+          }
+
         </div>
       </div>
       <h1 className="text-center my-5 text-white">Is this picture a flip 👍 or a flop 👎 </h1>
