@@ -9,6 +9,7 @@ import FriendRequest from './userInfo/friends/FriendRequest'
 import MyFriends from './userInfo/friends/MyFriends'
 import ImgFeedInput from './pictureUploads/ImgFeedInput'
 import PersonalImg from './userInfo/PersonalImg'
+import AboutMeInput from './userInfo/AboutMeInput'
 
 const Dashboard = ({ setAuth }) => {
   const [individualUser, setIndividualUser] = useState({})
@@ -81,6 +82,7 @@ const Dashboard = ({ setAuth }) => {
       <div className="row">
         <div className="col-8">
           <UserInfo userInfo={userInfo} individualUser={individualUser} />
+          <AboutMeInput setAvatarChange={setAvatarChange} individualUser={individualUser} />
           <AvatarInput setAvatarChange={setAvatarChange} />
         </div>
         <div className="col-4">
@@ -91,7 +93,7 @@ const Dashboard = ({ setAuth }) => {
       <div className="row justify-content-center">
         <ImgFeedInput setUploadNewImg={setUploadNewImg} />
       </div>
-      <div class="row">
+      <div className="row">
         <PersonalImg userInfo={userInfo}/>
       </div>
     </div>

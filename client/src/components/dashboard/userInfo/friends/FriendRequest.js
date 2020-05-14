@@ -6,17 +6,13 @@ const FriendRequest = ({ friendRequest, setFriendActivity }) => {
   const [rejectedFriendId, setRejectedFriendId] = useState(0)
 
   const triggerFriendRequest = (e) => {
-    console.log(e);
     setFriends_id(prevState => prevState + Number(e))
   }
-  useEffect(()=>{
-    acceptFriend()
-  },[friends_id])
+
 
   const acceptFriend = async e => {
     try {
       const myHeaders = new Headers();
-      // I want to ad more than one header in post so I can send the Token
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwt_token", localStorage.token);
 
@@ -36,9 +32,7 @@ const FriendRequest = ({ friendRequest, setFriendActivity }) => {
   const triggerRejectFriendRequest = (e) => {
     setRejectedFriendId(prevState => prevState + Number(e))
   }
-  useEffect(()=>{
-    rejectFriend()
-  },[rejectedFriendId])
+
 
   const rejectFriend = async e => {
     try {
@@ -60,17 +54,23 @@ const FriendRequest = ({ friendRequest, setFriendActivity }) => {
       console.error(err.message);
     }
   };
+  useEffect(()=>{
+    acceptFriend()
+  },[friends_id])
+  useEffect(()=>{
+    rejectFriend()
+  },[rejectedFriendId])
 
 
   return (
     <Fragment>
       <p>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <button className="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
           Friend Request
         </button>
       </p>
-      <div class="collapse" id="collapseExample">
-        <div class="card card-body">
+      <div className="collapse" id="collapseExample">
+        <div className="card card-body">
         <ul className='list-group'>
         {
           friendRequest.length !== 0 &&

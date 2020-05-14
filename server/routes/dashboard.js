@@ -114,6 +114,25 @@ router.post('/avatar', [authorize, uploadS3.single('upload')], async (req, res, 
       console.error(err.message);
     }
   })
+  // POST AN ABOUT ME
+  router.put('/aboutMe', authorize, async (req, res, next) => {
+      try {
+        let user_id = req.user.id
+        const aboutMe = req.body.aboutMe
+        console.log('USER', req.user);
+        console.log('aboutME', req.body);
+
+        const aboutMePost = await pool.query(`
+          UPDATE user_account
+          SET about_me = $1
+          WHERE user_id = $2;`,[aboutMe, user_id])
+        res.json(aboutMe);
+
+      } catch (err) {
+        console.error(err.message);
+      }
+    })
+    //POST PICTURES FROM PROFILE PAGE
 router.post('/profileImg', [authorize, uploadS3.single('upload')], async (req, res, next) => {
       try {
         let  location  = req.file.location;

@@ -14,18 +14,17 @@ const IndividualUserPostedImg = ({ setAuth }) =>{
 
   let location = useLocation();
   let path = location.pathname;
-
-// ACTS LIKE COMPONENTDIDMOUTN BECOUASE OF BRACKETS AS SECOND PARAMATER
-useEffect(() => {
-  let id;
-  for(let i = path.length - 1; i > 0; i--){
-    if(path[i] == '/'){
-      id = path.slice(i+1)
-      break;
+  // ACTS LIKE COMPONENTDIDMOUTN BECOUASE OF BRACKETS AS SECOND PARAMATER
+  useEffect(() => {
+    let id;
+    for(let i = path.length - 1; i > 0; i--){
+      if(path[i] == '/'){
+        id = path.slice(i+1)
+        break;
+      }
     }
-  }
-  setImgId(id);
-    }, [])
+    setImgId(id);
+      }, [])
 
 
   const getProfile = async () => {
@@ -36,7 +35,6 @@ useEffect(() => {
       });
 
       const parseData = await res.json();
-      console.log(parseData);
       setCommentCount(parseData.commentCount)
       setIndividualUserImg(parseData.individualUserImg)
       setUserNames(parseData.setUserNames)
@@ -50,9 +48,9 @@ useEffect(() => {
   const deletePicture = async () => {
     try {
       const myHeaders = new Headers();
-      // I want to ad more than one header in post so I can send the Token
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwt_token", localStorage.token);
+      
       const res = await fetch(`http://localhost:5000/dashboard/deletePicture/${img.img_post_id}`, {
         method: "DELETE",
         headers: myHeaders
@@ -85,14 +83,21 @@ useEffect(() => {
       <button className="btn btn-danger mb-5 mt-5" onClick={deletePicture} >
         DELETE PICTURE
       </button>
-      <div class="text-center">
+      <div className="text-center">
         {
           img &&
-          <img src={img.img } key={img.img_post_id} class="img-thumbnail rounded w-50"  alt='user posted picture'/>
+          <img src={img.img } key={img.img_post_id} className="img-thumbnail rounded w-50"  alt='user posted picture'/>
         }
 
+
       </div>
-      <div class="text-center mt-5">
+      <div className="text-center text-white">
+      {
+        img &&
+        <span>{img.img_likes}❤️</span>
+      }
+      </div>
+      <div className="text-center mt-5">
         <Caption setCaption={setCaption} />
       </div>
 

@@ -8,7 +8,6 @@ const Register = ({ setAuth }) => {
     last_name: '',
     email: "",
     password: "",
-    // name: ""
   });
 
   const { first_name, last_name, email, password } = inputs;

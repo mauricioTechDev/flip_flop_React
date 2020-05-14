@@ -14,9 +14,6 @@ const AvatarInput = ({ setAvatarChange }) => {
       myHeaders.append("jwt_token", localStorage.token);
       const formdata = new FormData();
     formdata.append("upload", uploadedAvatar);
-    console.log(uploadedAvatar);
-
-      // const body = { uploadedAvatar };
 
       const response = await fetch("http://localhost:5000/dashboard/avatar", {
         method: "POST",

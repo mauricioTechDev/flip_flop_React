@@ -10,10 +10,7 @@ const IndividualPicture = ({ setAuth }) => {
   const [userNames, setUserNames] = useState([]);
   const [commentCount, setCommentCount]= useState([])
   const [comment, setComment] = useState("");
-  const [rows, setRows] = useState([])
   const [user_account, setUser_account] = useState([])
-
-
 
   let location = useLocation();
   let path = location.pathname;
@@ -29,7 +26,7 @@ const IndividualPicture = ({ setAuth }) => {
     }
     setPictureId(id);
       }, [])
-      console.log(pictureId);
+      
   const getIndividualPictureInfo = async () => {
     try {
 
@@ -39,7 +36,7 @@ const IndividualPicture = ({ setAuth }) => {
       });
 // CONDITIONALY SET DATA!!!!!!!!!
       const parseData = await res.json();
-      console.log(parseData);
+
       if(parseData.individualPicture.length >= 1){
         setIndividualPictureInfo(parseData.individualPicture)
         setIndividualPicture(parseData.individualPicture[0])
@@ -48,7 +45,6 @@ const IndividualPicture = ({ setAuth }) => {
         setIndividualPicture(parseData.backUpIndividualPicture[0])
       }
       setUser_account(parseData.user_account[0])
-
       setUserNames(parseData.userNames)
       setCommentCount(parseData.commentCount)
 
@@ -56,14 +52,9 @@ const IndividualPicture = ({ setAuth }) => {
         console.error(err.message);
     }
   }
-useEffect(() =>{
-  getIndividualPictureInfo()
-},[pictureId])
-console.log('individualPicture', individualPicture);
-console.log('individualPictureInfo', individualPictureInfo);
-console.log('userNames', userNames);
-console.log('commentCount', commentCount);
-console.log('user_account',user_account);
+  useEffect(() =>{
+    getIndividualPictureInfo()
+  },[pictureId])
 
 // =============================
 // POSTING A COMMENT
@@ -86,14 +77,10 @@ const onSubmitForm = async e => {
 
     const parseResponse = await response.json();
 
-    console.log(parseResponse);
     if(parseResponse){
       getIndividualPictureInfo()
     }
     setComment('')
-    // setTodosChange(true);
-    // setComment("");
-    // window.location = "/";
   } catch (err) {
     console.error(err.message);
   }
@@ -102,7 +89,6 @@ const onSubmitForm = async e => {
 const addHeart = async (e) => {
   try {
     const myHeaders = new Headers();
-
     // I want to ad more than one header in post so I can send the Token
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("jwt_token", localStorage.token);
@@ -117,7 +103,6 @@ const addHeart = async (e) => {
     });
 
     const parseResponse = await response.json();
-    console.log(parseResponse);
     if(parseResponse){
       getIndividualPictureInfo()
     }
@@ -163,7 +148,7 @@ const deleteComment= async (id) => {
           {
             commentCount.map(e => (
               e.img_commented_on_id === individualPicture.img_post_id &&
-              <span className='text-white'>{ e.count }💬</span>
+              <span key={individualPicture.img_post_id} className='text-white'>{ e.count }💬</span>
             ))
           }
 

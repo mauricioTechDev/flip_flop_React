@@ -4,10 +4,9 @@ import { Link, useLocation } from "react-router-dom";
 const Caption = ({ setCaption }) => {
   const [caption, setNewCaption] = useState('')
   const [pictureId, setPictureId] = useState('')
-  let location = useLocation();
 
+  let location = useLocation();
   let path = location.pathname;
-  // ACTS LIKE COMPONENTDIDMOUTN BECOUASE OF BRACKETS AS SECOND PARAMATER
   useEffect(() => {
     let id;
     for(let i = path.length - 1; i > 0; i--){
@@ -23,7 +22,6 @@ const Caption = ({ setCaption }) => {
     e.preventDefault();
     try {
       const myHeaders = new Headers();
-      // I want to ad more than one header in post so I can send the Token
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwt_token", localStorage.token);
 
@@ -42,8 +40,6 @@ const Caption = ({ setCaption }) => {
       console.error(err.message);
     }
   };
-
-
 
   return (
     <Fragment>

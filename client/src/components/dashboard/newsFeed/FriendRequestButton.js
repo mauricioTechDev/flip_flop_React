@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 
-
 const FriendRequestButton = ({ individualPicture }) => {
   const [buttonText, setButtonText] = useState('')
 
   const sendFriendRequest = async () => {
     try {
-
       const myHeaders = new Headers();
 
       myHeaders.append("Content-Type", "application/json");
@@ -25,8 +23,6 @@ const FriendRequestButton = ({ individualPicture }) => {
         console.error(err.message);
     }
   }
-  console.log(buttonText);
-
 
   return (
     <div className='text-center mb-5'>

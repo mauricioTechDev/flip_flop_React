@@ -15,25 +15,22 @@ const NewsFeed = ({ setAuth }) => {
   useEffect(() => {
     let id;
     for(let i = path.length - 1; i > 0; i--){
-      if(path[i] == '/'){
+      if(path[i] === '/'){
         id = path.slice(i+1)
         break;
       }
     }
     setUserId(id);
       }, [])
-      console.log(userId);
 
   const getNewsFeed = async () => {
     try {
-
       const res = await fetch(`http://localhost:5000/dashboard/newsfeed/${userId}`, {
         method: "GET",
         headers: { jwt_token: localStorage.token }
       });
 
       const parseData = await res.json();
-      console.log(parseData);
       setNewsFeed(parseData.newsFeed)
       setCommentCount(parseData.commentCount)
 
@@ -41,14 +38,10 @@ const NewsFeed = ({ setAuth }) => {
         console.error(err.message);
     }
   }
-  // console.log('NEWS FEED',newsFeed);
-  // console.log('COMMENT COUNT', commentCount);
 
-
-useEffect(() =>{
-  getNewsFeed()
-},[userId])
-
+  useEffect(() =>{
+    getNewsFeed()
+  },[userId])
 
   return (
     <div>

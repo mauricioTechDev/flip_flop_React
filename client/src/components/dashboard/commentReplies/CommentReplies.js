@@ -34,7 +34,7 @@ const CommentReplies = ({ setAuth }) => {
         headers: { jwt_token: localStorage.token }
       });
       const parseData = await res.json();
-      console.log(parseData);
+
       setComment(parseData.comment[0])
       setReplies(parseData.replies)
       setUserNames(parseData.userNames)
@@ -56,11 +56,9 @@ const onSubmitForm = async e => {
   e.preventDefault();
   try {
     const myHeaders = new Headers();
-
     // I want to ad more than one header in post so I can send the Token
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("jwt_token", localStorage.token);
-
     // const body = { reply, commentRepliedToId };
     const response = await fetch("http://localhost:5000/dashboard/commentReply", {
       method: "POST",
@@ -74,7 +72,6 @@ const onSubmitForm = async e => {
 
     const parseResponse = await response.json();
 
-    console.log(parseResponse);
     if(parseResponse){
       getComments()
     }
@@ -94,7 +91,6 @@ const deleteComment= async (id) => {
     });
 
     const parseResponse = await response.json();
-    console.log(parseResponse);
     if(parseResponse){
       getComments()
     }
@@ -102,10 +98,6 @@ const deleteComment= async (id) => {
     console.error(err.message);
   }
 }
-
-
-
-
 
   return (
     <Fragment>
@@ -124,8 +116,6 @@ const deleteComment= async (id) => {
       </form>
       <table className="table table-dark">
       <tbody>
-
-
         {fullReplyInfo .length !== 0 &&
           fullReplyInfo.map(post => (
             <tr key={post.comments_id}>
@@ -137,13 +127,10 @@ const deleteComment= async (id) => {
                 </button>
             }
               </td>
-
             </tr>
           ))}
       </tbody>
       </table>
-
-
     </Fragment>
   )
 };

@@ -19,7 +19,7 @@ const FriendsPage = () => {
   useEffect(() => {
     let id;
     for(let i = path.length - 1; i > 0; i--){
-      if(path[i] == '/'){
+      if(path[i] === '/'){
         id = path.slice(i+1)
         break;
       }
@@ -47,15 +47,19 @@ const FriendsPage = () => {
 
   return (
     <div>
+    <Link className='btn btn-warning  mt-5 ml-5 mb-5'  to='/dashboard'>PROFILE</Link>
       <div className="d-flex justify-content-center">
         <h1 className='text-white mr-5'>Welcome to Flip - Flop </h1>
-
       </div>
       <div className="d-flex justify-content-center">
         <h2 className='text-white mr-5'>This is {friend.first_name}'s page</h2>
+        <h2 className='text-white mr-5'>{friend.about_me}</h2>
+      </div>
+      <div className="d-flex justify-content-center">
+        <h2 className='text-white mr-5'>{friend.about_me}</h2>
       </div>
       <div class="text-center">
-        <img src={friend.profile_img} key={friend.user_id}className='img-thumbnail rounded' style={{ "width" : "10%"}}/>
+        <img src={friend.profile_img} key={friend.user_id}className='img-thumbnail rounded' style={{ "width" : "10%"}} alt='user profile'/>
       </div>
 
       <div className="d-flex flex-wrap">

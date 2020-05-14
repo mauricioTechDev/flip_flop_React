@@ -12,7 +12,7 @@ const PersonalImg = ({ userInfo }) => {
             userInfo[0].img_post_id !== null &&
             userInfo.map(e => (
                 <Link to={`/dashboard/${e.img_post_id}`} key={e.img_post_id}>
-                  <img src={e.img} key={e.img_post_id} alt='user posted picture' className='img-thumbnail rounded w-50'/>
+                  <img src={e.img} key={e.img_post_id} alt='user posted' className='img-thumbnail rounded w-50'/>
                 </Link>
             ))}
           </div>
