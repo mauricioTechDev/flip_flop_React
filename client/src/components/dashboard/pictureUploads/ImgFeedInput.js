@@ -12,7 +12,7 @@ const ImgFeedInput = ({ setUploadNewImg }) => {
       const formdata = new FormData();
       formdata.append("upload", uploadImg);
 
-      const response = await fetch("http://localhost:5000/dashboard/profileImg", {
+      const response = await fetch("/dashboard/profileImg", {
         method: "POST",
         headers: myHeaders,
         body: formdata

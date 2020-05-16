@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const path = require('path')
+
 require("dotenv").config();
 
 
@@ -15,7 +17,14 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, 'client/build')))
 
+if(process.env.NODE_ENV === 'production'){
+  // serve static content
+  // npm run build holds all the static content and I have to aim for the inced.html fil withing that build folder
+  // inside the static() I have to say the location of the build folder
+  app.use(express.static(path.join(__dirname, 'client/build')))
+}
 //routes
 
 app.use("/authentication", require("./routes/jwtAuth"));

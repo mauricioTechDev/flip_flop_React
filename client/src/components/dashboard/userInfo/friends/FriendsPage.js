@@ -30,7 +30,7 @@ const FriendsPage = () => {
 
   const getFriendPage = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/dashboard/friend/${friendsId}`, {
+      const res = await fetch(`/dashboard/friend/${friendsId}`, {
         method: "GET",
         headers: { jwt_token: localStorage.token }
       });

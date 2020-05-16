@@ -16,7 +16,7 @@ const FriendRequest = ({ friendRequest, setFriendActivity }) => {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwt_token", localStorage.token);
 
-      const response = await fetch("http://localhost:5000/dashboard/acceptRequest", {
+      const response = await fetch("/dashboard/acceptRequest", {
         method: "PUT",
         headers: myHeaders,
         body: JSON.stringify({
@@ -41,7 +41,7 @@ const FriendRequest = ({ friendRequest, setFriendActivity }) => {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwt_token", localStorage.token);
 
-      const response = await fetch("http://localhost:5000/dashboard/declineRequest", {
+      const response = await fetch("/dashboard/declineRequest", {
         method: "PUT",
         headers: myHeaders,
         body: JSON.stringify({

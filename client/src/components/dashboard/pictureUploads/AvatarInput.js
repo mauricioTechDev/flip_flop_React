@@ -15,7 +15,7 @@ const AvatarInput = ({ setAvatarChange }) => {
       const formdata = new FormData();
     formdata.append("upload", uploadedAvatar);
 
-      const response = await fetch("http://localhost:5000/dashboard/avatar", {
+      const response = await fetch("/dashboard/avatar", {
         method: "POST",
         headers: myHeaders,
         body: formdata

@@ -13,7 +13,7 @@ const AboutMeInput = ({ setAvatarChange }) => {
       myHeaders.append("jwt_token", localStorage.token);
 
       const body = { aboutMe };
-      const response = await fetch("http://localhost:5000/dashboard/aboutMe", {
+      const response = await fetch("/dashboard/aboutMe", {
         method: "PUT",
         headers: myHeaders,
         body: JSON.stringify(body)

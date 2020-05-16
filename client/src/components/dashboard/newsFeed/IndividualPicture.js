@@ -26,11 +26,11 @@ const IndividualPicture = ({ setAuth }) => {
     }
     setPictureId(id);
       }, [])
-      
+
   const getIndividualPictureInfo = async () => {
     try {
 
-      const res = await fetch(`http://localhost:5000/dashboard/individualPicture/${pictureId}`, {
+      const res = await fetch(`/dashboard/individualPicture/${pictureId}`, {
         method: "GET",
         headers: { jwt_token: localStorage.token }
       });
@@ -69,7 +69,7 @@ const onSubmitForm = async e => {
     myHeaders.append("jwt_token", localStorage.token);
 
     const body = { comment };
-    const response = await fetch("http://localhost:5000/dashboard/comment", {
+    const response = await fetch("/dashboard/comment", {
       method: "POST",
       headers: myHeaders,
       body: JSON.stringify(body)
@@ -94,7 +94,7 @@ const addHeart = async (e) => {
     myHeaders.append("jwt_token", localStorage.token);
 
     const img_post_id = individualPicture.img_post_id;
-    const response = await fetch("http://localhost:5000/dashboard/addHeart", {
+    const response = await fetch("/dashboard/addHeart", {
       method: "PUT",
       headers: myHeaders,
       body: JSON.stringify({
@@ -113,7 +113,7 @@ const addHeart = async (e) => {
 
 const deleteComment= async (id) => {
   try {
-    const response = await fetch(`http://localhost:5000/dashboard/deleteComment/${id}`, {
+    const response = await fetch(`/dashboard/deleteComment/${id}`, {
       method: "DELETE",
       headers: { jwt_token: localStorage.token }
     });

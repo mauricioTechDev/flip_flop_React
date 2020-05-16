@@ -29,7 +29,7 @@ const IndividualUserPostedImg = ({ setAuth }) =>{
 
   const getProfile = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/dashboard/individualUserImg/${imgId}`, {
+      const res = await fetch(`/dashboard/individualUserImg/${imgId}`, {
         method: "GET",
         headers: { jwt_token: localStorage.token }
       });
@@ -50,8 +50,8 @@ const IndividualUserPostedImg = ({ setAuth }) =>{
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwt_token", localStorage.token);
-      
-      const res = await fetch(`http://localhost:5000/dashboard/deletePicture/${img.img_post_id}`, {
+
+      const res = await fetch(`/dashboard/deletePicture/${img.img_post_id}`, {
         method: "DELETE",
         headers: myHeaders
       });

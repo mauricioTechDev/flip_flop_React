@@ -25,7 +25,7 @@ const NewsFeed = ({ setAuth }) => {
 
   const getNewsFeed = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/dashboard/newsfeed/${userId}`, {
+      const res = await fetch(`/dashboard/newsfeed/${userId}`, {
         method: "GET",
         headers: { jwt_token: localStorage.token }
       });

@@ -11,7 +11,7 @@ const FriendRequestButton = ({ individualPicture }) => {
       myHeaders.append("jwt_token", localStorage.token);
 
       const id_of_img_poster = individualPicture.id_of_img_poster
-      const response = await fetch(`http://localhost:5000/dashboard/individualPicture/friendReguest`, {
+      const response = await fetch(`/dashboard/individualPicture/friendReguest`, {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify({

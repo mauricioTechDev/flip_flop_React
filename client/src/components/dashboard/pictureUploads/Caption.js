@@ -26,7 +26,7 @@ const Caption = ({ setCaption }) => {
       myHeaders.append("jwt_token", localStorage.token);
 
       const body = { caption, pictureId };
-      const response = await fetch("http://localhost:5000/dashboard/caption", {
+      const response = await fetch("/dashboard/caption", {
         method: "PUT",
         headers: myHeaders,
         body: JSON.stringify(body)

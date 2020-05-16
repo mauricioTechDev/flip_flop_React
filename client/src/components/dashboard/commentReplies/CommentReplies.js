@@ -29,7 +29,7 @@ const CommentReplies = ({ setAuth }) => {
   const getComments = async () => {
     try {
 
-      const res = await fetch(`http://localhost:5000/dashboard/replies/${commentRepliedToId}`, {
+      const res = await fetch(`/dashboard/replies/${commentRepliedToId}`, {
         method: "GET",
         headers: { jwt_token: localStorage.token }
       });
@@ -60,7 +60,7 @@ const onSubmitForm = async e => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("jwt_token", localStorage.token);
     // const body = { reply, commentRepliedToId };
-    const response = await fetch("http://localhost:5000/dashboard/commentReply", {
+    const response = await fetch("/dashboard/commentReply", {
       method: "POST",
       headers: myHeaders,
       body: JSON.stringify({
@@ -85,7 +85,7 @@ const onSubmitForm = async e => {
 // =============
 const deleteComment= async (id) => {
   try {
-    const response = await fetch(`http://localhost:5000/dashboard/deleteReply/${id}`, {
+    const response = await fetch(`/dashboard/deleteReply/${id}`, {
       method: "DELETE",
       headers: { jwt_token: localStorage.token }
     });
