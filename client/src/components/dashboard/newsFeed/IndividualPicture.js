@@ -87,6 +87,7 @@ const onSubmitForm = async e => {
 };
 
 const addHeart = async (e) => {
+  e.preventDefault();
   try {
     const myHeaders = new Headers();
     // I want to ad more than one header in post so I can send the Token

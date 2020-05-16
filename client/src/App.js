@@ -5,7 +5,8 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
+  HashRouter
 } from "react-router-dom";
 
 import { toast } from "react-toastify";
@@ -52,7 +53,7 @@ function App() {
 
   return (
     <Fragment>
-      <Router>
+      <HashRouter>
         <div className="container-fluid bg-dark pb-5 pl-5 pr-5 pt-5">
           <Switch>
             <Route
@@ -156,7 +157,7 @@ function App() {
             />
           </Switch>
         </div>
-      </Router>
+      </HashRouter>
     </Fragment>
   );
 }
