@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Confirmation from "./components/Confirmation";
 import Dashboard from "./components/dashboard/Dashboard";
 import Landing from "./components/Landing";
 import IndividualUserPostedImg from "./components/dashboard/pictureUploads/IndividualUserPostedImg"
@@ -86,6 +87,17 @@ function App() {
                   <Register {...props} setAuth={setAuth} />
                 ) : (
                   <Redirect to="/dashboard" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/dashboard/confirmation/:id"
+              render={props =>
+                isAuthenticated ? (
+                  <Confirmation {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
                 )
               }
             />

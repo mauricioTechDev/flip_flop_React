@@ -4,6 +4,9 @@ const pool = require("../config/db");
 const AWS = require('aws-sdk')
 const multerS3 = require('multer-s3');
 var multer  = require('multer')
+const jwt = require("jsonwebtoken");
+const EMAIL_SECRET="iHopeYouConfirmYourEmail"
+
 /*
  * Configure the AWS region of the target bucket.
  * Remember to change this to the relevant region.
@@ -46,9 +49,9 @@ storage: multerS3({
 //======================================
 // GET THE USER DASHBOARD
 //======================================
-
 router.get("/", authorize, async (req, res) => {
   try {
+
     let  user_id  = req.user.id
     console.log(user_id);
     const userInfo = await pool.query(`
@@ -63,7 +66,6 @@ router.get("/", authorize, async (req, res) => {
 			const commentCount = await pool.query(`
         SELECT img_commented_on_id, count(img_commented_on_id)
         FROM comments GROUP BY img_commented_on_id`)
-        console.log('commentCount', commentCount.rows);
 
 			let friendRequest = await pool.query(`
 				SELECT
@@ -99,6 +101,35 @@ router.get("/", authorize, async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+
+
+
+
+// THIS IS THE PROBLEM
+router.post('/confirmation/:id', authorize, async (req, res, next) => {
+  try {
+    console.log('REQ PARAMS', req.params);
+    console.log('JWT RERIFY', jwt.verify(req.params.id, EMAIL_SECRET));
+    const verificationResponce = jwt.verify(req.params.id, EMAIL_SECRET);
+    const id = verificationResponce.user
+    console.log('type of', typeof id);
+    console.log('ID',id);
+    const emailConfirmed = true
+    console.log(typeof emailConfirmed);
+    const emailConfirmation = await pool.query(`
+      UPDATE user_account
+      SET confirmed = $1
+      WHERE user_id = $2;`,[emailConfirmed, id])
+      console.log('emailConfirmation', emailConfirmation);
+      // res.json(emailConfirmation)
+  } catch (err) {
+    console.error(err.message);
+  }
+
+  // return res.redirect('http://localhost:3001/login');
+});
+
 // UPLOAD A PICTURE IN THE USER DASHBOARD
 router.post('/avatar', [authorize, uploadS3.single('upload')], async (req, res, next) => {
     try {

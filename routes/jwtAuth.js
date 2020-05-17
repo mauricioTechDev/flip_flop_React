@@ -5,7 +5,21 @@ const pool = require("../config/db");
 const validInfo = require("../middleware/validInfo");
 const jwtGenerator = require("../utils/jwtGenerator");
 const authorize = require("../middleware/authorize");
+const nodemailer = require('nodemailer');
+const jwt = require("jsonwebtoken");
 
+require('dotenv').config();
+
+
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
+  },
+});
+
+const EMAIL_SECRET="iHopeYouConfirmYourEmail"
 //authorizeentication
 
 router.post("/register", validInfo, async (req, res) => {
@@ -28,15 +42,44 @@ router.post("/register", validInfo, async (req, res) => {
       VALUES ($1, $2, $3, $4) RETURNING *`,
       [first_name, last_name, email, bcryptPassword]
     );
+    // when I create the user I need to send them an email
+    // with a jwt confirmation token
+    jwt.sign(
+      {
+        user: newUser.rows[0].user_id,
+      },
+      EMAIL_SECRET,
+      {
+        expiresIn: '1d',
+      },
+      (err, emailToken) => {
+        const url = `http://localhost:3000/#/dashboard/confirmation/${emailToken}`;
+        console.log('URL', url);
+        transporter.sendMail({
+          to: newUser.rows[0].email,
+          subject: 'Confirm Email',
+          html: `Please click this email to confirm your email: <a href="${url}">${url}</a>`,
+        });
+      },
+    );
 
     const jwtToken = jwtGenerator(newUser.rows[0].user_id);
 
-    return res.json({ jwtToken });
+     res.json({ jwtToken });
+     res.json('THANKS for registering');
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
 });
+
+
+
+
+
+
+
+
 
 router.post("/login", validInfo, async (req, res) => {
   const { email, password } = req.body;
@@ -53,6 +96,10 @@ router.post("/login", validInfo, async (req, res) => {
       password,
       user.rows[0].password
     );
+    // CHECKING IF THE EMAIL HAS BEEN CONFRIMED
+    if(!user.rows[0].confirmed){
+      return res.status(401).json("Please validate your email");
+    }
 
     if (!validPassword) {
       return res.status(401).json("Invalid Credential");
