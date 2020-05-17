@@ -92,12 +92,12 @@ function App() {
             />
             <Route
               exact
-              path="/dashboard/confirmation/:id"
+              path="/confirmation/:id"
               render={props =>
-                isAuthenticated ? (
+                !isAuthenticated ? (
                   <Confirmation {...props} setAuth={setAuth} />
                 ) : (
-                  <Redirect to="/login" />
+                  <Redirect to="/dashboard" />
                 )
               }
             />

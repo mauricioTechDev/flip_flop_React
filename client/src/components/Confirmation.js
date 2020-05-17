@@ -27,8 +27,8 @@ const Confirmation = ({ setAuth }) => {
       const myHeaders = new Headers();
       console.log('JWT TOKEN',localStorage.token);
       myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("jwt_token", localStorage.token);
-      const res = await fetch(`/dashboard/confirmation/${authId}`, {
+      // myHeaders.append("jwt_token", localStorage.token);
+      const res = await fetch(`/authentication/confirmation/${authId}`, {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify({

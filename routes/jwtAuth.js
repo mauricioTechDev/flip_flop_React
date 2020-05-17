@@ -53,7 +53,7 @@ router.post("/register", validInfo, async (req, res) => {
         expiresIn: '1d',
       },
       (err, emailToken) => {
-        const url = `http://localhost:3000/#/dashboard/confirmation/${emailToken}`;
+        const url = `http://localhost:3000/#/confirmation/${emailToken}`;
         console.log('URL', url);
         transporter.sendMail({
           to: newUser.rows[0].email,
@@ -63,14 +63,31 @@ router.post("/register", validInfo, async (req, res) => {
       },
     );
 
-    const jwtToken = jwtGenerator(newUser.rows[0].user_id);
-
-     res.json({ jwtToken });
+    // const jwtToken = jwtGenerator(newUser.rows[0].user_id);
+    //
+    //  res.json({ jwtToken });
      res.json('THANKS for registering');
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
+});
+
+router.post('/confirmation/:id', async (req, res, next) => {
+  try {
+    const verificationResponce = jwt.verify(req.params.id, EMAIL_SECRET);
+    const id = verificationResponce.user
+    const emailConfirmed = true
+    const emailConfirmation = await pool.query(`
+      UPDATE user_account
+      SET confirmed = $1
+      WHERE user_id = $2;`,[emailConfirmed, id])
+      console.log('emailConfirmation', emailConfirmation);
+  } catch (err) {
+    console.error(err.message);
+  }
+
+  // return res.redirect('http://localhost:3001/login');
 });
 
 

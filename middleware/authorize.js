@@ -6,7 +6,6 @@ require("dotenv").config();
 module.exports = function(req, res, next) {
   // Get token from header
   const token = req.header("jwt_token");
-  console.log(req);
 
   // Check if not token
   if (!token) {
