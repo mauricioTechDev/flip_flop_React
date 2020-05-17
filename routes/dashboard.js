@@ -109,20 +109,14 @@ router.get("/", authorize, async (req, res) => {
 // THIS IS THE PROBLEM
 router.post('/confirmation/:id', authorize, async (req, res, next) => {
   try {
-    console.log('REQ PARAMS', req.params);
-    console.log('JWT RERIFY', jwt.verify(req.params.id, EMAIL_SECRET));
     const verificationResponce = jwt.verify(req.params.id, EMAIL_SECRET);
     const id = verificationResponce.user
-    console.log('type of', typeof id);
-    console.log('ID',id);
     const emailConfirmed = true
-    console.log(typeof emailConfirmed);
     const emailConfirmation = await pool.query(`
       UPDATE user_account
       SET confirmed = $1
       WHERE user_id = $2;`,[emailConfirmed, id])
       console.log('emailConfirmation', emailConfirmation);
-      // res.json(emailConfirmation)
   } catch (err) {
     console.error(err.message);
   }

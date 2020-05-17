@@ -16,6 +16,7 @@ For this project I wanted to focus on using PostgreSQL for my database and on Sc
 - React
 - React Router
 - JWT Auth
+- nodemailer for email verification
 - Javascript
 
 
