@@ -66,7 +66,7 @@ router.post("/register", validInfo, async (req, res) => {
     // const jwtToken = jwtGenerator(newUser.rows[0].user_id);
     //
     //  res.json({ jwtToken });
-     res.json('THANKS for registering');
+     res.json('Check email for confirmation link. Thank you!');
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -82,7 +82,7 @@ router.post('/confirmation/:id', async (req, res, next) => {
       UPDATE user_account
       SET confirmed = $1
       WHERE user_id = $2;`,[emailConfirmed, id])
-      console.log('emailConfirmation', emailConfirmation);
+      res.json(emailConfirmation)
   } catch (err) {
     console.error(err.message);
   }

@@ -5,6 +5,8 @@ import { Link, useLocation } from 'react-router-dom'
 
 const Confirmation = ({ setAuth }) => {
   const [authId, setAuthId] = useState('')
+  const [thankYou, setThankYou] = useState('')
+
 
   let location = useLocation();
   let path = location.pathname;
@@ -37,21 +39,24 @@ const Confirmation = ({ setAuth }) => {
       });
 
       const parseData = await res.json();
+      setThankYou('Thanks for confirming.  You can log in and enjoy 🚀')
 
       console.log('data for confimring email',parseData);
     } catch (err) {
       console.error(err.message);
     }
   };
+  console.log('thank you', thankYou);
 
 
   return (
     <div className="jumbotron mt-5">
       <h1>FLIP FLOP PHOTO APP</h1>
-      <p>Thanks For Confirming Your Email</p>
+      <p>Click bellow to Confirm Your Email</p>
+      <p>{ thankYou }</p>
       <button onClick={emailConfirmation}>CONFIRM</button>
       <Link to="/login" className="btn btn-primary">
-        Login/Get Profile
+        Login
       </Link>
     </div>
   );

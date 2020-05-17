@@ -30,6 +30,12 @@ const Register = ({ setAuth }) => {
         }
       );
       const parseRes = await response.json();
+      setInputs({
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: ''
+      })
 
       if (parseRes.jwtToken) {
         localStorage.setItem("token", parseRes.jwtToken);
