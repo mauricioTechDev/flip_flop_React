@@ -49,6 +49,9 @@ const Landing = () => {
           </div>
         </div>
       </div>
+      <div style={{textAlign: 'center'}}>
+        <p>&copy; MAURICO ACOSTA</p>
+      </div>
     </div>
   );
 };
@@ -90,7 +93,7 @@ const containerRight = {
   fontWeight: 'bolder',
   color: 'white',
   border: '1px solid purple',
-  boxShadow: '2px 3px 0px 5px #80808073'
+  boxShadow: '2px 3px 3px 9px #80808073'
 }
 const h1 = {
   marginTop: '25px',
@@ -119,5 +122,6 @@ const signIn = {
 const button = {
   width: '30%',
 }
+
 
 export default Landing;

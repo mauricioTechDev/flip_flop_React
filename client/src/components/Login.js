@@ -91,6 +91,9 @@ const Login = ({ setAuth }) => {
           <p>Thats fine justy sign up 😜</p>
           <Link className="btn btn-warning btn-lg mb-5" to="/register" style={buttons}>SIGN UP</Link>
         </div>
+        <div style={{textAlign: 'center'}}>
+          <p>&copy; MAURICO ACOSTA</p>
+        </div>
       </div>
     </Fragment>
   );

@@ -9,6 +9,7 @@ const Register = ({ setAuth }) => {
     email: "",
     password: "",
   });
+  const [checkEmail, setCheckEmail] = useState('')
 
   const { first_name, last_name, email, password } = inputs;
 
@@ -36,6 +37,7 @@ const Register = ({ setAuth }) => {
         email: '',
         password: ''
       })
+      setCheckEmail('A verification email is on its way.  Check your inbox to click the link to verify your email.')
 
       if (parseRes.jwtToken) {
         localStorage.setItem("token", parseRes.jwtToken);
@@ -71,6 +73,7 @@ const Register = ({ setAuth }) => {
     </div>
     <div style={containerLeft}>
       <h1 style={h1} onMouseEnter={changeBackground} onMouseLeave={h1Out}>FLIP FLOP PHOTO APP</h1>
+      <h2 style={verification}>{checkEmail}</h2>
       <h2 style={h2} onMouseEnter={changeBackground} onMouseLeave={h1Out}>
         Register
       </h2>
@@ -81,7 +84,7 @@ const Register = ({ setAuth }) => {
           value={first_name}
           placeholder="First Name"
           onChange={e => onChange(e)}
-          style={names}
+          style={firstName}
         />
         <input
           type="text"
@@ -89,7 +92,7 @@ const Register = ({ setAuth }) => {
           value={last_name}
           placeholder="Last Name"
           onChange={e => onChange(e)}
-          style={names}
+          style={lastName}
         />
         <input
           type="text"
@@ -110,10 +113,17 @@ const Register = ({ setAuth }) => {
         <button className="btn btn-success btn-block">Submit</button>
       </form>
     </div>
+    <div style={{textAlign: 'center'}}>
+      <p>&copy; MAURICO ACOSTA</p>
+    </div>
     </div>
     </Fragment>
   );
 };
+const verification = {
+  backgroundColor: '#ffa500',
+  textAlign: 'center'
+}
 const parentContainer = {
   display: 'flex',
   flexDirection: 'column',
@@ -127,9 +137,22 @@ const buttons = {
   border: '3px solid black',
   boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px'
 };
-const names = {
+const firstName = {
   width: '48%',
-  margin: '1%',
+  height: 'calc(1.5em + .75rem + 2px)',
+  padding: '.375rem .75rem',
+  fontSize: '1rem',
+  fontWeight: '400',
+  lineHeight: '1.5',
+  color: '#495057',
+  backgroundColor: '#fff',
+  backgroundClip: 'padding-box',
+  border: '1px solid #ced4da',
+  borderRadius: '.25rem',
+}
+const lastName = {
+  width: '48%',
+  marginLeft: '4%',
   height: 'calc(1.5em + .75rem + 2px)',
   padding: '.375rem .75rem',
   fontSize: '1rem',
@@ -175,8 +198,8 @@ const h2 = {
   borderRadius: '4%'
 };
 const form = {
-  width: '40%',
-  marginLeft: '30%'
+  width: '90%',
+  marginLeft: '5%'
 };
 
 export default Register;
