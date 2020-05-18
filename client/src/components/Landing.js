@@ -28,7 +28,7 @@ const Landing = () => {
       </div>
       <div style={containerRight}>
         <div>
-          <p style={signIn} onMouseEnter={changeBackground} onMouseLeave={h1Out}>Sign In ✏️ to start sharing with others</p>
+          <p style={signIn} onMouseEnter={changeBackground} onMouseLeave={h1Out}>Sign In 📷 to start sharing with others</p>
         </div>
         <div>
           <div>
