@@ -55,7 +55,6 @@ function App() {
   return (
     <Fragment>
       <HashRouter>
-        <div className="container-fluid bg-dark pb-5 pl-5 pr-5 pt-5">
           <Switch>
             <Route
               exact
@@ -168,7 +167,6 @@ function App() {
               }
             />
           </Switch>
-        </div>
       </HashRouter>
     </Fragment>
   );

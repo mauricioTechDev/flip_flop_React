@@ -25,9 +25,7 @@ const Confirmation = ({ setAuth }) => {
 
   const emailConfirmation = async () => {
     try {
-      console.log('authid', authId);
       const myHeaders = new Headers();
-      console.log('JWT TOKEN',localStorage.token);
       myHeaders.append("Content-Type", "application/json");
       // myHeaders.append("jwt_token", localStorage.token);
       const res = await fetch(`/authentication/confirmation/${authId}`, {
