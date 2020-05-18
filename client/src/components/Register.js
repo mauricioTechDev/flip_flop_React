@@ -121,7 +121,7 @@ const parentContainer = {
   border: '1px solid purple',
   justifyContent: 'center',
   backgroundColor: '#fbcbd4',
-  paddingBottom: '15%'
+  paddingBottom: '3%'
 };
 const buttons = {
   border: '3px solid black',

@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import Image from '../images/girl-friends-laughing.jpg'; // Import using relative path
-
 
 const Landing = () => {
 
@@ -63,13 +61,12 @@ const parentContainer = {
   backgroundColor: '#fbcbd4'
 };
 const containerLeft ={
-  // background: 'linear-gradient(90deg, #f2b666 0%, rgb(236, 236, 236) 50%, #f2b666 81%)',
   backgroundImage: `url(${'/images/girl-friends-laughing.jpg'})`,
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    fontWeight: 'bolder',
-    color: 'white',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  fontWeight: 'bolder',
+  color: 'white',
   height: '536px',
   paddingTop: '10%',
   paddingLeft: '15%',
@@ -81,11 +78,10 @@ const containerLeft ={
 }
 const containerRight = {
   backgroundImage: `url(${'/images/new-york-street-style.jpg'})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
   textAlign: 'center',
-  // height: '400px',
   paddingTop:'5%',
   paddingLeft: '15%',
   paddingRight: '15%',
@@ -102,15 +98,15 @@ const h1 = {
   textAlign: 'center',
   fontFamily: '-webkit-pictograph',
   marginLeft: '15%',
-    marginRight: '16%',
-    borderRadius: '4%'
+  marginRight: '16%',
+  borderRadius: '4%'
 }
 const h2 = {
   marginTop: '25px',
   fontSize: '2rem',
   textAlign: 'center',
   marginLeft: '15%',
-    marginRight: '16%',
+  marginRight: '16%',
   fontFamily: '-webkit-pictograph',
   borderRadius: '4%'
 }
@@ -118,13 +114,10 @@ const signIn = {
   fontSize: '3rem',
   fontFamily: '-webkit-pictograph',
   marginLeft: '20%',
-    marginRight: '20%',
-
+  marginRight: '20%',
 }
 const button = {
   width: '30%',
-
-
 }
 
 export default Landing;

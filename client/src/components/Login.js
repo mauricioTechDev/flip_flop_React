@@ -102,7 +102,7 @@ const parentContainer = {
   border: '1px solid purple',
   justifyContent: 'center',
   backgroundColor: '#fbcbd4',
-  paddingBottom: '15%'
+  paddingBottom: '3%'
 };
 const containerLeft ={
   backgroundImage: `url(${'/images/girl-friends-laughing.jpg'})`,
@@ -145,7 +145,7 @@ const form = {
   marginLeft: '30%'
 }
 const noAccount = {
-  marginTop: '30px'
+  marginTop: '10px'
 }
 
 const buttons = {

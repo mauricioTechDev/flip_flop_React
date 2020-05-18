@@ -102,28 +102,6 @@ router.get("/", authorize, async (req, res) => {
   }
 });
 
-
-
-
-
-// THIS IS THE PROBLEM
-// router.post('/confirmation/:id', async (req, res, next) => {
-//   try {
-//     const verificationResponce = jwt.verify(req.params.id, EMAIL_SECRET);
-//     const id = verificationResponce.user
-//     const emailConfirmed = true
-//     const emailConfirmation = await pool.query(`
-//       UPDATE user_account
-//       SET confirmed = $1
-//       WHERE user_id = $2;`,[emailConfirmed, id])
-//       console.log('emailConfirmation', emailConfirmation);
-//   } catch (err) {
-//     console.error(err.message);
-//   }
-//
-//   // return res.redirect('http://localhost:3001/login');
-// });
-
 // UPLOAD A PICTURE IN THE USER DASHBOARD
 router.post('/avatar', [authorize, uploadS3.single('upload')], async (req, res, next) => {
     try {
