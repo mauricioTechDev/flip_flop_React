@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from "react";
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 
 
 
 const Confirmation = ({ setAuth }) => {
   const [authId, setAuthId] = useState('')
-  const [thankYou, setThankYou] = useState('')
 
-
+  let history = useHistory();
   let location = useLocation();
   let path = location.pathname;
 
@@ -37,14 +36,14 @@ const Confirmation = ({ setAuth }) => {
       });
 
       const parseData = await res.json();
-      setThankYou('Thanks for confirming.  You can log in bellow and enjoy 🚀')
+      if(parseData){
+        console.log('HISTROY', history.push('/Login'))
+      }
 
-      console.log('data for confimring email',parseData);
     } catch (err) {
       console.error(err.message);
     }
   };
-  console.log('thank you', thankYou);
   const changeBackground = (e) => {
     e.target.style.background = 'orange'
   }
@@ -65,12 +64,9 @@ const Confirmation = ({ setAuth }) => {
       <h2 style={h2} onMouseEnter={changeBackground} onMouseLeave={h1Out}>
         Click bellow to Confirm Your Email
       </h2>
-      <h2 style={h2} onMouseEnter={changeBackground} onMouseLeave={h1Out}>{ thankYou }</h2>
       <button onClick={emailConfirmation} className="btn btn-success btn-block" style={button}>CONFIRM</button>
     </div>
     <div style={containerCenter}>
-    <Link className="btn btn-warning btn-lg mt-5" to='/login' style={buttons}>Log In</Link>
-
     </div>
     </div>
   );

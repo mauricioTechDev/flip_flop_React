@@ -122,7 +122,10 @@ const Register = ({ setAuth }) => {
 };
 const verification = {
   backgroundColor: '#ffa500',
-  textAlign: 'center'
+  textAlign: 'center',
+  padding: '1%',
+  boxShadow: 'inset 0 0 11px #000000',
+  borderRadius: '3%'
 }
 const parentContainer = {
   display: 'flex',
