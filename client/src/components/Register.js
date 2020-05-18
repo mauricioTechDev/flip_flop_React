@@ -81,7 +81,7 @@ const Register = ({ setAuth }) => {
           value={first_name}
           placeholder="First Name"
           onChange={e => onChange(e)}
-          className="form-control my-3"
+          style={names}
         />
         <input
           type="text"
@@ -89,7 +89,7 @@ const Register = ({ setAuth }) => {
           value={last_name}
           placeholder="Last Name"
           onChange={e => onChange(e)}
-          className="form-control my-3"
+          style={names}
         />
         <input
           type="text"
@@ -127,6 +127,20 @@ const buttons = {
   border: '3px solid black',
   boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px'
 };
+const names = {
+  width: '48%',
+  margin: '1%',
+  height: 'calc(1.5em + .75rem + 2px)',
+  padding: '.375rem .75rem',
+  fontSize: '1rem',
+  fontWeight: '400',
+  lineHeight: '1.5',
+  color: '#495057',
+  backgroundColor: '#fff',
+  backgroundClip: 'padding-box',
+  border: '1px solid #ced4da',
+  borderRadius: '.25rem',
+}
 const containerLeft ={
   backgroundImage: `url(${'/images/girl-friends-laughing.jpg'})`,
   backgroundPosition: 'center',
