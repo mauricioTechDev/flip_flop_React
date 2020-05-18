@@ -46,7 +46,7 @@ const Landing = () => {
               style={button}
               onMouseEnter={changeButtonBackground}
               onMouseLeave={buttonOut}>
-              Sign UP
+              Sign Up
             </Link>
           </div>
         </div>

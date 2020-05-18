@@ -101,17 +101,16 @@ const parentContainer = {
   flexWrap: 'nowrap',
   border: '1px solid purple',
   justifyContent: 'center',
-  backgroundColor: '#fbcbd4'
-
+  backgroundColor: '#fbcbd4',
+  paddingBottom: '15%'
 };
 const containerLeft ={
-  // background: 'linear-gradient(90deg, #f2b666 0%, rgb(236, 236, 236) 50%, #f2b666 81%)',
   backgroundImage: `url(${'/images/girl-friends-laughing.jpg'})`,
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    fontWeight: 'bolder',
-    color: 'white',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  fontWeight: 'bolder',
+  color: 'white',
   paddingTop: '10%',
   paddingLeft: '15%',
   paddingRight: '15%',
@@ -129,15 +128,15 @@ const h1 = {
   textAlign: 'center',
   fontFamily: '-webkit-pictograph',
   marginLeft: '15%',
-    marginRight: '16%',
-    borderRadius: '4%'
+  marginRight: '16%',
+  borderRadius: '4%'
 }
 const h2 = {
   marginTop: '25px',
   fontSize: '2rem',
   textAlign: 'center',
   marginLeft: '15%',
-    marginRight: '16%',
+  marginRight: '16%',
   fontFamily: '-webkit-pictograph',
   borderRadius: '4%'
 };
