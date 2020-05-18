@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+// import Image from '../images/girl-friends-laughing.jpg'; // Import using relative path
+
 
 const Landing = () => {
 
@@ -62,7 +64,7 @@ const parentContainer = {
 };
 const containerLeft ={
   // background: 'linear-gradient(90deg, #f2b666 0%, rgb(236, 236, 236) 50%, #f2b666 81%)',
-  backgroundImage: `url(https://www.augustahealth.com/sites/default/files/blog/girl-friends-laughing.jpg)`,
+  backgroundImage: `url(${'/images/girl-friends-laughing.jpg'})`,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -78,7 +80,7 @@ const containerLeft ={
   boxShadow: '2px 3px 3px 9px #80808073'
 }
 const containerRight = {
-  backgroundImage: `url(https://static.highsnobiety.com/thumbor/wKWctd4c1XkB0_N53x3VDub9Z24=/fit-in/1200x720/smart/static.highsnobiety.com/wp-content/uploads/2020/02/18140609/new-york-fw20-street-style-new-01.jpg)`,
+  backgroundImage: `url(${'/images/new-york-street-style.jpg'})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -106,7 +108,6 @@ const h1 = {
 const h2 = {
   marginTop: '25px',
   fontSize: '2rem',
-  fontFamily: '-webkit-pictograph',
   textAlign: 'center',
   marginLeft: '15%',
     marginRight: '16%',
