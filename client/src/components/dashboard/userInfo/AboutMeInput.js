@@ -33,13 +33,32 @@ const AboutMeInput = ({ setAvatarChange }) => {
 
   return (
     <Fragment>
-      <span className='text-white'>Add/Edit About Me</span>
+    <div style={parentContainer}>
+      <span
+        style={{ fontSize: '1.5rem',fontFamily: '-webkit-pictograph', marginBottom: '1%' }}
+        className='text-white'>
+          Customize your about me 💪 😎 👇
+      </span>
       <form onSubmit={onSubmitForm}>
-        <input value={aboutMe} onChange={e => setAbout(e.target.value)} ></input>
-        <button>SUBMIT</button>
+        <input
+          value={aboutMe}
+          onChange={e => setAbout(e.target.value)}
+          style={{ height: '36px', borderRadius: '2px' }}
+          placeHolder=' About Me' >
+        </input>
+        <button className="btn btn-success ">SUBMIT</button>
       </form>
+      </div>
     </Fragment>
   )
+};
+const parentContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+  flexWrap: 'nowrap',
+  justifyContent: 'center',
+  backgroundColor: '#fbcbd4',
+  textAlign: 'center'
 };
 
 export default AboutMeInput;
