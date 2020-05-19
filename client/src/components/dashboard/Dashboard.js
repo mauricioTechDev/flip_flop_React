@@ -66,6 +66,12 @@ const Dashboard = ({ setAuth }) => {
     getProfile();
     setFriendActivity(false);
   }, [friendActivity]);
+  const changeBackground = (e) => {
+    e.target.style.transform = 'scale(1.1)';
+  }
+  const changeBackgroundOut = (e) => {
+    e.target.style.transform = ''
+  }
 
   return (
     <div style={parentContainer}>
@@ -74,30 +80,33 @@ const Dashboard = ({ setAuth }) => {
         <div>
           <h1 style={h1} className='text-white'>Flip - Flop</h1>
         </div>
-        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons}>HOME</Link>
-        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons}>FEED</Link>
-        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons}>FRIENDS</Link>
-        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons}>EDIT PROFILE</Link>
-        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons}>LOG OUT</button>
+        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>HOME</Link>
+        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FEED</Link>
+        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
+        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
+        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>LOG OUT</button>
       </header>
     </div>
-
-
-      <div className="row">
-        <div className="col-8">
+      <div className="">
+        <div className="">
           <UserInfo userInfo={userInfo} individualUser={individualUser} />
           <AboutMeInput setAvatarChange={setAvatarChange} individualUser={individualUser} />
           <AvatarInput setAvatarChange={setAvatarChange} />
         </div>
-        <div className="col-4">
+        <div className="">
           <FriendRequest friendRequest={friendRequest} setFriendActivity={setFriendActivity}/>
           <MyFriends friendsList={friendsList} />
         </div>
       </div>
-      <div className="row justify-content-center">
+      <div className="">
         <ImgFeedInput setUploadNewImg={setUploadNewImg} />
       </div>
-      <div className="row">
+      <div className="">
         <PersonalImg userInfo={userInfo}/>
       </div>
     </div>
