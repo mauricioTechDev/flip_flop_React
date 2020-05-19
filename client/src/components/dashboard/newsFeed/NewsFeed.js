@@ -48,7 +48,7 @@ const NewsFeed = ({ setAuth, logout }) => {
   const changeBackgroundOut = (e) => {
     e.target.style.transform = ''
   }
-
+  console.log('NEWSFEED', newsFeed);
   return (
     <div style={{  backgroundColor: '#fbcbd4'}}>
     <div style={parentContainer}>
@@ -78,6 +78,8 @@ const NewsFeed = ({ setAuth, logout }) => {
             newsFeed.map(e => (
               <div style={ galleryItem }>
               <Link  to={`/individualPicture/${e.img_post_id}`} key={e.img_post_id}>
+                <img style={avatar} src={e.profile_img} />
+                <span style={avatarName}>{e.first_name}</span>
                 <img style={ galleryImage } src={e.img} key={e.img_post_id} alt='user posted picture'/>
               </Link>
               </div>
@@ -87,7 +89,34 @@ const NewsFeed = ({ setAuth, logout }) => {
     </div>
   )
 };
+const avatar = {
+    width: '50px',
+    height: '50px',
+    borderRadius:' 50%',
+    objectFit: 'cover',
+    objectFosition: 'center right',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    margin: '.5rem'
+};
+const avatarName = {
+  width: '14%',
+    objectFit: 'cover',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    marginLeft: '4rem',
+    marginTop: '1rem',
+    color: 'white',
+    background: '#00000078',
+    padding: '1%',
+    borderRadius: '9%',
+}
 const parentContainer = {
+  backgroundColor: '#fbcbd4',
   maxWidth: '93.5rem',
     margin: '0 auto',
     padding: '0 2rem'
@@ -108,12 +137,12 @@ const gallary = {
     flexWrap: 'wrap',
     margin: '-1rem -1rem',
     paddingBottom: '3rem',
-    overFlow: 'auto'
+    overflow: 'auto'
 }
 const galleryItem = {
   position: 'relative',
     flex: '1 0 22rem',
-    margin: '1rem',
+    margin: '.5rem',
     color: '#fff',
     cursor: 'pointer'
 }

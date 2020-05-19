@@ -226,7 +226,7 @@ router.get('/individualUserImg/:id', authorize, async (req, res) => {
       const newsFeed = await pool.query(`
         SELECT
         img_post.img, img_post.description, img_post.img_likes, img_post.img_post_id,
-        user_account.first_name, user_account.user_id
+        user_account.first_name, user_account.user_id, user_account.profile_img
         FROM img_post
         LEFT JOIN user_account
         ON img_post.id_of_img_poster = user_account.user_id
