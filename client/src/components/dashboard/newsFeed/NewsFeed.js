@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, useLocation } from "react-router-dom";
 
 
-const NewsFeed = ({ setAuth }) => {
+const NewsFeed = ({ setAuth, logout }) => {
   const [userId, setUserId] = useState('')
   const [newsFeed, setNewsFeed] = useState([]);
   const [commentCount, setCommentCount] = useState([]);
@@ -42,30 +42,85 @@ const NewsFeed = ({ setAuth }) => {
   useEffect(() =>{
     getNewsFeed()
   },[userId])
+  const changeBackground = (e) => {
+    e.target.style.transform = 'scale(1.1)';
+  }
+  const changeBackgroundOut = (e) => {
+    e.target.style.transform = ''
+  }
 
   return (
+    <div style={{  backgroundColor: '#fbcbd4'}}>
+    <div style={parentContainer}>
     <div>
-      <div>
-        <h1 className="text-center text-white">NEWS FEED</h1>
-      </div>
-      <Link to='/dashboard' className='btn btn-warning mt-5 ml-5'>PROFILE</Link>
+      <header style={{ textAlign: 'center', marginBottom: '6%' }}>
+        <div>
+          <h1 style={h1} className='text-white'>Flip - Flop</h1>
+          <h1 style={h1} className="text-white">NEWS FEED</h1>
+        </div>
+        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>HOME</Link>
+        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FEED</Link>
+        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
+        <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
+        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>LOG OUT</button>
+      </header>
+    </div>
 
-      <div className="d-flex flex-wrap">
-        <div className="p-2 flex-wrap mt-5">
+      <div style={gallary}>
+
           {newsFeed.length !== 0 &&
             newsFeed[0].img_post_id !== null &&
             newsFeed.map(e => (
-              <Link to={`/individualPicture/${e.img_post_id}`} key={e.img_post_id}>
-                <img src={e.img} key={e.img_post_id} alt='user posted picture' className='img-thumbnail rounded w-50'/>
+              <div style={ galleryItem }>
+              <Link  to={`/individualPicture/${e.img_post_id}`} key={e.img_post_id}>
+                <img style={ galleryImage } src={e.img} key={e.img_post_id} alt='user posted picture'/>
               </Link>
+              </div>
             ))}
         </div>
-      </div>
-
-
     </div>
-
+    </div>
   )
 };
+const parentContainer = {
+  maxWidth: '93.5rem',
+    margin: '0 auto',
+    padding: '0 2rem'
+};
+const buttons = {
+  border: '3px solid black',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
+  margin: '1%'
+};
+const h1 = {
+  fontSize: '3rem',
+  textAlign: 'center',
+  fontFamily: '-webkit-pictograph',
+  borderRadius: '4%'
+}
+const gallary = {
+  display: 'flex',
+    flexWrap: 'wrap',
+    margin: '-1rem -1rem',
+    paddingBottom: '3rem',
+    overFlow: 'auto'
+}
+const galleryItem = {
+  position: 'relative',
+    flex: '1 0 22rem',
+    margin: '1rem',
+    color: '#fff',
+    cursor: 'pointer'
+}
+const galleryImage = {
+  width: '100%',
+    height: '100%',
+    objectFit: 'cover'
+}
 
 export default NewsFeed;

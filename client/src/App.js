@@ -149,7 +149,7 @@ function App() {
               path="/dashboard/newsfeed/:id"
               render={props =>
                 isAuthenticated ? (
-                  <NewsFeed {...props} setAuth={setAuth} />
+                  <NewsFeed {...props} setAuth={setAuth} logout={logout} />
                 ) : (
                   <Redirect to="/login" />
                 )
