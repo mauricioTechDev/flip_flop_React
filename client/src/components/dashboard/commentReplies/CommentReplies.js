@@ -99,11 +99,55 @@ const deleteComment= async (id) => {
   }
 }
 
+const changeBackground = (e) => {
+  e.target.style.transform = 'scale(1.1)';
+}
+const changeBackgroundOut = (e) => {
+  e.target.style.transform = ''
+}
+const logout = async e => {
+  e.preventDefault();
+  try {
+    localStorage.removeItem("token");
+    setAuth(false);
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+console.log('COMMENT',comment);
+console.log('USERNAME', userName);
   return (
     <Fragment>
-      <Link className="btn btn-warning mt-5 ml-5 mb-5" to={`/individualPicture/${comment.img_commented_on_id}`}>BACK</Link>
-      <Link className='btn btn-warning  mt-5 ml-5 mb-5'  to='/dashboard'>PROFILE</Link>
-      <h1 className='text-white'>{comment.comment}</h1>
+    <div style={parentContainer}>
+      <div>
+        <header style={{ textAlign: 'center', marginBottom: '6%', borderBottom: '2px solid gray' }}>
+          <div>
+            <h1 style={h1} className='text-white'>Flip - Flop</h1>
+            <h1 style={h1} className="text-white">NEWS FEED</h1>
+          </div>
+          <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
+          onMouseLeave={changeBackgroundOut}>HOME</Link>
+          <Link to={`/dashboard/newsfeed/${user_account.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+          onMouseLeave={changeBackgroundOut}>FEED</Link>
+          <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+          onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
+          <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+          onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
+          <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+          onMouseLeave={changeBackgroundOut}>LOG OUT</button>
+        </header>
+      </div>
+      {
+        userName.map(name => (
+          name.user_id === comment.commenter_user_id &&
+          <div>
+            <h1 style={h1}>{name.first_name}</h1>
+            <h1 style={h1}>{comment.comment}</h1>
+          </div>
+        ))
+      }
+
+      <div style={commentContainer}>
       <form className="d-flex" onSubmit={onSubmitForm}>
         <input
           type="text"
@@ -112,7 +156,7 @@ const deleteComment= async (id) => {
           value={reply}
           onChange={e => setReply(e.target.value)}
         />
-        <button className="btn btn-success ">Add</button>
+        <button className="btn btn-success ">REPLY</button>
       </form>
       <table className="table table-dark">
       <tbody>
@@ -122,7 +166,7 @@ const deleteComment= async (id) => {
               <td className="font-weight-bold" key={post.comments_id}>{post.first_name}: {post.reply}</td>
               <td>
             {  user_account.user_id === post.user_id &&
-                <button className="btn btn-danger" onClick={() => deleteComment(post.comment_reply_id)} >
+                <button key={post.comments_id} className="btn btn-danger" onClick={() => deleteComment(post.comment_reply_id)} >
                   DELETE
                 </button>
             }
@@ -131,8 +175,33 @@ const deleteComment= async (id) => {
           ))}
       </tbody>
       </table>
+      </div>
+      </div>
     </Fragment>
   )
 };
-
+const parentContainer = {
+  backgroundColor: 'rgb(251, 203, 212)',
+  margin: '0px auto',
+  padding:' 0px 2rem',
+  height: '780px'
+};
+const buttons = {
+  border: '3px solid black',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
+  margin: '1%'
+};
+const h1 = {
+  fontSize: '3rem',
+  textAlign: 'center',
+  fontFamily: '-webkit-pictograph',
+  borderRadius: '4%'
+};
+const commentContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+  overflow: 'auto',
+  justifyContent: 'center',
+  height: '500px'
+};
 export default CommentReplies;

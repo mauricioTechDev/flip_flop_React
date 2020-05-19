@@ -38,7 +38,6 @@ const NewsFeed = ({ setAuth, logout }) => {
         console.error(err.message);
     }
   }
-
   useEffect(() =>{
     getNewsFeed()
   },[userId])
@@ -53,14 +52,14 @@ const NewsFeed = ({ setAuth, logout }) => {
     <div style={{  backgroundColor: '#fbcbd4'}}>
     <div style={parentContainer}>
     <div>
-      <header style={{ textAlign: 'center', marginBottom: '6%' }}>
+      <header style={{ textAlign: 'center', marginBottom: '6%', borderBottom: '2px solid gray' }}>
         <div>
           <h1 style={h1} className='text-white'>Flip - Flop</h1>
           <h1 style={h1} className="text-white">NEWS FEED</h1>
         </div>
         <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>HOME</Link>
-        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        <Link to={`/dashboard/newsfeed/${userId}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>FEED</Link>
         <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>FRIENDS</Link>

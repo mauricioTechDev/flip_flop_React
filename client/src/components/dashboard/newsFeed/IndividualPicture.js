@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, useLocation } from "react-router-dom";
-import FriendRequestButton from './FriendRequestButton'
+import FollowButton from './FollowButton'
 
 const IndividualPicture = ({ setAuth }) => {
 
@@ -55,7 +55,7 @@ const IndividualPicture = ({ setAuth }) => {
   useEffect(() =>{
     getIndividualPictureInfo()
   },[pictureId])
-
+console.log('USER account', user_account);
 // =============================
 // POSTING A COMMENT
 // =============================
@@ -68,11 +68,14 @@ const onSubmitForm = async e => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("jwt_token", localStorage.token);
 
-    const body = { comment };
+    // const body = { comment };
     const response = await fetch("/dashboard/comment", {
       method: "POST",
       headers: myHeaders,
-      body: JSON.stringify(body)
+      body: JSON.stringify({
+        'comment': comment,
+        'pictureId': pictureId
+      })
     });
 
     const parseResponse = await response.json();
@@ -129,37 +132,75 @@ const deleteComment= async (id) => {
   }
 }
 
+const changeBackground = (e) => {
+  e.target.style.transform = 'scale(1.1)';
+}
+const changeBackgroundOut = (e) => {
+  e.target.style.transform = ''
+}
+const logout = async e => {
+  e.preventDefault();
+  try {
+    localStorage.removeItem("token");
+    setAuth(false);
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+
 
 
   return (
     <Fragment>
-    <Link className="btn btn-warning mt-5 ml-5 mb-5" to={`/dashboard/newsfeed/${user_account.user_id}`}>BACK</Link>
-    <Link className='btn btn-warning  mt-5 ml-5 mb-5'  to='/dashboard'>PROFILE</Link>
+    <div style={parentContainer}>
+    <div>
+      <header style={{ textAlign: 'center', marginBottom: '6%', borderBottom: '2px solid gray' }}>
+        <div>
+          <h1 style={h1} className='text-white'>Flip - Flop</h1>
+          <h1 style={h1} className="text-white">NEWS FEED</h1>
+        </div>
+        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>HOME</Link>
+        <Link to={`/dashboard/newsfeed/${user_account.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FEED</Link>
+        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
+        <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
+        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>LOG OUT</button>
+      </header>
+    </div>
     {userNames.length !== 0 &&
       userNames[0].user_id !== null &&
       userNames.map(e => (
         e.user_id === individualPicture.id_of_img_poster &&
-          <h1 key={e.user_id} className='text-white'>Posted by: {e.first_name} -- {individualPicture.description}</h1>
+          <div style={userInfoContainer}>
+          <Link style={{ display: 'flex' }} to={`/friend/${e.user_id}`}>
+            <img style={avatar}key={e.user_id} src={e.profile_img} />
+            <h1 key={e.user_id} style={h1} className='text-white'>{e.first_name}</h1>
+          </Link>
+
+          </div>
       ))}
       <div className='text-center'>
-
-        <img src={individualPicture.img ? individualPicture.img : '#'} key={individualPicture.img_post_id ? individualPicture.img : ''} alt='user posted picture' className='img-thumbnail rounded w-50'/>
+        <img src={individualPicture.img ? individualPicture.img : '#'} key={individualPicture.img_post_id ? individualPicture.img : ''} alt='user posted picture' className='img-thumbnail rounded' style={{width: '70%'}}/>
         <div className='mt-1'>
-          <a href='#' onClick={addHeart} className='text-white'>{individualPicture.img_likes  ? individualPicture.img_likes : 0}❤️</a>
+          <a href='#' onClick={addHeart} style={commentHeartCountStyle}>{individualPicture.img_likes  ? individualPicture.img_likes : 0}❤️</a>
           {
             commentCount.map(e => (
               e.img_commented_on_id === individualPicture.img_post_id &&
-              <span key={individualPicture.img_post_id} className='text-white'>{ e.count }💬</span>
+              <span key={individualPicture.img_post_id} style={commentHeartCountStyle}>{ e.count }💬</span>
             ))
           }
-
+          <h1>{individualPicture.description}</h1>
         </div>
       </div>
-      <h1 className="text-center my-5 text-white">Is this picture a flip 👍 or a flop 👎 </h1>
 
-      <FriendRequestButton individualPicture={individualPicture}/>
+      <FollowButton individualPicture={individualPicture}/>
 
-
+      <div style={commentContainer}>
       <form className="d-flex" onSubmit={onSubmitForm}>
         <input
           type="text"
@@ -193,9 +234,55 @@ const deleteComment= async (id) => {
           ))}
       </tbody>
       </table>
+      </div>
+      </div>
     </Fragment>
   )
 };
+const parentContainer = {
+  backgroundColor: '#fbcbd4',
+    margin: '0 auto',
+    padding: '0 2rem'
+};
+const userInfoContainer = {
+  display: 'flex',
+  flexDirection: 'row',
+    overflow: 'auto',
+    justifyContent: 'center'
+}
+const avatar = {
+    width: '50px',
+    height: '50px',
+    borderRadius:' 50%',
+    objectFit: 'cover',
+    objectFosition: 'center right',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // position: 'absolute',
+    margin: '.5rem'
+};
+const buttons = {
+  border: '3px solid black',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
+  margin: '1%'
+};
+const h1 = {
+  fontSize: '3rem',
+  textAlign: 'center',
+  fontFamily: '-webkit-pictograph',
+  borderRadius: '4%'
+};
+const commentHeartCountStyle = {
+  color: 'white',
+  fontSize: '2rem'
+}
+const commentContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+    overflow: 'auto',
+    justifyContent: 'center'
+}
 
 
 export default IndividualPicture;

@@ -32,24 +32,32 @@ const ImgFeedInput = ({ setUploadNewImg }) => {
 
   return (
     <Fragment>
-      <div className='text-center '>
+    <div style={imgParentContainer}>
+    <span
+      style={{ fontSize: '1.5rem',fontFamily: '-webkit-pictograph', marginBottom: '1%', marginTop: '3%' }}
+      className='text-white'>
+        Choose a file 👇 to add a picture 📸 to your timeline.
+    </span>
         <form className="input-group2  w-10" encType="multipart/form-data" onSubmit={sumbitImg}>
-          <div className="custom-file">
           <input
             type="file"
-            className="custom-file-input"
             name="uploadImg"
-            onChange={e => setUploadImg(e.target.files[0])} />
-            <label className="custom-file-label" htmlFor="inputGroupFile04">{uploadImg.name}</label>
-          </div>
-          <div className="input-group-append">
-            <button className="btn btn-success ">Add</button>
-          </div>
+            onChange={e => setUploadImg(e.target.files[0])}
+            style={{width: '240px' }} />
+            <button style={{ width: '100px'}} className="btn btn-success ">Add</button>
         </form>
       </div>
     </Fragment>
 
   )
+};
+const imgParentContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+  flexWrap: 'nowrap',
+  justifyContent: 'center',
+  backgroundColor: '#fbcbd4',
+  textAlign: 'center'
 };
 
 export default ImgFeedInput;

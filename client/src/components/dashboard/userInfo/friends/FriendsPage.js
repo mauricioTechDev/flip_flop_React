@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom'
 
 
-const FriendsPage = () => {
+const FriendsPage = ({ logout }) => {
   const [friend, setFriend] = useState([])
   const [friendsPicture, setFriendsPicture] = useState([])
   const [commentCount, seCommentCount] = useState([])
@@ -45,36 +45,122 @@ const FriendsPage = () => {
     }
   };
 
-  return (
-    <div>
-      <Link className='btn btn-warning  mt-5 ml-5 mb-5'  to='/dashboard'>PROFILE</Link>
-      <div className="d-flex justify-content-center">
-        <h1 className='text-white mr-5'>Welcome to Flip - Flop </h1>
-      </div>
-      <div className="d-flex justify-content-center">
-        <h2 className='text-white mr-5'>This is {friend.first_name}'s page</h2>
-        <h2 className='text-white mr-5'>{friend.about_me}</h2>
-      </div>
-      <div className="d-flex justify-content-center">
-        <h2 className='text-white mr-5'>{friend.about_me}</h2>
-      </div>
-      <div className="text-center">
-        <img src={friend.profile_img} key={friend.user_id}className='img-thumbnail rounded' style={{ "width" : "10%"}} alt='user profile'/>
-      </div>
+  const changeBackground = (e) => {
+    e.target.style.transform = 'scale(1.1)';
+  }
+  const changeBackgroundOut = (e) => {
+    e.target.style.transform = ''
+  }
 
-      <div className="d-flex flex-wrap">
-        <div className="p-2 flex-wrap mt-5">
+  return (
+    <div style={parentContainer}>
+    <div>
+      <header style={{ textAlign: 'center' }}>
+        <div>
+          <h1 style={h1} className='text-white'>Flip - Flop</h1>
+        </div>
+        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>HOME</Link>
+        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FEED</Link>
+        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
+        <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
+        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>LOG OUT</button>
+      </header>
+    </div>
+
+
+    <div style={parentContainer}>
+        <h1 style={h1} className='h1 text-white'> {friend.first_name} </h1>
+
+        { friend.profile_img
+          ? <span><img src={friend.profile_img} alt='User Profile' style={avatar}
+          onMouseEnter={changeBackground}
+          onMouseLeave={changeBackgroundOut}/></span>
+          : <span><img src='https://via.placeholder.com/150' alt='User Profile' style={avatar}/></span>
+        }
+        <h2 style={h2} className='h2 text-white'>{ friend.about_me }</h2>
+    </div>
+
+
+
+      <div style={gallary}>
           {friendsPicture.length !== 0 &&
             friendsPicture.map(e => (
+              <div style={ galleryItem }>
                 <Link to={`/individualPicture/${e.img_post_id}`} key={e.img_post_id} >
-                  <img src={e.img} key={e.img_post_id} alt={e.description} className='img-thumbnail rounded '/>
+                  <img src={e.img} key={e.img_post_id} alt={e.description} style={ galleryImage } />
                 </Link>
+                </div>
             ))}
-          </div>
         </div>
     </div>
   )
 };
+const parentContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+  flexWrap: 'nowrap',
+  justifyContent: 'center',
+  backgroundColor: '#fbcbd4',
+  paddingBottom: '3%',
+  textAlign: 'center'
+};
+const buttons = {
+  border: '3px solid black',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
+  margin: '1%'
+};
+const h1 = {
+  marginTop: '25px',
+  fontSize: '3rem',
+  textAlign: 'center',
+  fontFamily: '-webkit-pictograph',
+  borderRadius: '4%'
+};
 
+const avatar = {
+  width: '200px',
+  height: '200px',
+  borderRadius:' 50%',
+  margin: '20px',
+  objectFit: 'cover',
+  objectFosition: 'center right',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px'
+};
+
+const h2 = {
+  fontSize: '2rem',
+  textAlign: 'center',
+  marginLeft: '15%',
+  marginRight: '16%',
+  fontFamily: '-webkit-pictograph',
+  borderRadius: '4%'
+};
+const gallary = {
+  display: 'flex',
+    flexWrap: 'wrap',
+    margin: '-1rem -1rem',
+    paddingBottom: '3rem',
+    overflow: 'auto',
+    paddingRight: '1rem',
+    paddingLeft: '1rem'
+};
+const galleryItem = {
+  position: 'relative',
+    flex: '1 0 22rem',
+    margin: '.5rem',
+    color: '#fff',
+    cursor: 'pointer'
+};
+const galleryImage = {
+  width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px'
+};
 
 export default FriendsPage;

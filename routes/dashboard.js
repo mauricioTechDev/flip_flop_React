@@ -274,7 +274,7 @@ router.get('/individualPicture/:picId', authorize, async (req, res) => {
       ON comments.commenter_user_id = user_account.user_id
       WHERE img_post.img_post_id = $1`, [id])
     const userNames = await pool.query(`
-      SELECT user_id, first_name
+      SELECT user_id, first_name, profile_img
       FROM user_account`)
     const commentCount = await pool.query(`
       SELECT img_commented_on_id, count(img_commented_on_id)

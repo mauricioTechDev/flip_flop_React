@@ -1,14 +1,12 @@
 import React, { Fragment, useState } from "react";
 
 const UserInfo = ({ individualUser }) => {
-
   const changeBackground = (e) => {
     e.target.style.transform = 'rotate(10deg)';
   }
   const changeBackgroundOut = (e) => {
     e.target.style.transform = ''
   }
-
 
   return (
     <Fragment>
@@ -30,13 +28,13 @@ const parentContainer = {
   display: 'flex',
   flexDirection: 'column',
   flexWrap: 'nowrap',
-  border: '1px solid purple',
   justifyContent: 'center',
-  textAlign: 'center'
+  textAlign: 'center',
+  background: '#ff910033'
 };
 const avatar = {
-  width: '150px',
-  height: '150px',
+  width: '200px',
+  height: '200px',
   borderRadius:' 50%',
   margin: '20px',
   objectFit: 'cover',
@@ -44,7 +42,7 @@ const avatar = {
   boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px'
 };
 const h1 = {
-  marginTop: '25px',
+  marginTop: '5px',
   fontSize: '3rem',
   textAlign: 'center',
   fontFamily: '-webkit-pictograph',

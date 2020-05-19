@@ -45,12 +45,28 @@ const Caption = ({ setCaption }) => {
     <Fragment>
     <span className='text-white'>Add/Edit caption</span>
     <form onSubmit={onSubmitForm}>
-      <input value={caption} onChange={e => setNewCaption(e.target.value)} ></input>
-      <button>SUBMIT</button>
+      <input value={caption} style={inputStyle} onChange={e => setNewCaption(e.target.value)} ></input>
+      <button style={button} className="btn btn-success btn-block">SUBMIT</button>
     </form>
     </Fragment>
   )
 };
+const inputStyle = {
+  height: 'calc(1.5em + .75rem + 2px)',
+  padding: '.375rem .75rem',
+  fontSize: '1rem',
+  fontWeight: '400',
+  lineHeight: '1.5',
+  color: '#495057',
+  backgroundColor: '#fff',
+  backgroundClip: 'padding-box',
+  border: '1px solid #ced4da',
+  borderRadius: '.25rem',
+}
+const button = {
+  width: '7%',
+  display: 'inline'
+}
 
 
 export default Caption;

@@ -88,12 +88,11 @@ const Dashboard = ({ setAuth, logout }) => {
         <ImgFeedInput setUploadNewImg={setUploadNewImg} />
       </div>
       <div className="">
-        <PersonalImg userInfo={userInfo}/>
+        <PersonalImg userInfo={userInfo} logout={logout}/>
       </div>
     </div>
   );
 };
-
 const parentContainer = {
   display: 'flex',
   flexDirection: 'column',

@@ -65,7 +65,7 @@ function App() {
 
   return (
     <Fragment>
-      <HashRouter>
+    <HashRouter>
           <Switch>
             <Route
               exact
@@ -182,7 +182,7 @@ function App() {
               path="/friend/:friendId"
               render={props =>
                 isAuthenticated ? (
-                  <FriendsPage {...props} setAuth={setAuth} />
+                  <FriendsPage {...props} setAuth={setAuth} logout={logout} />
                 ) : (
                   <Redirect to="/login" />
                 )
