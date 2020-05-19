@@ -3,13 +3,11 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 //components
-import AvatarInput from './pictureUploads/AvatarInput'
 import UserInfo from './userInfo/UserInfo'
 import FriendRequest from './userInfo/friends/FriendRequest'
 import MyFriends from './userInfo/friends/MyFriends'
 import ImgFeedInput from './pictureUploads/ImgFeedInput'
 import PersonalImg from './userInfo/PersonalImg'
-import AboutMeInput from './userInfo/AboutMeInput'
 
 const Dashboard = ({ setAuth, logout }) => {
   const [individualUser, setIndividualUser] = useState({})
@@ -18,7 +16,6 @@ const Dashboard = ({ setAuth, logout }) => {
   const [friendsList, setFriendsList] = useState([])
   const [commentCount, setCommentCount] = useState([])
 
-  const [avatarChange, setAvatarChange] = useState(false);
   const [uploadNewImg, setUploadNewImg] = useState(false);
   const [friendActivity, setFriendActivity] = useState(false)
   const [avatarImg, setAvatarImg] = useState('')
@@ -42,22 +39,8 @@ const Dashboard = ({ setAuth, logout }) => {
     }
   };
 
-  // const logout = async e => {
-  //   e.preventDefault();
-  //   try {
-  //     localStorage.removeItem("token");
-  //     setAuth(false);
-  //     toast.success("Logout successfully");
-  //   } catch (err) {
-  //     console.error(err.message);
-  //   }
-  // };
-
 // put in arguments and keep track when changes are done to fire again
-  useEffect(() => {
-    getProfile();
-    setAvatarChange(false);
-  }, [avatarChange]);
+
   useEffect(() => {
     getProfile();
     setUploadNewImg(false);
@@ -95,8 +78,6 @@ const Dashboard = ({ setAuth, logout }) => {
       <div className="">
         <div className="">
           <UserInfo userInfo={userInfo} individualUser={individualUser} />
-          <AboutMeInput setAvatarChange={setAvatarChange} individualUser={individualUser} />
-          <AvatarInput setAvatarChange={setAvatarChange} />
         </div>
         <div className="">
           <FriendRequest friendRequest={friendRequest} setFriendActivity={setFriendActivity}/>
