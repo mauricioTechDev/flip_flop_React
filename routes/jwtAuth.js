@@ -66,7 +66,7 @@ router.post("/register", validInfo, async (req, res) => {
     // const jwtToken = jwtGenerator(newUser.rows[0].user_id);
     //
     //  res.json({ jwtToken });
-     res.json('Check email for confirmation link. Thank you!');
+     // res.json('Check email for confirmation link. Thank you!');
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

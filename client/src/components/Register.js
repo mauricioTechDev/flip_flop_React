@@ -37,7 +37,7 @@ const Register = ({ setAuth }) => {
         email: '',
         password: ''
       })
-      setCheckEmail('A verification email is on its way.  Check your inbox to click the link to verify your email.')
+      setCheckEmail('A verification email is on its way.  Check your inbox and click the link to verify your email.')
 
       if (parseRes.jwtToken) {
         localStorage.setItem("token", parseRes.jwtToken);
@@ -123,7 +123,6 @@ const Register = ({ setAuth }) => {
 const verification = {
   backgroundColor: '#ffa500',
   textAlign: 'center',
-  padding: '1%',
   boxShadow: 'inset 0 0 11px #000000',
   borderRadius: '3%'
 }

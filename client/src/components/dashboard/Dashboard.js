@@ -68,17 +68,21 @@ const Dashboard = ({ setAuth }) => {
   }, [friendActivity]);
 
   return (
+    <div style={parentContainer}>
     <div>
-      <div className="d-flex justify-content-center">
-        <h1 className='text-white mr-5'>Welcome to Flip - Flop {individualUser.first_name}</h1>
-        <button onClick={e => logout(e)} className="btn btn-primary">
-          Logout
-        </button>
-      </div>
-      <div className="row">
-        <Link to='/dashboard' className='mr-5 mt-5 ml-5 display-3'>PROFILE</Link>
-        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className='mr-5 mt-5 ml-5 display-3' >FEED</Link>
-      </div>
+      <header style={{ textAlign: 'center' }}>
+        <div>
+          <h1 style={h1} className='text-white'>Flip - Flop</h1>
+        </div>
+        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons}>HOME</Link>
+        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons}>FEED</Link>
+        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons}>FRIENDS</Link>
+        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons}>EDIT PROFILE</Link>
+        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons}>LOG OUT</button>
+      </header>
+    </div>
+
+
       <div className="row">
         <div className="col-8">
           <UserInfo userInfo={userInfo} individualUser={individualUser} />
@@ -99,5 +103,27 @@ const Dashboard = ({ setAuth }) => {
     </div>
   );
 };
+
+const parentContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+  flexWrap: 'nowrap',
+  border: '1px solid purple',
+  justifyContent: 'center',
+  backgroundColor: '#fbcbd4',
+  paddingBottom: '3%'
+};
+const buttons = {
+  border: '3px solid black',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
+  margin: '1%'
+};
+const h1 = {
+  marginTop: '25px',
+  fontSize: '3rem',
+  textAlign: 'center',
+  fontFamily: '-webkit-pictograph',
+  borderRadius: '4%'
+}
 
 export default Dashboard;
