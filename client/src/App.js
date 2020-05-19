@@ -17,6 +17,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Confirmation from "./components/Confirmation";
 import Dashboard from "./components/dashboard/Dashboard";
+import Editprofile from './components/dashboard/userInfo/Editprofile'
 import Landing from "./components/Landing";
 import IndividualUserPostedImg from "./components/dashboard/pictureUploads/IndividualUserPostedImg"
 import NewsFeed from './components/dashboard/newsFeed/NewsFeed'
@@ -50,6 +51,16 @@ function App() {
 
   const setAuth = boolean => {
     setIsAuthenticated(boolean);
+  };
+  const logout = async e => {
+    e.preventDefault();
+    try {
+      localStorage.removeItem("token");
+      setAuth(false);
+      toast.success("Logout successfully");
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   return (
@@ -105,7 +116,18 @@ function App() {
               path="/dashboard"
               render={props =>
                 isAuthenticated ? (
-                  <Dashboard {...props} setAuth={setAuth} />
+                  <Dashboard {...props} setAuth={setAuth} logout={logout} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/editprofile"
+              render={props =>
+                isAuthenticated ? (
+                  <Editprofile {...props} setAuth={setAuth} logout={logout}/>
                 ) : (
                   <Redirect to="/login" />
                 )

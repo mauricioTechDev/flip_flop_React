@@ -11,7 +11,7 @@ import ImgFeedInput from './pictureUploads/ImgFeedInput'
 import PersonalImg from './userInfo/PersonalImg'
 import AboutMeInput from './userInfo/AboutMeInput'
 
-const Dashboard = ({ setAuth }) => {
+const Dashboard = ({ setAuth, logout }) => {
   const [individualUser, setIndividualUser] = useState({})
   const [userInfo, setUserInfo] = useState([]);
   const [friendRequest, setFriendRequest] = useState([])
@@ -42,16 +42,16 @@ const Dashboard = ({ setAuth }) => {
     }
   };
 
-  const logout = async e => {
-    e.preventDefault();
-    try {
-      localStorage.removeItem("token");
-      setAuth(false);
-      toast.success("Logout successfully");
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
+  // const logout = async e => {
+  //   e.preventDefault();
+  //   try {
+  //     localStorage.removeItem("token");
+  //     setAuth(false);
+  //     toast.success("Logout successfully");
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // };
 
 // put in arguments and keep track when changes are done to fire again
   useEffect(() => {
@@ -86,7 +86,7 @@ const Dashboard = ({ setAuth }) => {
         onMouseLeave={changeBackgroundOut}>FEED</Link>
         <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
-        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
         <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>LOG OUT</button>
