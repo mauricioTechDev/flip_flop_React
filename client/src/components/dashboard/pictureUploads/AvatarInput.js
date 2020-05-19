@@ -33,22 +33,31 @@ const AvatarInput = ({ setAvatarChange }) => {
 
   return (
     <Fragment>
-      <div className='d-flex mt-5 align-content-start '>
+
+      <div style={parentContainer}>
+      <span
+        style={{ fontSize: '1.5rem',fontFamily: '-webkit-pictograph', marginBottom: '1%', marginTop: '3%' }}
+        className='text-white'>
+          Choose a file 👇 to change your profile picture 📸
+      </span>
         <form className="input-group2  w-10" encType="multipart/form-data" onSubmit={submitAvatar}>
-          <div className="custom-file">
           <input
             type="file"
-            className="custom-file-input"
             name="uploadedAvatar"
-            onChange={e => setUploadedAvatar(e.target.files[0])} />
-            <label className="custom-file-label" htmlFor="inputGroupFile04">{uploadedAvatar.name}</label>
-            <button className="btn btn-success ">Add</button>
-          </div>
-
+            onChange={e => setUploadedAvatar(e.target.files[0])}
+            style={{width: '240px' }} />
+            <button style={{ width: '100px'}} className="btn btn-success ">Add</button>
         </form>
       </div>
     </Fragment>
   )
 };
-
+const parentContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+  flexWrap: 'nowrap',
+  justifyContent: 'center',
+  backgroundColor: '#fbcbd4',
+  textAlign: 'center'
+};
 export default AvatarInput;

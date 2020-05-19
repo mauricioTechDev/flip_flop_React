@@ -43,7 +43,7 @@ const AboutMeInput = ({ setAvatarChange }) => {
         <input
           value={aboutMe}
           onChange={e => setAbout(e.target.value)}
-          style={{ height: '36px', borderRadius: '2px' }}
+          style={{ height: '36px', borderRadius: '2px', width: '250px' }}
           placeHolder=' About Me' >
         </input>
         <button className="btn btn-success ">SUBMIT</button>
