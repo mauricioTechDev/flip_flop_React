@@ -1,14 +1,19 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom'
+import UnfollowButton from './UnfollowButton'
+import FollowButtonTwo from './FollowButtonTwo'
 
-
-const FriendsPage = ({ logout }) => {
+const FriendsPage = ({ logout, userInfo }) => {
   const [friend, setFriend] = useState([])
   const [friendsPicture, setFriendsPicture] = useState([])
   const [commentCount, seCommentCount] = useState([])
   const [friendsId, setFriendsId] = useState([])
+  const [currentUserId, setCurrentUserId] = useState('')
+  const [unFollowed, setUnFollowed] = useState(false)
+  const [followed, setFollowed] = useState(false)
 
 
+// console.log('THe USER INFO', userInfo);
   useEffect(() => {
     getFriendPage();
   }, [friendsId]);
@@ -40,11 +45,13 @@ const FriendsPage = ({ logout }) => {
       setFriend(parseData.friend)
       setFriendsPicture(parseData.friendsPicture);
       seCommentCount(parseData.commentCount)
+      setCurrentUserId(parseData.user_id)
     } catch (err) {
       console.error(err.message);
     }
   };
 
+  // console.log('FRIEND', friend);
   const changeBackground = (e) => {
     e.target.style.transform = 'scale(1.1)';
   }
@@ -55,16 +62,16 @@ const FriendsPage = ({ logout }) => {
   return (
     <div style={parentContainer}>
     <div>
-      <header style={{ textAlign: 'center' }}>
+      <header style={{ textAlign: 'center', borderBottom: '2px solid gray' }}>
         <div>
           <h1 style={h1} className='text-white'>Flip - Flop</h1>
         </div>
         <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>HOME</Link>
-        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        <Link to={`/dashboard/newsfeed/${currentUserId}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>FEED</Link>
-        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
+        <Link to={`/followers/${currentUserId}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
         <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
         <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
@@ -83,7 +90,11 @@ const FriendsPage = ({ logout }) => {
           : <span><img src='https://via.placeholder.com/150' alt='User Profile' style={avatar}/></span>
         }
         <h2 style={h2} className='h2 text-white'>{ friend.about_me }</h2>
+
+        <UnfollowButton friendsId={friendsId} setUnFollowed={setUnFollowed} followed={followed} setFollowed={setFollowed} />
+        <FollowButtonTwo currentUserId={currentUserId} friendsId={friendsId} unFollowed={unFollowed} setFollowed={setFollowed} setUnFollowed={setUnFollowed}/>
     </div>
+
 
 
 

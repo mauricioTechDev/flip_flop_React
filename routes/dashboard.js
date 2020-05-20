@@ -101,6 +101,22 @@ router.get("/", authorize, async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+router.get('/userInfo', authorize, async (req,res) => {
+  try {
+    let user_id = req.user.id
+    const getUserInfo = await pool.query(`
+      SELECT
+      user_id,first_name,last_name,email,about_me,profile_img
+      FROM user_account
+      WHERE user_id = $1
+      `, [user_id])
+      res.json({
+        getUserInfo: getUserInfo.rows
+      })
+  } catch (err) {
+    console.error(err.message);
+  }
+})
 // UPLOAD A PICTURE IN THE USER DASHBOARD
 router.post('/avatar', [authorize, uploadS3.single('upload')], async (req, res, next) => {
     try {
@@ -481,14 +497,16 @@ router.post('/commentReply',authorize, async (req, res) => {
   // ==============
   // Decline FriendRequest
   // =============
-  router.put('/declineRequest', async (req, res) => {
+  router.delete('/unFollow', authorize, async (req, res) => {
     try {
-      const friends_id = req.body.friends_id
+      let  user_id  = req.user.id
+      const friends_id = req.body.friendsId
+
       const updateFriendStatus = await pool.query(`
-        UPDATE friends
-        SET status = 'DECLINE'
-        WHERE friends_id = $1`,
-        [friends_id])
+        DELETE FROM friends
+        WHERE addresseeid = $1 AND requesterid = $2`,
+        [friends_id, user_id])
+        res.json(updateFriendStatus)
     } catch (err) {
       console.error(err.message);
     }
@@ -538,8 +556,9 @@ router.post('/commentReply',authorize, async (req, res) => {
     }
   })
 
-  router.get('/friend/:friendId', async(req, res) => {
+  router.get('/friend/:friendId', authorize, async(req, res) => {
     try {
+      let  user_id  = req.user.id
       const { friendId } = req.params;
       const friend = await pool.query(`
         SELECT * FROM user_account
@@ -555,7 +574,8 @@ router.post('/commentReply',authorize, async (req, res) => {
         // userData: req.user[0],
         friend: friend.rows[0],
         friendsPicture: friendsPicture.rows,
-        commentCount: commentCount.rows
+        commentCount: commentCount.rows,
+        user_id: user_id
         })
     } catch (err) {
       console.error(err.message);

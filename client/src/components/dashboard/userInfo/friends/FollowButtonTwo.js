@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-const FollowButton = ({ individualPicture }) => {
+const FollowButtonTwo = ({ currentUserId, friendsId, unFollowed, setFollowed, setUnFollowed }) => {
   const [buttonText, setButtonText] = useState('')
   // const [button, setButton] = useState([])
-
+  console.log('currentUserId', currentUserId);
+  console.log('friendsId', friendsId);
   const sendFriendRequest = async () => {
     try {
       const myHeaders = new Headers();
@@ -11,15 +12,16 @@ const FollowButton = ({ individualPicture }) => {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwt_token", localStorage.token);
 
-      const id_of_img_poster = individualPicture.id_of_img_poster
       const response = await fetch(`/dashboard/individualPicture/friendReguest`, {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify({
-          'id_of_img_poster': id_of_img_poster
+          'id_of_img_poster': friendsId
         })
       })
       setButtonText('FOLLOWING')
+      setFollowed(true)
+      setUnFollowed(false)
     } catch (err) {
         console.error(err.message);
     }
@@ -30,11 +32,15 @@ const FollowButton = ({ individualPicture }) => {
   const [whoImFollowing, setWhoImFollowing] = useState([])
   // console.log('allFollowers', allFollowers);
   // console.log('myFollowers', myFollowers);
-  console.log('whoImFollowing', whoImFollowing);
+  // console.log('whoImFollowing', whoImFollowing);
 
   useEffect(() => {
     getFollowers()
   }, [])
+  useEffect(() => {
+    getFollowers()
+    setButtonText('FOLLOW')
+  },[unFollowed])
   const getFollowers = async () => {
     try {
       const res = await fetch("/dashboard/getFollowers", {
@@ -61,10 +67,9 @@ const FollowButton = ({ individualPicture }) => {
   const changeBackgroundOut = (e) => {
     e.target.style.transform = ''
   }
-  const id_of_img_poster = individualPicture.id_of_img_poster
   const button =[]
   for(let i = 0; i < whoImFollowing.length; i++){
-    if(whoImFollowing[i].addresseeid === id_of_img_poster){
+    if(whoImFollowing[i].addresseeid === friendsId){
       button.push(<button style={buttons} className="btn btn-success"onMouseEnter={changeBackground}
       onMouseLeave={changeBackgroundOut}> FOLLOWING </button>)
     }
@@ -88,4 +93,4 @@ const buttons = {
 };
 
 
-export default FollowButton;
+export default FollowButtonTwo;

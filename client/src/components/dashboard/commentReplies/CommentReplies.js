@@ -123,29 +123,31 @@ console.log('USERNAME', userName);
         <header style={{ textAlign: 'center', marginBottom: '6%', borderBottom: '2px solid gray' }}>
           <div>
             <h1 style={h1} className='text-white'>Flip - Flop</h1>
-            <h1 style={h1} className="text-white">NEWS FEED</h1>
+            <h1 style={h1} className="text-white">REPLY</h1>
           </div>
           <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
           onMouseLeave={changeBackgroundOut}>HOME</Link>
           <Link to={`/dashboard/newsfeed/${user_account.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
           onMouseLeave={changeBackgroundOut}>FEED</Link>
-          <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
+          <Link to={`/followers/${user_account.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+          onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
           <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
           onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
           <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
           onMouseLeave={changeBackgroundOut}>LOG OUT</button>
         </header>
       </div>
+      <div style={originalCommentContainer}>
       {
         userName.map(name => (
           name.user_id === comment.commenter_user_id &&
           <div>
-            <h1 style={h1}>{name.first_name}</h1>
+            <h1 style={h1}>{name.first_name}:</h1>
             <h1 style={h1}>{comment.comment}</h1>
           </div>
         ))
       }
+      </div>
 
       <div style={commentContainer}>
       <form className="d-flex" onSubmit={onSubmitForm}>
@@ -184,7 +186,7 @@ const parentContainer = {
   backgroundColor: 'rgb(251, 203, 212)',
   margin: '0px auto',
   padding:' 0px 2rem',
-  height: '780px'
+  // height: '780px'
 };
 const buttons = {
   border: '3px solid black',
@@ -197,6 +199,16 @@ const h1 = {
   fontFamily: '-webkit-pictograph',
   borderRadius: '4%'
 };
+const originalCommentContainer = {
+  border: '3px solid black',
+    width: '60%',
+    marginLeft: '20%',
+    padding: '1%',
+    backgroundColor: 'rgb(244, 186, 0)',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
+    borderRadius: '2%',
+    marginTop: '3%',
+};
 const commentContainer = {
   display: 'flex',
   flexDirection: 'column',
@@ -204,4 +216,5 @@ const commentContainer = {
   justifyContent: 'center',
   height: '500px'
 };
+
 export default CommentReplies;

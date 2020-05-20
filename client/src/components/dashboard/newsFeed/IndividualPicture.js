@@ -55,7 +55,6 @@ const IndividualPicture = ({ setAuth }) => {
   useEffect(() =>{
     getIndividualPictureInfo()
   },[pictureId])
-console.log('USER account', user_account);
 // =============================
 // POSTING A COMMENT
 // =============================
@@ -155,7 +154,7 @@ const logout = async e => {
     <Fragment>
     <div style={parentContainer}>
     <div>
-      <header style={{ textAlign: 'center', marginBottom: '6%', borderBottom: '2px solid gray' }}>
+      <header style={{ textAlign: 'center', marginBottom: '2%', borderBottom: '2px solid gray' }}>
         <div>
           <h1 style={h1} className='text-white'>Flip - Flop</h1>
           <h1 style={h1} className="text-white">NEWS FEED</h1>
@@ -164,8 +163,8 @@ const logout = async e => {
         onMouseLeave={changeBackgroundOut}>HOME</Link>
         <Link to={`/dashboard/newsfeed/${user_account.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>FEED</Link>
-        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
+        <Link to={`/followers/${user_account.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
         <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
         <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}

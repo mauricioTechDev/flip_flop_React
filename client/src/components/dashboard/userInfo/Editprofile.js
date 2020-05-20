@@ -59,7 +59,7 @@ console.log('userInfo', userInfo);
         </div>
         <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>HOME</Link>
-        <Link to={`/dashboard/newsfeed/${userInfo.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>FEED</Link>
         <Link to={`/followers/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
