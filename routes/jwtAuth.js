@@ -5,11 +5,13 @@ const pool = require("../config/db");
 const validInfo = require("../middleware/validInfo");
 const jwtGenerator = require("../utils/jwtGenerator");
 const authorize = require("../middleware/authorize");
+const path = require('path')
 const nodemailer = require('nodemailer');
 const jwt = require("jsonwebtoken");
 
-require('dotenv').config();
 
+
+require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -18,8 +20,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.GMAIL_PASS,
   },
 });
-
 const EMAIL_SECRET="iHopeYouConfirmYourEmail"
+
 //authorizeentication
 
 router.post("/register", validInfo, async (req, res) => {
@@ -53,8 +55,7 @@ router.post("/register", validInfo, async (req, res) => {
         expiresIn: '1d',
       },
       (err, emailToken) => {
-        const url = `http://localhost:3000/#/confirmation/${emailToken}`;
-        console.log('URL', url);
+        const url = `https://flip-flop-photo-app.herokuapp.com/#/confirmation/${emailToken}`;
         transporter.sendMail({
           to: newUser.rows[0].email,
           subject: 'Confirm Email',
@@ -65,8 +66,8 @@ router.post("/register", validInfo, async (req, res) => {
 
     // const jwtToken = jwtGenerator(newUser.rows[0].user_id);
     //
-    //  res.json({ jwtToken });
-     // res.json('Check email for confirmation link. Thank you!');
+    // return res.json({ jwtToken });
+    res.json(newUser);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -107,10 +108,6 @@ router.post("/login", validInfo, async (req, res) => {
       password,
       user.rows[0].password
     );
-    // CHECKING IF THE EMAIL HAS BEEN CONFRIMED
-    if(!user.rows[0].confirmed){
-      return res.status(401).json("Please validate your email");
-    }
 
     if (!validPassword) {
       return res.status(401).json("Invalid Credential");
@@ -131,6 +128,11 @@ router.post("/verify", authorize, (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+// cathc all method
+  router.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "client/build/index.html"))
+  })
 
 module.exports = router;
  // inspired by https://github.com/l0609890/db-design-auth-todo-list

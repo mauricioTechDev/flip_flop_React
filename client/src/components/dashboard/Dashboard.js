@@ -67,8 +67,8 @@ const Dashboard = ({ setAuth, logout }) => {
         onMouseLeave={changeBackgroundOut}>HOME</Link>
         <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>FEED</Link>
-        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
+        <Link to={`/followers/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
         <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
         <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
@@ -80,8 +80,8 @@ const Dashboard = ({ setAuth, logout }) => {
           <UserInfo userInfo={userInfo} individualUser={individualUser} />
         </div>
         <div className="">
-          <FriendRequest friendRequest={friendRequest} setFriendActivity={setFriendActivity}/>
-          <MyFriends friendsList={friendsList} />
+          { /*<FriendRequest friendRequest={friendRequest} setFriendActivity={setFriendActivity}/>*/}
+          { /*<MyFriends friendsList={friendsList} />*/}
         </div>
       </div>
       <div className="">

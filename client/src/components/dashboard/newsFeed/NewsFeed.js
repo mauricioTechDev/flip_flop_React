@@ -61,8 +61,8 @@ const NewsFeed = ({ setAuth, logout }) => {
         onMouseLeave={changeBackgroundOut}>HOME</Link>
         <Link to={`/dashboard/newsfeed/${userId}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>FEED</Link>
-        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
+        <Link to={`/followers/${userId}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
         <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
         <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
@@ -101,7 +101,8 @@ const avatar = {
     margin: '.5rem'
 };
 const avatarName = {
-  width: '14%',
+  width: '35%',
+  textAlign: 'center',
     objectFit: 'cover',
     boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px',
     justifyContent: 'center',

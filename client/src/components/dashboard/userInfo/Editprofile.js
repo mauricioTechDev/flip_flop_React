@@ -11,7 +11,7 @@ const Editprofile = ({ logout }) => {
   const [friendRequest, setFriendRequest] = useState([])
   const [friendsList, setFriendsList] = useState([])
   const [commentCount, setCommentCount] = useState([])
-
+console.log('userInfo', userInfo);
 
   const [avatarChange, setAvatarChange] = useState(false);
 
@@ -61,8 +61,8 @@ const Editprofile = ({ logout }) => {
         onMouseLeave={changeBackgroundOut}>HOME</Link>
         <Link to={`/dashboard/newsfeed/${userInfo.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>FEED</Link>
-        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
+        <Link to={`/followers/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
         <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
         onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
         <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}

@@ -24,6 +24,7 @@ import NewsFeed from './components/dashboard/newsFeed/NewsFeed'
 import IndividualPicture from './components/dashboard/newsFeed/IndividualPicture'
 import CommentReplies from './components/dashboard/commentReplies/CommentReplies';
 import FriendsPage from './components/dashboard/userInfo/friends/FriendsPage'
+import Followers from './components/dashboard/Followers'
 
 toast.configure();
 
@@ -128,6 +129,17 @@ function App() {
               render={props =>
                 isAuthenticated ? (
                   <Editprofile {...props} setAuth={setAuth} logout={logout}/>
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              exact
+              path='/followers/:id'
+              render={props =>
+                isAuthenticated ? (
+                  <Followers {...props} setAuth={setAuth} logout={logout}/>
                 ) : (
                   <Redirect to="/login" />
                 )

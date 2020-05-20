@@ -31,22 +31,26 @@ const Register = ({ setAuth }) => {
         }
       );
       const parseRes = await response.json();
-      setInputs({
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: ''
-      })
-      setCheckEmail('A verification email is on its way.  Check your inbox and click the link to verify your email.')
-
-      if (parseRes.jwtToken) {
-        localStorage.setItem("token", parseRes.jwtToken);
-        setAuth(true);
-        toast.success("Register Successfully");
-      } else {
-        setAuth(false);
-        toast.error(parseRes);
+      console.log(parseRes);
+      if(parseRes){
+        setInputs({
+          first_name: '',
+          last_name: '',
+          email: '',
+          password: ''
+        })
+        setCheckEmail('A verification email is on its way.  Check your inbox and click the link to verify your email.')
       }
+
+
+      // if (parseRes.jwtToken) {
+      //   localStorage.setItem("token", parseRes.jwtToken);
+      //   setAuth(true);
+      //   toast.success("Register Successfully");
+      // } else {
+      //   setAuth(false);
+      //   toast.error(parseRes);
+      // }
     } catch (err) {
       console.error(err.message);
     }
@@ -67,56 +71,53 @@ const Register = ({ setAuth }) => {
   return (
     <Fragment>
     <div style={parentContainer}>
-    <div>
-      <Link className="btn btn-warning btn-lg mt-5 ml-5" to='/' style={buttons}>HOME</Link>
-      <Link className="btn btn-warning btn-lg mt-5 ml-5" to='/login' style={buttons}>Log In</Link>
-    </div>
-    <div style={containerLeft}>
-      <h1 style={h1} onMouseEnter={changeBackground} onMouseLeave={h1Out}>FLIP FLOP PHOTO APP</h1>
-      <h2 style={verification}>{checkEmail}</h2>
-      <h2 style={h2} onMouseEnter={changeBackground} onMouseLeave={h1Out}>
-        Register
-      </h2>
-      <form onSubmit={onSubmitForm} style={form}>
-        <input
-          type="text"
-          name="first_name"
-          value={first_name}
-          placeholder="First Name"
-          onChange={e => onChange(e)}
-          style={firstName}
-        />
-        <input
-          type="text"
-          name="last_name"
-          value={last_name}
-          placeholder="Last Name"
-          onChange={e => onChange(e)}
-          style={lastName}
-        />
-        <input
-          type="text"
-          name="email"
-          value={email}
-          placeholder="Email"
-          onChange={e => onChange(e)}
-          className="form-control my-3"
-        />
-        <input
-          type="password"
-          name="password"
-          value={password}
-          placeholder="Password"
-          onChange={e => onChange(e)}
-          className="form-control my-3"
-        />
-        <button className="btn btn-success btn-block">Submit</button>
-      </form>
-    </div>
-    <div style={{textAlign: 'center'}}>
-      <p>&copy; MAURICO ACOSTA</p>
-    </div>
-    </div>
+      <div>
+        <Link className="btn btn-warning btn-lg mt-5 ml-5" to='/' style={buttons}>HOME</Link>
+        <Link className="btn btn-warning btn-lg mt-5 ml-5" to='/login' style={buttons}>Log In</Link>
+      </div>
+      <div style={containerLeft}>
+        <h1 style={h1} onMouseEnter={changeBackground} onMouseLeave={h1Out}>FLIP FLOP PHOTO APP</h1>
+        <h2 style={verification}>{checkEmail}</h2>
+        <h2 style={h2} onMouseEnter={changeBackground} onMouseLeave={h1Out}>
+          Register
+        </h2>
+        <form onSubmit={onSubmitForm} style={form}>
+          <input
+            type="text"
+            name="first_name"
+            value={first_name}
+            placeholder="First Name"
+            onChange={e => onChange(e)}
+            style={firstName}
+          />
+          <input
+            type="text"
+            name="last_name"
+            value={last_name}
+            placeholder="Last Name"
+            onChange={e => onChange(e)}
+            style={lastName}
+          />
+          <input
+            type="text"
+            name="email"
+            value={email}
+            placeholder="Email"
+            onChange={e => onChange(e)}
+            className="form-control my-3"
+          />
+          <input
+            type="password"
+            name="password"
+            value={password}
+            placeholder="Password"
+            onChange={e => onChange(e)}
+            className="form-control my-3"
+          />
+          <button className="btn btn-success btn-block">Submit</button>
+        </form>
+      </div>
+      </div>
     </Fragment>
   );
 };

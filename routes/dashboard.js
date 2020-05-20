@@ -4,8 +4,8 @@ const pool = require("../config/db");
 const AWS = require('aws-sdk')
 const multerS3 = require('multer-s3');
 var multer  = require('multer')
-const jwt = require("jsonwebtoken");
-const EMAIL_SECRET="iHopeYouConfirmYourEmail"
+const path = require('path')
+
 
 /*
  * Configure the AWS region of the target bucket.
@@ -49,9 +49,9 @@ storage: multerS3({
 //======================================
 // GET THE USER DASHBOARD
 //======================================
+
 router.get("/", authorize, async (req, res) => {
   try {
-
     let  user_id  = req.user.id
     console.log(user_id);
     const userInfo = await pool.query(`
@@ -101,7 +101,6 @@ router.get("/", authorize, async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
 // UPLOAD A PICTURE IN THE USER DASHBOARD
 router.post('/avatar', [authorize, uploadS3.single('upload')], async (req, res, next) => {
     try {
@@ -264,7 +263,7 @@ router.get('/individualPicture/:picId', authorize, async (req, res) => {
         FULL JOIN comments
         ON img_post.img_post_id = comments.img_commented_on_id
         WHERE img_post.img_post_id = $1`, [id])
-        console.log('BACKUP',backUpIndividualPicture.rows);
+        // console.log('BACKUP',backUpIndividualPicture.rows);
 
     const individualPicture = await pool.query(`
       SELECT * FROM img_post
@@ -298,7 +297,7 @@ router.get('/individualPicture/:picId', authorize, async (req, res) => {
   router.post('/comment', authorize, async (req, res) => {
     try {
       let commenter_user_id = req.user.id
-      const { comment } = req.body
+      const { comment, pictureId } = req.body
       let url = req.headers.referer;
       let image_commented_on_id;
       for(let i = url.length - 1; i > 0; i--){
@@ -307,9 +306,12 @@ router.get('/individualPicture/:picId', authorize, async (req, res) => {
           break;
         }
       };
+      console.log('comment', comment);
+      console.log('image_commented_on_id', image_commented_on_id);
+      console.log('commenter_user_id', commenter_user_id);
       const commentPost = await pool.query(`
         INSERT INTO comments (comment, commenter_user_id, img_commented_on_id)
-        VALUES ($1, $2, $3)`, [comment, commenter_user_id, img_commented_on_id])
+        VALUES ($1, $2, $3)`, [comment, commenter_user_id, pictureId])
       res.json(commentPost.rows)
     } catch (err) {
       console.error(err.message);
@@ -475,6 +477,7 @@ router.post('/commentReply',authorize, async (req, res) => {
       console.error(err.message);
     }
   })
+
   // ==============
   // Decline FriendRequest
   // =============
@@ -490,6 +493,51 @@ router.post('/commentReply',authorize, async (req, res) => {
       console.error(err.message);
     }
   })
+
+  router.get('/getFollowers', authorize, async(req, res) => {
+    try {
+      let  user_id  = req.user.id
+      const allFollowers = await pool.query(`
+        SELECT * FROM friends;
+        `)
+        const allFollowersRows = allFollowers.rows
+
+        let whoImFollowing = await pool.query(`
+  				SELECT
+  				user_account.first_name, user_account.user_id, user_account.about_me, user_account.profile_img, friends.friends_id, friends.requesterid, friends.addresseeid, friends.status, friends.friends_id
+  				FROM user_account
+  				INNER JOIN friends
+  				ON  friends.addresseeid = user_account.user_id
+  				WHERE friends.requesterid = $1`, [user_id])
+          const whoImFollowingRows = whoImFollowing.rows
+          const filteredWhoImFollowingRows = Array.from(new Set(whoImFollowingRows.map(a => a.addresseeid)))
+                                   .map(id => {
+                                     return whoImFollowingRows.find(a => a.addresseeid === id)
+                                   })
+
+          let myFollowers = await pool.query(`
+    				SELECT
+    				user_account.first_name, user_account.user_id, user_account.about_me, user_account.profile_img, friends.friends_id, friends.requesterid, friends.addresseeid, friends.status, friends.friends_id
+    				FROM user_account
+    				INNER JOIN friends
+    				ON  friends.requesterid = user_account.user_id
+    				WHERE friends.addresseeid = $1`, [user_id])
+            const myFollowersRows = myFollowers.rows
+            const filteredMyFollowersRows = Array.from(new Set(myFollowersRows.map(a => a.requesterid)))
+                                     .map(id => {
+                                       return myFollowersRows.find(a => a.requesterid === id)
+                                     })
+
+        res.json({
+          allFollowers: allFollowersRows,
+          myFollowers: filteredMyFollowersRows,
+          whoImFollowing:filteredWhoImFollowingRows
+        })
+    } catch (err) {
+      console.error(err.message);
+    }
+  })
+
   router.get('/friend/:friendId', async(req, res) => {
     try {
       const { friendId } = req.params;
@@ -514,5 +562,9 @@ router.post('/commentReply',authorize, async (req, res) => {
     }
   })
 
+  // cathc all method
+    router.get("*", (req, res) => {
+      res.sendFile(path.join(__dirname, "..", "client/build/index.html"))
+    })
 
 module.exports = router;
