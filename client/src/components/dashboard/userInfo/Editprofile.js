@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
-import AvatarInput from '../pictureUploads/AvatarInput'
-import AboutMeInput from '../userInfo/AboutMeInput'
-import UserInfo from './UserInfo'
+import AvatarInput from '../pictureUploads/AvatarInput';
+import AboutMeInput from '../userInfo/AboutMeInput';
+import UserInfo from './UserInfo';
+import Deleteaccount from './Deleteaccount'
 
 const Editprofile = ({ logout }) => {
   const [individualUser, setIndividualUser] = useState({})
@@ -11,7 +12,6 @@ const Editprofile = ({ logout }) => {
   const [friendRequest, setFriendRequest] = useState([])
   const [friendsList, setFriendsList] = useState([])
   const [commentCount, setCommentCount] = useState([])
-console.log('userInfo', userInfo);
 
   const [avatarChange, setAvatarChange] = useState(false);
 
@@ -73,6 +73,7 @@ console.log('userInfo', userInfo);
       <UserInfo userInfo={userInfo} individualUser={individualUser} />
       <AboutMeInput setAvatarChange={setAvatarChange} individualUser={individualUser} />
       <AvatarInput  setAvatarChange={setAvatarChange} />
+      <Deleteaccount logout={logout}/>
     </div>
 
     </div>

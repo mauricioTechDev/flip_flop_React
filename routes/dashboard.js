@@ -53,7 +53,6 @@ storage: multerS3({
 router.get("/", authorize, async (req, res) => {
   try {
     let  user_id  = req.user.id
-    console.log(user_id);
     const userInfo = await pool.query(`
 				SELECT
 				user_account.user_id, user_account.first_name, user_account.last_name, user_account.email, user_account.about_me, user_account.profile_img,
@@ -138,8 +137,6 @@ router.post('/avatar', [authorize, uploadS3.single('upload')], async (req, res, 
       try {
         let user_id = req.user.id
         const aboutMe = req.body.aboutMe
-        console.log('USER', req.user);
-        console.log('aboutME', req.body);
 
         const aboutMePost = await pool.query(`
           UPDATE user_account
@@ -322,9 +319,6 @@ router.get('/individualPicture/:picId', authorize, async (req, res) => {
           break;
         }
       };
-      console.log('comment', comment);
-      console.log('image_commented_on_id', image_commented_on_id);
-      console.log('commenter_user_id', commenter_user_id);
       const commentPost = await pool.query(`
         INSERT INTO comments (comment, commenter_user_id, img_commented_on_id)
         VALUES ($1, $2, $3)`, [comment, commenter_user_id, pictureId])
@@ -577,6 +571,23 @@ router.post('/commentReply',authorize, async (req, res) => {
         commentCount: commentCount.rows,
         user_id: user_id
         })
+    } catch (err) {
+      console.error(err.message);
+    }
+  })
+
+  router.delete('/deleteAccount', authorize, async(req, res) => {
+    try {
+      let  user_id  = req.user.id
+      let email = req.body.email
+      console.log('BODY', req.body.email);
+      console.log('useID', req.user.id);
+        const deleteUserAccount = await pool.query(`
+          DELETE FROM user_account
+          WHERE user_id = $1 AND email = $2
+          `,[user_id, email])
+
+        res.setTimeout(500)
     } catch (err) {
       console.error(err.message);
     }
