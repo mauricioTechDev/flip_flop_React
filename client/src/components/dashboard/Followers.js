@@ -1,24 +1,24 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'
 
-const Followers = ({ logout }) =>{
+
+import { ThemeProvider } from 'styled-components';
+import { useOnClickOutside } from '../../hooks';
+import { GlobalStyles } from '../../global';
+import { theme } from '../../theme';
+import { Burger, Menu } from './burgerMenu';
+import FocusLock from 'react-focus-lock';
+
+const Followers = ({ logout, setAuth }) =>{
   const [individualUser, setIndividualUser] = useState({})
   const [userInfo, setUserInfo] = useState([]);
   const [friendRequest, setFriendRequest] = useState([])
   const [friendsList, setFriendsList] = useState([])
   const [commentCount, setCommentCount] = useState([])
-  // console.log('individualUser',individualUser);
-  console.log('userInfo', userInfo);
-  // console.log('friendRequest', friendRequest);
-  // console.log('friendsList', friendsList);
-  // console.log('commentCount', commentCount);
 
   const [allFollowers, setFollowers] = useState([])
   const [myFollowers, setMyFollowers] = useState([])
   const [whoImFollowing, setWhoImFollowing] = useState([])
-  console.log('allFollowers', allFollowers);
-  console.log('myFollowers', myFollowers);
-  console.log('whoImFollowing', whoImFollowing);
 
 
   useEffect(() => {
@@ -32,7 +32,6 @@ const Followers = ({ logout }) =>{
       });
 
       const parseData = await res.json();
-      console.log('PARSE DATA', parseData);
 
       setIndividualUser(parseData.userInfo[0])
       setUserInfo(parseData.userInfo);
@@ -72,26 +71,27 @@ const Followers = ({ logout }) =>{
   const changeBackgroundOut = (e) => {
     e.target.style.transform = ''
   }
+  //FOR BURGER
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  const menuId = "main-menu";
+  useOnClickOutside(node, () => setOpen(false));
 
 
   return (
+    <ThemeProvider theme={theme}>
     <div style={parentContainer}>
+    <GlobalStyles />
       <div>
-        <header style={{ textAlign: 'center', marginBottom: '2%', borderBottom: '2px solid gray' }}>
-          <div>
-            <h1 style={h1} className='text-white'>Flip - Flop</h1>
-          </div>
-          <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>HOME</Link>
-          <Link to={`/dashboard/newsfeed/${userInfo.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>FEED</Link>
-          <Link to={`/followers/${userInfo.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
-          <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
-          <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>LOG OUT</button>
-        </header>
+      <div>
+        <h1 style={h1} className='text-white'>Flip - Flop</h1>
+      </div>
+      <div ref={node}>
+            <FocusLock disabled={!open}>
+              <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+              <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
+            </FocusLock>
+      </div>
         <div style={followingContainer}>
           <div style={followingSubContainer}>
             <h2 style={{ fontSize: '1.5rem' }}>FOLLOWING</h2>
@@ -154,6 +154,7 @@ const Followers = ({ logout }) =>{
       </div>
 
     </div>
+    </ThemeProvider>
   )
 };
 const followingContainer = {

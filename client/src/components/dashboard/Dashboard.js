@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -8,6 +8,14 @@ import FriendRequest from './userInfo/friends/FriendRequest'
 import MyFriends from './userInfo/friends/MyFriends'
 import ImgFeedInput from './pictureUploads/ImgFeedInput'
 import PersonalImg from './userInfo/PersonalImg'
+
+
+import { ThemeProvider } from 'styled-components';
+import { useOnClickOutside } from '../../hooks';
+import { GlobalStyles } from '../../global';
+import { theme } from '../../theme';
+import { Burger, Menu } from './burgerMenu';
+import FocusLock from 'react-focus-lock';
 
 const Dashboard = ({ setAuth, logout }) => {
   const [individualUser, setIndividualUser] = useState({})
@@ -55,33 +63,29 @@ const Dashboard = ({ setAuth, logout }) => {
   const changeBackgroundOut = (e) => {
     e.target.style.transform = ''
   }
+  //FOR BURGER
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  const menuId = "main-menu";
+  useOnClickOutside(node, () => setOpen(false));
+
 
   return (
+    <ThemeProvider theme={theme}>
     <div style={parentContainer}>
+    <GlobalStyles />
     <div>
-      <header style={{ textAlign: 'center' }}>
-        <div>
-          <h1 style={h1} className='text-white'>Flip - Flop</h1>
-        </div>
-        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>HOME</Link>
-        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FEED</Link>
-        <Link to={`/followers/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
-        <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
-        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>LOG OUT</button>
-      </header>
+      <h1 style={h1} className='text-white'>Flip - Flop</h1>
     </div>
+    <div ref={node}>
+          <FocusLock disabled={!open}>
+            <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+            <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
+          </FocusLock>
+        </div>
       <div className="">
         <div className="">
           <UserInfo userInfo={userInfo} individualUser={individualUser} />
-        </div>
-        <div className="">
-          { /*<FriendRequest friendRequest={friendRequest} setFriendActivity={setFriendActivity}/>*/}
-          { /*<MyFriends friendsList={friendsList} />*/}
         </div>
       </div>
       <div className="">
@@ -91,6 +95,7 @@ const Dashboard = ({ setAuth, logout }) => {
         <PersonalImg userInfo={userInfo} logout={logout}/>
       </div>
     </div>
+    </ThemeProvider>
   );
 };
 const parentContainer = {
