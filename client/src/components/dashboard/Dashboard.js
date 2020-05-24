@@ -9,7 +9,6 @@ import MyFriends from './userInfo/friends/MyFriends'
 import ImgFeedInput from './pictureUploads/ImgFeedInput'
 import PersonalImg from './userInfo/PersonalImg'
 
-
 import { ThemeProvider } from 'styled-components';
 import { useOnClickOutside } from '../../hooks';
 import { GlobalStyles } from '../../global';
@@ -63,61 +62,73 @@ const Dashboard = ({ setAuth, logout }) => {
   const changeBackgroundOut = (e) => {
     e.target.style.transform = ''
   }
+
   //FOR BURGER
   const [open, setOpen] = useState(false);
   const node = useRef();
   const menuId = "main-menu";
   useOnClickOutside(node, () => setOpen(false));
 
-
   return (
     <ThemeProvider theme={theme}>
     <div style={parentContainer}>
-    <GlobalStyles />
-    <div>
-      <h1 style={h1} className='text-white'>Flip - Flop</h1>
-    </div>
-    <div ref={node}>
-          <FocusLock disabled={!open}>
-            <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
-            <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
-          </FocusLock>
+      <GlobalStyles />
+      <headers style={header}>
+        <div ref={node}>
+              <FocusLock disabled={!open}>
+                <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+                <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
+              </FocusLock>
         </div>
-      <div className="">
-        <div className="">
-          <UserInfo userInfo={userInfo} individualUser={individualUser} />
+        <div >
+          <Link to='/dashboard' style={{   textDecoration: 'none' }}>
+            <h1 style={h1} className='text-white' onMouseEnter={changeBackground}
+            onMouseLeave={changeBackgroundOut}>Flip - Flop: Home</h1>
+          </Link>
+        </div>
+      </headers>
+      <div style={topChildContainer}>
+        <div style={{ boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 9px', display: 'flex' }}>
+            <UserInfo userInfo={userInfo} individualUser={individualUser} />
+            <ImgFeedInput setUploadNewImg={setUploadNewImg} />
         </div>
       </div>
-      <div className="">
-        <ImgFeedInput setUploadNewImg={setUploadNewImg} />
-      </div>
-      <div className="">
         <PersonalImg userInfo={userInfo} logout={logout}/>
+      <div style={{textAlign: 'center'}}>
+        <p>&copy; MAURICO ACOSTA</p>
       </div>
     </div>
     </ThemeProvider>
   );
 };
+const header ={
+  display: 'flex',
+  justifyContent: 'center',
+  borderBottom: '3px solid rgb(249, 167, 196)',
+  height: '127px',
+}
 const parentContainer = {
   display: 'flex',
   flexDirection: 'column',
   flexWrap: 'nowrap',
-  border: '1px solid purple',
   justifyContent: 'center',
-  backgroundColor: '#fbcbd4',
-  paddingBottom: '3%'
+  paddingBottom: '3%',
+  margin: '1.5%',
+  padding: '0 .5rem'
+
 };
-const buttons = {
-  border: '3px solid black',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
-  margin: '1%'
-};
+const topChildContainer = {
+  display: 'flex',
+  flexDirection: 'row-reverse',
+  justifyContent: 'center',
+  padding: '2%',
+  flexWrap: 'wrap'
+}
 const h1 = {
-  marginTop: '25px',
   fontSize: '3rem',
   textAlign: 'center',
-  fontFamily: '-webkit-pictograph',
-  borderRadius: '4%'
+  fontFamily: 'Anton , sans-serif',
+  marginTop: '7%'
 }
 
 export default Dashboard;

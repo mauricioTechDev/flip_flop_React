@@ -1,6 +1,5 @@
-import React, {useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom'
-
 
 import { ThemeProvider } from 'styled-components';
 import { useOnClickOutside } from '../../hooks';
@@ -32,6 +31,7 @@ const Followers = ({ logout, setAuth }) =>{
       });
 
       const parseData = await res.json();
+      console.log('PARSE DATA', parseData);
 
       setIndividualUser(parseData.userInfo[0])
       setUserInfo(parseData.userInfo);
@@ -53,7 +53,6 @@ const Followers = ({ logout, setAuth }) =>{
       });
 
       const parseData = await res.json();
-      // console.log('FOLLOWER', parseData);
       setFollowers(parseData.allFollowers)
       setMyFollowers(parseData.myFollowers)
       setWhoImFollowing(parseData.whoImFollowing)
@@ -82,122 +81,133 @@ const Followers = ({ logout, setAuth }) =>{
     <ThemeProvider theme={theme}>
     <div style={parentContainer}>
     <GlobalStyles />
-      <div>
-      <div>
-        <h1 style={h1} className='text-white'>Flip - Flop</h1>
-      </div>
+      <headers style={header}>
       <div ref={node}>
             <FocusLock disabled={!open}>
               <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
               <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
             </FocusLock>
       </div>
+      <div>
+      <Link to='/dashboard' style={{   textDecoration: 'none' }}>
+        <h1 style={h1} className='text-white' onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>Flip - Flop: FOLLOWERS</h1>
+      </Link>
+      </div>
+      </headers>
+
         <div style={followingContainer}>
           <div style={followingSubContainer}>
-            <h2 style={{ fontSize: '1.5rem' }}>FOLLOWING</h2>
-
-            {
-              whoImFollowing.map(e => (
-                 e.profile_img
-                  ? <span>
-                      <h2 style={{ fontSize: '1.5rem' }}>{e.first_name}</h2>
-                      <Link to={`/friend/${e.user_id}`}>
-                        <img
-                          src={e.profile_img} alt='User Profile' style={avatar}
-                          onMouseEnter={changeBackground}
-                          onMouseLeave={changeBackgroundOut}
-                        />
-                      </Link>
-                    </span>
-                  : <span>
-                      <h2 style={{ fontSize: '1.5rem' }}>{e.first_name}</h2>
-                      <Link to={`/friend/${e.user_id}`}>
-                        <img
-                          src='https://via.placeholder.com/150' alt='User Profile' style={avatar}
-                          onMouseEnter={changeBackground}
-                          onMouseLeave={changeBackgroundOut}
-                        />
-                      </Link>
-                    </span>
-              ))
-            }
+            <h2 style={ following }>FOLLOWING</h2>
+            <div style={gallary}>
+                  {
+                    whoImFollowing.map(e => (
+                      e.profile_img
+                      ? <div style={ galleryItem }>
+                          <Link to={`/friend/${e.user_id}`} key={e.img_post_id}>
+                            <span style={avatarName}>{e.first_name}</span>
+                            <img src={e.profile_img} key={e.user_id} alt='User Profile' style={ galleryImage }onMouseEnter={changeBackground}
+                            onMouseLeave={changeBackgroundOut} />
+                          </Link>
+                        </div>
+                      : <div style={ galleryItem }>
+                          <Link to={`/friend/${e.user_id}`} key={e.img_post_id}>
+                            <span style={avatarName}>{e.first_name}</span>
+                            <img src='https://via.placeholder.com/150' key={e.user_id} alt='User Profile' style={ galleryImage }onMouseEnter={changeBackground}
+                            onMouseLeave={changeBackgroundOut} />
+                          </Link>
+                        </div>
+                    ))}
+              </div>
           </div>
           <div style={followingSubContainer}>
-            <h2 style={{ fontSize: '1.5rem' }}>FOLLOWERS</h2>
-            {
-              myFollowers.map(e => (
-                e.profile_img
-                 ? <span>
-                     <h2 style={{ fontSize: '1.5rem' }}>{e.first_name}</h2>
-                     <Link to={`/friend/${e.user_id}`}>
-                       <img
-                         src={e.profile_img} alt='User Profile' style={avatar}
-                         onMouseEnter={changeBackground}
-                         onMouseLeave={changeBackgroundOut}
-                       />
-                     </Link>
-                   </span>
-                 : <span>
-                     <h2 style={{ fontSize: '1.5rem' }}>{e.first_name}</h2>
-                     <Link to={`/friend/${e.user_id}`}>
-                       <img
-                         src='https://via.placeholder.com/150' alt='User Profile' style={avatar}
-                         onMouseEnter={changeBackground}
-                         onMouseLeave={changeBackgroundOut}
-                       />
-                     </Link>
-                   </span>
-              ))
-            }
+            <h2 style={ following }>FOLLOWERS</h2>
+            <div style={gallary}>
+                  {
+                    myFollowers.map(e => (
+                      e.profile_img
+                      ? <div style={ galleryItem }>
+                          <Link to={`/friend/${e.user_id}`} key={e.img_post_id}>
+                            <span style={avatarName}>{e.first_name}</span>
+                            <img src={e.profile_img} key={e.user_id} alt='User Profile' style={ galleryImage }onMouseEnter={changeBackground}
+                            onMouseLeave={changeBackgroundOut} />
+                          </Link>
+                        </div>
+                      : <div style={ galleryItem }>
+                          <Link to={`/friend/${e.user_id}`} key={e.img_post_id}>
+                            <span style={avatarName}>{e.first_name}</span>
+                            <img src='https://via.placeholder.com/150' key={e.user_id} alt='User Profile' style={ galleryImage }onMouseEnter={changeBackground}
+                            onMouseLeave={changeBackgroundOut} />
+                          </Link>
+                        </div>
+                    ))}
+              </div>
           </div>
         </div>
+      <div style={{textAlign: 'center'}}>
+          <p>&copy; MAURICO ACOSTA</p>
       </div>
-
     </div>
     </ThemeProvider>
   )
 };
+const organizeFollowers = {
+  display: 'flex',
+    flexWrap: 'wrap',
+    paddingBottom: '3rem',
+    overflow: 'auto',
+    paddingRight: '9.5%',
+    paddingLeft: '9.5%',
+}
+const parentContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+  flexWrap: 'nowrap',
+  justifyContent: 'center',
+  paddingBottom: '3%'
+};
+const header ={
+  display: 'flex',
+  flexDirection: 'row',
+  borderBottom: '2px solid purple',
+  justifyContent: 'center',
+  height: '150px'
+}
+const following = {
+  fontSize: '1.5rem',
+  color: 'rgb(249, 167, 196)',
+  background: 'rgba(0, 0, 0, 0.47)',
+  borderRadius: '6%',
+  width: '50%',
+  margin: 'auto',
+  fontWeight: '900',
+
+}
 const followingContainer = {
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'nowrap',
   justifyContent: 'center',
-  backgroundColor: '#fbcbd4',
   paddingBottom: '3%',
   marginTop: '3%'
 };
 const followingSubContainer = {
   borderRadius: '4%',
-  backgroundColor: '#fbc107',
+  backgroundColor: '#f88807',
   border: '3px solid black',
   boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 8px',
   margin: '1%',
   padding: '2%',
-  height: '938px',
   overflow: 'scroll',
-  textAlign: 'center'
-};
-const parentContainer = {
-  display: 'flex',
-  flexDirection: 'column',
-  flexWrap: 'nowrap',
-  border: '1px solid purple',
-  justifyContent: 'center',
-  backgroundColor: '#fbcbd4',
-  paddingBottom: '3%'
+  textAlign: 'center',
+  width: '50%'
 };
 
-const buttons = {
-  border: '3px solid black',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
-  margin: '1%'
-};
 const h1 = {
-  marginTop: '25px',
   fontSize: '3rem',
   textAlign: 'center',
-  fontFamily: '-webkit-pictograph',
-  borderRadius: '4%'
+  fontFamily: 'Anton , sans-serif',
+  marginTop: '15%'
 };
 const avatar = {
   width: '147px',
@@ -207,5 +217,40 @@ const avatar = {
   objectFosition: 'center right',
   boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px'
 };
+const gallary = {
+  display: 'flex',
+    flexWrap: 'wrap',
+    paddingBottom: '3rem',
+    overflow: 'auto',
+    paddingRight: '9.5%',
+    paddingLeft: '9.5%',
+    justifyContent: 'center'
+};
+const galleryItem = {
+    margin: '.5rem',
+    color: '#fff',
+    cursor: 'pointer'
+};
+const galleryImage = {
+    height: '100%',
+    objectFit: 'cover',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 2px 3px'
+};
+const avatarName = {
+  textAlign: 'center',
+    objectFit: 'cover',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    marginLeft: '.25rem',
+    marginTop: '.25rem',
+    background: '#00000078',
+    padding: '.5%',
+    borderRadius: '9%',
+    fontFamily: 'Balsamiq Sans, cursive',
+    color: '#f9a7c4',
+    zIndex: '1'
+}
 
 export default Followers;

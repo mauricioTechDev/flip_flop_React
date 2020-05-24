@@ -13,6 +13,9 @@ export const StyledMenu = styled.nav`
   top: 0;
   left: 0;
   transition: transform 0.3s ease-in-out;
+  width: 50%;
+  text-align: center;
+   z-index: 2;
   @media (max-width: ${({ theme }) => theme.mobile}) {
       width: 100%;
     }
@@ -31,6 +34,9 @@ export const StyledMenu = styled.nav`
     }
     &:hover {
       color: ${({ theme }) => theme.primaryHover};
+      transform: scale(1.4);
+      transform-origin: center
+
     }
   }
 `;

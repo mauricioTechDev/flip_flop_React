@@ -78,8 +78,6 @@ const FriendsPage = ({ logout, userInfo }) => {
         onMouseLeave={changeBackgroundOut}>LOG OUT</button>
       </header>
     </div>
-
-
     <div style={parentContainer}>
         <h1 style={h1} className='h1 text-white'> {friend.first_name} </h1>
 
@@ -94,19 +92,19 @@ const FriendsPage = ({ logout, userInfo }) => {
         <UnfollowButton friendsId={friendsId} setUnFollowed={setUnFollowed} followed={followed} setFollowed={setFollowed} />
         <FollowButtonTwo currentUserId={currentUserId} friendsId={friendsId} unFollowed={unFollowed} setFollowed={setFollowed} setUnFollowed={setUnFollowed}/>
     </div>
-
-
-
-
       <div style={gallary}>
           {friendsPicture.length !== 0 &&
             friendsPicture.map(e => (
               <div style={ galleryItem }>
                 <Link to={`/individualPicture/${e.img_post_id}`} key={e.img_post_id} >
+                  <span style={avatarName}>{e.img_likes}❤️</span>
                   <img src={e.img} key={e.img_post_id} alt={e.description} style={ galleryImage } />
                 </Link>
                 </div>
             ))}
+        </div>
+        <div style={{textAlign: 'center'}}>
+            <p>&copy; MAURICO ACOSTA</p>
         </div>
     </div>
   )
@@ -173,5 +171,22 @@ const galleryImage = {
     objectFit: 'cover',
     boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px'
 };
+const avatarName = {
+  textAlign: 'center',
+    objectFit: 'cover',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    marginLeft: '4rem',
+    marginTop: '1rem',
+    background: '#00000078',
+    paddingTop: '1%',
+    borderRadius: '9%',
+    fontFamily: 'Balsamiq Sans, cursive',
+    color: '#f9a7c4',
+    zIndex: '1',
+    width: '14%'
+}
 
 export default FriendsPage;

@@ -28,9 +28,7 @@ const FollowButton = ({ individualPicture }) => {
   const [allFollowers, setFollowers] = useState([])
   const [myFollowers, setMyFollowers] = useState([])
   const [whoImFollowing, setWhoImFollowing] = useState([])
-  // console.log('allFollowers', allFollowers);
-  // console.log('myFollowers', myFollowers);
-  console.log('whoImFollowing', whoImFollowing);
+
 
   useEffect(() => {
     getFollowers()
@@ -71,7 +69,7 @@ const FollowButton = ({ individualPicture }) => {
   }
 
   return (
-    <div className='text-center mb-5'>
+    <div className='text-center'>
     {
       button.length >= 1
       ? button[0]
@@ -84,7 +82,8 @@ const FollowButton = ({ individualPicture }) => {
 const buttons = {
   border: '3px solid black',
   boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
-  margin: '1%'
+  margin: '9% 4% 2% 15%',
+  borderRadius: '13%'
 };
 
 

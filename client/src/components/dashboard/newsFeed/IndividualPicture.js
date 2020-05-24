@@ -1,6 +1,13 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from "react-router-dom";
-import FollowButton from './FollowButton'
+import FollowButton from './FollowButton';
+
+import { ThemeProvider } from 'styled-components';
+import { useOnClickOutside } from '../../../hooks';
+import { GlobalStyles } from '../../../global';
+import { theme } from '../../../theme';
+import { Burger, Menu } from '../burgerMenu';
+import FocusLock from 'react-focus-lock';
 
 const IndividualPicture = ({ setAuth }) => {
 
@@ -146,45 +153,55 @@ const logout = async e => {
     console.error(err.message);
   }
 };
-
-
+  //FOR BURGER
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  const menuId = "main-menu";
+  useOnClickOutside(node, () => setOpen(false));
 
 
   return (
+    <ThemeProvider theme={theme}>
     <Fragment>
     <div style={parentContainer}>
+    <GlobalStyles />
     <div>
-      <header style={{ textAlign: 'center', marginBottom: '2%', borderBottom: '2px solid gray' }}>
-        <div>
-          <h1 style={h1} className='text-white'>Flip - Flop</h1>
-          <h1 style={h1} className="text-white">NEWS FEED</h1>
-        </div>
-        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>HOME</Link>
-        <Link to={`/dashboard/newsfeed/${user_account.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FEED</Link>
-        <Link to={`/followers/${user_account.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
-        <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
-        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>LOG OUT</button>
-      </header>
+    <headers style={header}>
+      <div ref={node}>
+        <FocusLock disabled={!open}>
+          <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+          <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
+        </FocusLock>
+      </div>
+      <div >
+        <Link to='/dashboard' style={{   textDecoration: 'none' }}>
+          <h1 style={h1} className='text-white' onMouseEnter={changeBackground}
+          onMouseLeave={changeBackgroundOut}>Flip - Flop: Feed</h1>
+        </Link>
+      </div>
+    </headers>
     </div>
     {userNames.length !== 0 &&
       userNames[0].user_id !== null &&
       userNames.map(e => (
         e.user_id === individualPicture.id_of_img_poster &&
           <div style={userInfoContainer}>
-          <Link style={{ display: 'flex' }} to={`/friend/${e.user_id}`}>
+          <Link style={{ display: 'flex', alignItems: 'center' }} to={`/friend/${e.user_id}`}>
             <img style={avatar}key={e.user_id} src={e.profile_img} />
-            <h1 key={e.user_id} style={h1} className='text-white'>{e.first_name}</h1>
+            <h2 key={e.user_id} style={h2} className='text-white'>{e.first_name}</h2>
           </Link>
+          <FollowButton individualPicture={individualPicture}/>
 
           </div>
       ))}
       <div className='text-center'>
-        <img src={individualPicture.img ? individualPicture.img : '#'} key={individualPicture.img_post_id ? individualPicture.img : ''} alt='user posted picture' className='img-thumbnail rounded' style={{width: '70%'}}/>
+        <img
+          src={individualPicture.img ? individualPicture.img : '#'}
+          key={individualPicture.img_post_id ? individualPicture.img : ''}
+          alt='user posted picture'
+          className='img-thumbnail rounded'
+          style={{width: '70%', boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 0px 4px'}}
+        />
         <div className='mt-1'>
           <a href='#' onClick={addHeart} style={commentHeartCountStyle}>{individualPicture.img_likes  ? individualPicture.img_likes : 0}❤️</a>
           {
@@ -196,8 +213,6 @@ const logout = async e => {
           <h1>{individualPicture.description}</h1>
         </div>
       </div>
-
-      <FollowButton individualPicture={individualPicture}/>
 
       <div style={commentContainer}>
       <form className="d-flex" onSubmit={onSubmitForm}>
@@ -234,12 +249,21 @@ const logout = async e => {
       </tbody>
       </table>
       </div>
+      <div style={{textAlign: 'center'}}>
+          <p>&copy; MAURICO ACOSTA</p>
+      </div>
       </div>
     </Fragment>
+    </ThemeProvider>
   )
 };
+const header ={
+  display: 'flex',
+  justifyContent: 'center',
+  borderBottom: '3px solid rgb(249, 167, 196)',
+  height: '150px'
+}
 const parentContainer = {
-  backgroundColor: '#fbcbd4',
     margin: '0 auto',
     padding: '0 2rem'
 };
@@ -247,7 +271,9 @@ const userInfoContainer = {
   display: 'flex',
   flexDirection: 'row',
     overflow: 'auto',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: '1rem',
+    marginBottom: '1rem'
 }
 const avatar = {
     width: '50px',
@@ -259,7 +285,7 @@ const avatar = {
     justifyContent: 'center',
     alignItems: 'center',
     // position: 'absolute',
-    margin: '.5rem'
+    // margin: '.5rem'
 };
 const buttons = {
   border: '3px solid black',
@@ -269,8 +295,14 @@ const buttons = {
 const h1 = {
   fontSize: '3rem',
   textAlign: 'center',
-  fontFamily: '-webkit-pictograph',
-  borderRadius: '4%'
+  fontFamily: 'Anton , sans-serif',
+  marginTop: '15%'
+};
+const h2 = {
+  fontSize: '3rem',
+  textAlign: 'center',
+  fontFamily: "Balsamiq Sans, cursive",
+  marginLeft: '2%'
 };
 const commentHeartCountStyle = {
   color: 'white',

@@ -37,6 +37,7 @@ const Menu = ({ setAuth, open, ...props }) => {
     }
   };
 
+
   return (
     <StyledMenu open={open} aria-hidden={!isHidden} {...props}>
     <Link to='/dashboard'>

@@ -1,6 +1,13 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import Caption from './Caption'
+
+import { ThemeProvider } from 'styled-components';
+import { useOnClickOutside } from '../../../hooks';
+import { GlobalStyles } from '../../../global';
+import { theme } from '../../../theme';
+import { Burger, Menu } from '../burgerMenu';
+import FocusLock from 'react-focus-lock';
 
 
 const IndividualUserPostedImg = ({ setAuth, logout }) =>{
@@ -72,7 +79,7 @@ const IndividualUserPostedImg = ({ setAuth, logout }) =>{
     getProfile();
     setCaption(false);
       }, [newCaption])
-    const caption =  img ? <h1 className='text-white'>{img.description}</h1> : <h1 className='text-white'>{'Caption'}</h1>
+    const caption =  img ? <h1 style={{fontFamily: "Balsamiq Sans, cursive" }} className='text-white'>{img.description}</h1> : <h1 style={{fontFamily: "Balsamiq Sans, cursive" }} className='text-white'>{'Caption'}</h1>
 
     const changeBackground = (e) => {
       e.target.style.transform = 'scale(1.1)';
@@ -81,29 +88,35 @@ const IndividualUserPostedImg = ({ setAuth, logout }) =>{
       e.target.style.transform = ''
     }
 
+    //FOR BURGER
+    const [open, setOpen] = useState(false);
+    const node = useRef();
+    const menuId = "main-menu";
+    useOnClickOutside(node, () => setOpen(false));
+
   return(
+    <ThemeProvider theme={theme}>
     <Fragment>
     <div style={parentContainer}>
     <div>
-      <header style={{ textAlign: 'center', marginBottom: '1%', borderBottom: '2px solid gray' }}>
-        <div>
-          <h1 style={h1} className='text-white'>Flip - Flop</h1>
-          <h1 style={h1} className="text-white">NEWS FEED</h1>
-        </div>
-        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>HOME</Link>
-        <Link to={`/dashboard/newsfeed/${individualUserImg.id_of_img_poster}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FEED</Link>
-        <Link to={`/dashboard`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FRIENDS</Link>
-        <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
-        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>LOG OUT</button>
+      <GlobalStyles />
+      <header style={header}>
+      <div ref={node}>
+            <FocusLock disabled={!open}>
+              <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+              <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
+            </FocusLock>
+      </div>
+      <div >
+        <Link to='/dashboard' style={{   textDecoration: 'none' }}>
+          <h1 style={h1} className='text-white' onMouseEnter={changeBackground}
+          onMouseLeave={changeBackgroundOut}>Flip - Flop: Home</h1>
+        </Link>
+      </div>
       </header>
     </div>
     <div style={userInfoContainer}>
-      { caption }
+    Caption:  { caption }
       <div>
       <button className="btn btn-danger mb-5 mt-5" onClick={deletePicture} >
         DELETE PICTURE
@@ -126,13 +139,21 @@ const IndividualUserPostedImg = ({ setAuth, logout }) =>{
       <div className="text-center" style={{ padding: '2%' }}>
         <Caption setCaption={setCaption} />
       </div>
+      <div style={{textAlign: 'center'}}>
+          <p>&copy; MAURICO ACOSTA</p>
       </div>
-
+      </div>
     </Fragment>
+    </ThemeProvider>
   )
 };
+const header ={
+  display: 'flex',
+  justifyContent: 'center',
+  borderBottom: '3px solid rgb(249, 167, 196)',
+  height: '150px'
+}
 const parentContainer = {
-  backgroundColor: '#fbcbd4',
     margin: '0 auto',
     padding: '0 2rem'
 };
@@ -144,14 +165,16 @@ const buttons = {
 const h1 = {
   fontSize: '3rem',
   textAlign: 'center',
-  fontFamily: '-webkit-pictograph',
-  borderRadius: '4%'
+  fontFamily: 'Anton , sans-serif',
+  marginTop: '15%'
 };
 const userInfoContainer = {
   display: 'flex',
   flexDirection: 'column',
     overflow: 'auto',
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: '1%',
+    fontFamily: "Balsamiq Sans, cursive"
 }
 
 export default IndividualUserPostedImg;

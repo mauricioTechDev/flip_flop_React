@@ -1,7 +1,9 @@
 import React, { Fragment, useState } from "react";
+import '../../../index.css'
 
 const ImgFeedInput = ({ setUploadNewImg }) => {
   const [uploadImg, setUploadImg] = useState('')
+  // const [addPic, setAddPick] = useState(false)
 
   const sumbitImg = async e => {
     e.preventDefault();
@@ -30,48 +32,62 @@ const ImgFeedInput = ({ setUploadNewImg }) => {
 
 
 
+
+
   return (
     <Fragment>
     <div style={imgParentContainer}>
-    <div style={imgContainer}>
+    <div style={imgContainer} >
     <span
-      style={{ fontSize: '1.5rem',fontFamily: '-webkit-pictograph', marginBottom: '1%', marginTop: '3%' }}
-      className='text-white'>
-        Choose a file 👇 to add a picture 📸 to your timeline.
+      style={{ fontSize: '1.5rem',fontFamily: 'Balsamiq Sans, cursive', marginBottom: '1%', color: '#f9a7c4' }}>
+        Add a picture👇 to your timeline
     </span>
-        <form className="input-group2  w-10" encType="multipart/form-data" onSubmit={sumbitImg}>
-          <input
-            type="file"
-            name="uploadImg"
-            onChange={e => setUploadImg(e.target.files[0])}
-            style={{width: '240px' }} />
-            <button style={{ width: '100px'}} className="btn btn-success ">Add</button>
+      <div class="input-group" style={{ display: 'flex', justifyContent: 'center' }}>
+        <form encType="multipart/form-data" onSubmit={sumbitImg} style={{ display: 'flex', justifyContent: 'center' }}>
+          <label style={ addPic } className="btn btn-primary">
+          📸  Add a picture
+            <input
+              type="file"
+              name="uploadImg"
+              onChange={e => setUploadImg(e.target.files[0])}
+              style={{ visibility: 'hidden' }}
+              />
+          </label>
+            <button
+              className="btn btn-success"
+              style={{ zIndex: '1', boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 4px', marginLeft: '4%' }}
+            >Submit</button>
         </form>
+        </div>
         </div>
       </div>
     </Fragment>
   )
 };
+
 const imgParentContainer = {
   display: 'flex',
   flexDirection: 'column',
   flexWrap: 'nowrap',
   justifyContent: 'center',
-  backgroundColor: '#fbcbd4',
   textAlign: 'center',
   marginBottom: '1%'
 };
+const addPic = {
+  backgroundColor: '#0069d9',
+  color: 'white',
+  width: '34%',
+  borderRadius: '15px',
+  height: '38px',
+  margin: '0',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 4px'
+}
 
 const imgContainer = {
-  border: '3px solid black',
-  width: '60%',
-  marginLeft: '20%',
-  padding: '1%',
-  backgroundColor: '#f4ba00',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
+  paddingTop: '2%',
+  paddingBottom: '2%',
   borderRadius: '2%',
   marginTop: '3%',
-  marginBottom: '2%'
 };
 
 export default ImgFeedInput;

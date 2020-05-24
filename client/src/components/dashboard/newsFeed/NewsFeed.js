@@ -1,5 +1,12 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from "react-router-dom";
+
+import { ThemeProvider } from 'styled-components';
+import { useOnClickOutside } from '../../../hooks';
+import { GlobalStyles } from '../../../global';
+import { theme } from '../../../theme';
+import { Burger, Menu } from '../burgerMenu';
+import FocusLock from 'react-focus-lock';
 
 
 const NewsFeed = ({ setAuth, logout }) => {
@@ -42,41 +49,44 @@ const NewsFeed = ({ setAuth, logout }) => {
     getNewsFeed()
   },[userId])
   const changeBackground = (e) => {
-    e.target.style.transform = 'scale(1.1)';
+    e.target.style.transform = 'scale(1.05)';
   }
   const changeBackgroundOut = (e) => {
     e.target.style.transform = ''
   }
-  console.log('NEWSFEED', newsFeed);
+
+  //FOR BURGER
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  const menuId = "main-menu";
+  useOnClickOutside(node, () => setOpen(false));
+
   return (
-    <div style={{  backgroundColor: '#fbcbd4'}}>
+    <ThemeProvider theme={theme}>
+    <div style={{ padding: '0 2rem' }}>
+    <GlobalStyles />
+    <headers style={header}>
+      <div ref={node}>
+        <FocusLock disabled={!open}>
+          <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+          <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
+        </FocusLock>
+      </div>
+      <div >
+        <Link to='/dashboard' style={{   textDecoration: 'none' }}>
+          <h1 style={h1} className='text-white' onMouseEnter={changeBackground}
+          onMouseLeave={changeBackgroundOut}>Flip - Flop: Feed</h1>
+        </Link>
+      </div>
+    </headers>
     <div style={parentContainer}>
-    <div>
-      <header style={{ textAlign: 'center', marginBottom: '6%', borderBottom: '2px solid gray' }}>
-        <div>
-          <h1 style={h1} className='text-white'>Flip - Flop</h1>
-          <h1 style={h1} className="text-white">NEWS FEED</h1>
-        </div>
-        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>HOME</Link>
-        <Link to={`/dashboard/newsfeed/${userId}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FEED</Link>
-        <Link to={`/followers/${userId}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
-        <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
-        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>LOG OUT</button>
-      </header>
-    </div>
-
       <div style={gallary}>
-
           {newsFeed.length !== 0 &&
             newsFeed[0].img_post_id !== null &&
             newsFeed.map(e => (
               <div style={ galleryItem }>
-              <Link  to={`/individualPicture/${e.img_post_id}`} key={e.img_post_id}>
+              <Link  to={`/individualPicture/${e.img_post_id}`} key={e.img_post_id} onMouseEnter={changeBackground}
+              onMouseLeave={changeBackgroundOut}>
                 <img style={avatar} src={e.profile_img} />
                 <span style={avatarName}>{e.first_name}</span>
                 <img style={ galleryImage } src={e.img} key={e.img_post_id} alt='user posted picture'/>
@@ -85,9 +95,26 @@ const NewsFeed = ({ setAuth, logout }) => {
             ))}
         </div>
     </div>
+    <div style={{textAlign: 'center'}}>
+        <p>&copy; MAURICO ACOSTA</p>
     </div>
+    </div>
+    </ThemeProvider>
   )
 };
+const header ={
+  display: 'flex',
+  justifyContent: 'center',
+  borderBottom: '2px solid purple',
+  height: '150px',
+  borderBottom: '3px solid rgb(249, 167, 196)',
+}
+const h1 = {
+  fontSize: '3rem',
+  textAlign: 'center',
+  fontFamily: 'Anton , sans-serif',
+  marginTop: '15%'
+}
 const avatar = {
     width: '50px',
     height: '50px',
@@ -98,7 +125,8 @@ const avatar = {
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    margin: '.5rem'
+    margin: '.5rem',
+    zIndex: '1'
 };
 const avatarName = {
   width: '35%',
@@ -114,24 +142,21 @@ const avatarName = {
     background: '#00000078',
     padding: '1%',
     borderRadius: '9%',
+    zIndex: '1'
 }
 const parentContainer = {
-  backgroundColor: '#fbcbd4',
+  // backgroundColor: '#fbcbd4',
   maxWidth: '93.5rem',
     margin: '0 auto',
-    padding: '0 2rem'
+    padding: '0 2rem',
+    marginTop: '2%'
 };
 const buttons = {
   border: '3px solid black',
   boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
   margin: '1%'
 };
-const h1 = {
-  fontSize: '3rem',
-  textAlign: 'center',
-  fontFamily: '-webkit-pictograph',
-  borderRadius: '4%'
-}
+
 const gallary = {
   display: 'flex',
     flexWrap: 'wrap',
