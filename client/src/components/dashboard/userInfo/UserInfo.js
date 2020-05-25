@@ -10,7 +10,7 @@ const UserInfo = ({ individualUser }) => {
           : <span><img src='https://via.placeholder.com/150' alt='User Profile' style={avatar}/></span>
         }
         <div style={{ alignSelf: 'center' }}>
-          <h1 style={h1} className='h1'> { individualUser.first_name } </h1>
+          <h1 style={h1} className='h1'> { individualUser.first_name } {individualUser.last_name} </h1>
           <h2 style={h2} className='h2'>{ individualUser.about_me }</h2>
         </div>
     </div>

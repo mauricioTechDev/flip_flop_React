@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import AvatarInput from '../pictureUploads/AvatarInput';
 import AboutMeInput from '../userInfo/AboutMeInput';
+import FirstNameInput from '../userInfo/FirstNameInput'
+import LastNameInput from '../userInfo/LastNameInput'
 import UserInfo from './UserInfo';
 import Deleteaccount from './Deleteaccount'
 
@@ -87,6 +89,10 @@ const Editprofile = ({ logout, setAuth, currentTheme, toggleTheme }) => {
         <UserInfo userInfo={userInfo} individualUser={individualUser} />
         <AvatarInput  setAvatarChange={setAvatarChange} />
     </div>
+      <div style={editFirstLastNameBox}>
+        <FirstNameInput setAvatarChange={setAvatarChange} individualUser={individualUser} />
+        <LastNameInput setAvatarChange={setAvatarChange} individualUser={individualUser} />
+      </div>
       <div style={editBox}>
         <AboutMeInput setAvatarChange={setAvatarChange} individualUser={individualUser} />
       </div>
@@ -124,7 +130,7 @@ const header ={
   justifyContent: 'center',
   borderBottom: '3px solid rgb(249, 167, 196)',
   height: '127px',
-}
+};
 const buttons = {
   border: '3px solid black',
   boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
@@ -137,10 +143,18 @@ const h1 = {
   fontFamily: '-webkit-pictograph',
   borderRadius: '4%',
   fontFamily: 'Anton , sans-serif',
-}
+};
 const editBox = {
-  padding: '1%',
+  padding: '2rem',
   boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 9px',
+};
+const editFirstLastNameBox = {
+  padding: '2rem',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 9px',
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  marginBottom: '2rem'
 };
 const toggleStyle = {
   borderRadius: '15px',

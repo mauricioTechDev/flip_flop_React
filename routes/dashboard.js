@@ -148,6 +148,35 @@ router.post('/avatar', [authorize, uploadS3.single('upload')], async (req, res, 
         console.error(err.message);
       }
     })
+    router.put('/firstNameEdit', authorize, async (req, res, next) => {
+        try {
+          let user_id = req.user.id
+          const firstName = req.body.firstName
+
+          const firstNamePost = await pool.query(`
+            UPDATE user_account
+            SET first_name = $1
+            WHERE user_id = $2;`,[firstName, user_id])
+          res.json(firstNamePost);
+
+        } catch (err) {
+          console.error(err.message);
+        }
+      })
+      router.put('/lastNameEdit', authorize, async (req, res, next) => {
+          try {
+            let user_id = req.user.id
+            const lastName = req.body.lastName
+
+            const lastNamePost = await pool.query(`
+              UPDATE user_account
+              SET last_name = $1
+              WHERE user_id = $2;`,[lastName, user_id])
+            res.json(lastNamePost);
+          } catch (err) {
+            console.error(err.message);
+          }
+        })
     //POST PICTURES FROM PROFILE PAGE
 router.post('/profileImg', [authorize, uploadS3.single('upload')], async (req, res, next) => {
       try {
