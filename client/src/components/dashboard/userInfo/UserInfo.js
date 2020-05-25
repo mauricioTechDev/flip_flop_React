@@ -20,7 +20,7 @@ const UserInfo = ({ individualUser }) => {
 const parentContainer = {
   display: 'flex',
   flexDirection: 'row',
-  flexWrap: 'nowrap',
+  flexWrap: 'wrap',
   justifyContent: 'center',
   textAlign: 'center',
   padding: '2%'

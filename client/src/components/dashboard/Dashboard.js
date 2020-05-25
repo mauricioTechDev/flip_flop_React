@@ -92,18 +92,16 @@ const Dashboard = ({ setAuth, logout, currentTheme, toggleTheme }) => {
         <div style={{marginBottom: '1%'}}>
           <Link to='/dashboard' style={{   textDecoration: 'none' }}>
             <h1 style={h1} onMouseEnter={changeBackground}
-            onMouseLeave={changeBackgroundOut}>Flip - Flop: Home</h1>
+            onMouseLeave={changeBackgroundOut}>Flip - Flop</h1>
           </Link>
             <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
         </div>
 
       </headers>
       <div style={topChildContainer}>
-        <div style={{ boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 9px', display: 'flex',flexDirection: 'row',
-        flexWrap: 'nowrap', }}>
+
             <UserInfo userInfo={userInfo} individualUser={individualUser} />
             <ImgFeedInput setUploadNewImg={setUploadNewImg} />
-        </div>
       </div>
         <PersonalImg userInfo={userInfo} logout={logout}/>
       <div style={{textAlign: 'center'}}>
@@ -131,7 +129,8 @@ const parentContainer = {
 };
 const topChildContainer = {
   display: 'flex',
-  flexDirection: 'row-reverse',
+  // flexDirection: 'row-reverse',
+  flexDirection: 'row',
   justifyContent: 'center',
   padding: '2%',
   flexWrap: 'wrap'

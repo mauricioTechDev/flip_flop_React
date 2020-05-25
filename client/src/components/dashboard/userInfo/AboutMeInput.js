@@ -34,7 +34,7 @@ const AboutMeInput = ({ setAvatarChange }) => {
   return (
     <Fragment>
     <div style={parentContainer}>
-    <div style={inputContainer}>
+    {/*<div style={inputContainer}>*/}
       <span
         style={{ fontSize: '1.5rem',fontFamily: '-webkit-pictograph', marginBottom: '1%', fontFamily: 'Balsamiq Sans, cursive', }}>
           About me 💪 😎 👇
@@ -43,12 +43,12 @@ const AboutMeInput = ({ setAvatarChange }) => {
         <input
           value={aboutMe}
           onChange={e => setAbout(e.target.value)}
-          style={{ height: '36px', borderRadius: '20px' }}
+          style={{ height: '36px', borderRadius: '20px', width: '14rem' }}
           placeHolder=' About Me' >
         </input>
         <button style={button} className="btn btn-success ">SUBMIT</button>
       </form>
-      </div>
+      {/*</div>*/}
       </div>
     </Fragment>
   )
@@ -66,7 +66,7 @@ const inputContainer = {
   boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
   border: '1px solid black',
   borderRadius: '2%',
-  width: '59rem',
+  width: '56rem',
   margin: 'auto',
 }
 const button = {

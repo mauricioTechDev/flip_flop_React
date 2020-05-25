@@ -75,7 +75,7 @@ const NewsFeed = ({ setAuth, logout, currentTheme, toggleTheme  }) => {
       <div >
         <Link to='/dashboard' style={{   textDecoration: 'none' }}>
           <h1 style={h1} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>Flip - Flop: Feed</h1>
+          onMouseLeave={changeBackgroundOut}>Flip - Flop</h1>
         </Link>
         <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
       </div>
@@ -150,7 +150,7 @@ const parentContainer = {
   // backgroundColor: '#fbcbd4',
   maxWidth: '93.5rem',
     margin: '0 auto',
-    padding: '0 2rem',
+    // padding: '0 2rem',
     marginTop: '2%'
 };
 const buttons = {
@@ -175,6 +175,7 @@ const galleryItem = {
 }
 const galleryImage = {
   width: '100%',
+  // width: '19rem',
     height: '100%',
     objectFit: 'cover'
 };

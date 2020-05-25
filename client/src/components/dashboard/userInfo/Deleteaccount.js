@@ -40,10 +40,10 @@ const Deleteaccount = ({ logout }) => {
           <button className="btn btn-danger"> Submit </button>
         </form>
       </div>
-      : <span style={dangerBox}>
+      : <span >
         <h3>❌ Danger Zone ❌</h3>
         <h4>Click below to delete your account</h4>
-        <button className="btn btn-danger" onClick={activateCanelationBox}>DELETE</button>
+        <button className="btn btn-danger" style={{borderRadius: '15px'}} onClick={activateCanelationBox}>DELETE</button>
         </span>
     }
 
@@ -61,7 +61,7 @@ const inputContainer = {
     marginTop: '3%',
 };
 const dangerBox = {
-  width: '59rem',
+  width: '56rem',
   margin: 'auto',
   boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
   border: '1px solid black',

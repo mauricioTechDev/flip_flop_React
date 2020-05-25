@@ -49,7 +49,7 @@ const AvatarInput = ({ setAvatarChange }) => {
       </span>
         <form className="input-group2  w-10" encType="multipart/form-data" onSubmit={submitAvatar} style={{ display: 'flex', justifyContent: 'center' }}>
           <label style={ addPic } className="btn btn-primary">
-            📸  Add a picture
+            📸  Picture
             <input
               type="file"
               name="uploadedAvatar"

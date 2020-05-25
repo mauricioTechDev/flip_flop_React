@@ -131,12 +131,18 @@ const parentContainer = {
   marginTop: '2%'
 };
 const userInfoContainer ={
+  // display: 'flex',
+  // flexDirection: 'row',
+  // justifyContent: 'center',
+  // padding: '0 2rem',
+  // marginTop: '2%',
+  // alignItems: 'center'
   display: 'flex',
   flexDirection: 'row',
+  flexWrap: 'wrap',
   justifyContent: 'center',
-  padding: '0 2rem',
-  marginTop: '2%',
-  alignItems: 'center'
+  textAlign: 'center',
+  padding: '2%'
 }
 const header ={
   display: 'flex',

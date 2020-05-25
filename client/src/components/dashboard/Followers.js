@@ -76,14 +76,6 @@ const Followers = ({ logout, setAuth, toggleTheme, currentTheme }) =>{
   const menuId = "main-menu";
   useOnClickOutside(node, () => setOpen(false));
 
-  // const [currentTheme, setTheme] = useState('dark');
-  // const toggleTheme = () => {
-  //   if (currentTheme === 'dark') {
-  //     setTheme('light');
-  //   } else {
-  //     setTheme('dark');
-  //   }
-  // }
 
 
   return (

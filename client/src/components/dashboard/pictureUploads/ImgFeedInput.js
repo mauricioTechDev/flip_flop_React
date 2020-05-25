@@ -45,7 +45,7 @@ const ImgFeedInput = ({ setUploadNewImg }) => {
       <div class="input-group" style={{ display: 'flex', justifyContent: 'center' }}>
         <form encType="multipart/form-data" onSubmit={sumbitImg} style={{ display: 'flex', justifyContent: 'center' }}>
           <label style={ addPic } className="btn btn-primary">
-          📸  Add a picture
+          📸  Picture
             <input
               type="file"
               name="uploadImg"
@@ -77,11 +77,12 @@ const addPic = {
   color: 'white',
   width: '34%',
   borderRadius: '15px',
-  height: '38px',
+  height: '3.3rem',
   margin: '0',
   boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
   fontFamily: 'Balsamiq Sans, cursive',
   fontWeight: '900',
+  lineHeight: '40px'
 }
 
 const imgContainer = {

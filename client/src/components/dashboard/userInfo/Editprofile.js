@@ -83,11 +83,9 @@ const Editprofile = ({ logout, setAuth, currentTheme, toggleTheme }) => {
         </div>
       </headers>
     </div>
-    <div style={{ display: 'flex', justifyContent: 'center', padding: '2%' }}>
-      <div style={{ boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px', border: '1px solid black', display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
+    <div style={topChildContainer}>
         <UserInfo userInfo={userInfo} individualUser={individualUser} />
         <AvatarInput  setAvatarChange={setAvatarChange} />
-      </div>
     </div>
       <div style={editBox}>
         <AboutMeInput setAvatarChange={setAvatarChange} individualUser={individualUser} />
@@ -111,6 +109,16 @@ const parentContainer = {
   margin: '1.5%',
   padding: '0 .5rem'
 };
+const topChildContainer = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  padding: '2%',
+  flexWrap: 'wrap',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 9px',
+  marginTop: '1rem',
+  marginBottom: '2rem',
+};
 const header ={
   display: 'flex',
   justifyContent: 'center',
@@ -131,9 +139,8 @@ const h1 = {
   fontFamily: 'Anton , sans-serif',
 }
 const editBox = {
-  margin: 'auto',
   padding: '1%',
-  // boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 9px',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 9px',
 };
 const toggleStyle = {
   borderRadius: '15px',

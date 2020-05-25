@@ -176,7 +176,7 @@ const logout = async e => {
       <div >
         <Link to='/dashboard' style={{   textDecoration: 'none' }}>
           <h1 style={h1} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>Flip - Flop: Feed</h1>
+          onMouseLeave={changeBackgroundOut}>Flip - Flop</h1>
         </Link>
         <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
       </div>
@@ -271,7 +271,7 @@ const parentContainer = {
 const userInfoContainer = {
   display: 'flex',
   flexDirection: 'row',
-  overflow: 'auto',
+  // overflow: 'auto',
   justifyContent: 'center',
   marginTop: '1rem',
   marginBottom: '1rem'
