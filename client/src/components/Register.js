@@ -2,7 +2,11 @@ import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Register = ({ setAuth }) => {
+import { theme, lightTheme } from '../theme';
+import { GlobalStyles } from '../global';
+import { ThemeProvider } from 'styled-components';
+
+const Register = ({ setAuth, currentTheme, toggleTheme }) => {
   const [inputs, setInputs] = useState({
     first_name: '',
     last_name: '',
@@ -42,15 +46,6 @@ const Register = ({ setAuth }) => {
         setCheckEmail('A verification email is on its way.  Check your inbox and click the link to verify your email.')
       }
 
-
-      // if (parseRes.jwtToken) {
-      //   localStorage.setItem("token", parseRes.jwtToken);
-      //   setAuth(true);
-      //   toast.success("Register Successfully");
-      // } else {
-      //   setAuth(false);
-      //   toast.error(parseRes);
-      // }
     } catch (err) {
       console.error(err.message);
     }
@@ -69,11 +64,16 @@ const Register = ({ setAuth }) => {
   };
 
   return (
+    <ThemeProvider theme={currentTheme === 'dark' ? theme : lightTheme}>
     <Fragment>
     <div style={parentContainer}>
+    <GlobalStyles />
       <div>
-        <Link className="btn btn-warning btn-lg mt-5 ml-5" to='/' style={buttons}>HOME</Link>
-        <Link className="btn btn-warning btn-lg mt-5 ml-5" to='/login' style={buttons}>Log In</Link>
+      <div style={{ margin: '1rem' }}>
+        <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
+      </div>
+        <Link className="btn btn-warning btn-lg" to='/' style={buttons}>HOME</Link>
+        <Link className="btn btn-warning btn-lg" to='/login' style={buttons}>LOG IN</Link>
       </div>
       <div style={containerLeft}>
         <h1 style={h1} onMouseEnter={changeBackground} onMouseLeave={h1Out}>FLIP FLOP PHOTO APP</h1>
@@ -117,8 +117,12 @@ const Register = ({ setAuth }) => {
           <button className="btn btn-success btn-block">Submit</button>
         </form>
       </div>
+      <div style={{textAlign: 'center'}}>
+          <p>&copy; MAURICO ACOSTA</p>
+        </div>
       </div>
     </Fragment>
+    </ThemeProvider>
   );
 };
 const verification = {
@@ -131,14 +135,17 @@ const parentContainer = {
   display: 'flex',
   flexDirection: 'column',
   flexWrap: 'nowrap',
-  border: '1px solid purple',
+  // border: '1px solid purple',
   justifyContent: 'center',
-  backgroundColor: '#fbcbd4',
+  // backgroundColor: '#fbcbd4',
   paddingBottom: '3%'
 };
 const buttons = {
   border: '3px solid black',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px'
+  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
+  backgroundColor: 'darksalmon',
+  borderRadius: '15px',
+  margin: '1rem'
 };
 const firstName = {
   width: '48%',
@@ -179,7 +186,7 @@ const containerLeft ={
   paddingRight: '15%',
   paddingBottom: '10%',
   margin: '3%',
-  border: '1px solid purple',
+  border: '2px solid rgb(249, 167, 196)',
   boxShadow: '2px 3px 3px 9px #80808073'
 };
 const h1 = {
@@ -189,7 +196,8 @@ const h1 = {
   fontFamily: '-webkit-pictograph',
   marginLeft: '15%',
   marginRight: '16%',
-  borderRadius: '4%'
+  borderRadius: '4%',
+  fontFamily: 'Anton , sans-serif',
 }
 const h2 = {
   marginTop: '25px',
@@ -198,11 +206,18 @@ const h2 = {
   marginLeft: '15%',
   marginRight: '16%',
   fontFamily: '-webkit-pictograph',
-  borderRadius: '4%'
+  borderRadius: '4%',
+  fontFamily: 'Anton , sans-serif',
 };
 const form = {
   width: '90%',
   marginLeft: '5%'
+};
+const toggleStyle = {
+  borderRadius: '15px',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+    fontFamily: 'Balsamiq Sans, cursive',
+    fontWeight: '900',
 };
 
 export default Register;

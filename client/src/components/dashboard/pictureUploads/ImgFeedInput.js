@@ -39,7 +39,7 @@ const ImgFeedInput = ({ setUploadNewImg }) => {
     <div style={imgParentContainer}>
     <div style={imgContainer} >
     <span
-      style={{ fontSize: '1.5rem',fontFamily: 'Balsamiq Sans, cursive', marginBottom: '1%', color: '#f9a7c4' }}>
+      style={{ fontSize: '1.5rem',fontFamily: 'Balsamiq Sans, cursive', marginBottom: '1%'}}>
         Add a picture👇 to your timeline
     </span>
       <div class="input-group" style={{ display: 'flex', justifyContent: 'center' }}>
@@ -55,8 +55,7 @@ const ImgFeedInput = ({ setUploadNewImg }) => {
           </label>
             <button
               className="btn btn-success"
-              style={{ zIndex: '1', boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 4px', marginLeft: '4%' }}
-            >Submit</button>
+              style={ button }>Submit</button>
         </form>
         </div>
         </div>
@@ -80,7 +79,9 @@ const addPic = {
   borderRadius: '15px',
   height: '38px',
   margin: '0',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 4px'
+  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontWeight: '900',
 }
 
 const imgContainer = {
@@ -89,5 +90,14 @@ const imgContainer = {
   borderRadius: '2%',
   marginTop: '3%',
 };
+
+const button = {
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontWeight: '900',
+  zIndex: '1',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+  marginLeft: '4%',
+  borderRadius: '15px'
+}
 
 export default ImgFeedInput;

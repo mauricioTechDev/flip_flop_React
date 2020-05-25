@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 
 import AvatarInput from '../pictureUploads/AvatarInput';
@@ -6,7 +6,14 @@ import AboutMeInput from '../userInfo/AboutMeInput';
 import UserInfo from './UserInfo';
 import Deleteaccount from './Deleteaccount'
 
-const Editprofile = ({ logout }) => {
+import { ThemeProvider } from 'styled-components';
+import { useOnClickOutside } from '../../../hooks';
+import { GlobalStyles } from '../../../global';
+import { theme, lightTheme } from '../../../theme';
+import { Burger, Menu } from '../burgerMenu';
+import FocusLock from 'react-focus-lock';
+
+const Editprofile = ({ logout, setAuth, currentTheme, toggleTheme }) => {
   const [individualUser, setIndividualUser] = useState({})
   const [userInfo, setUserInfo] = useState([]);
   const [friendRequest, setFriendRequest] = useState([])
@@ -49,45 +56,67 @@ const Editprofile = ({ logout }) => {
   const changeBackgroundOut = (e) => {
     e.target.style.transform = ''
   }
+  //FOR BURGER
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  const menuId = "main-menu";
+  useOnClickOutside(node, () => setOpen(false));
 
   return(
+    <ThemeProvider theme={currentTheme === 'dark' ? theme : lightTheme}>
     <div style={parentContainer}>
+    <GlobalStyles />
     <div>
-      <header style={{ textAlign: 'center' }}>
-        <div>
-          <h1 style={h1} className='text-white'>Flip - Flop</h1>
+      <headers style={header}>
+        <div ref={node}>
+              <FocusLock disabled={!open}>
+                <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+                <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
+              </FocusLock>
         </div>
-        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>HOME</Link>
-        <Link to={`/dashboard/newsfeed/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FEED</Link>
-        <Link to={`/followers/${individualUser.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
-        <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
-        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>LOG OUT</button>
-      </header>
+        <div >
+          <Link to='/dashboard' style={{   textDecoration: 'none' }}>
+            <h1 style={h1}  onMouseEnter={changeBackground}
+            onMouseLeave={changeBackgroundOut}>Flip - Flop: Home</h1>
+          </Link>
+          <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
+        </div>
+      </headers>
     </div>
-    <div>
-      <UserInfo userInfo={userInfo} individualUser={individualUser} />
-      <AboutMeInput setAvatarChange={setAvatarChange} individualUser={individualUser} />
-      <AvatarInput  setAvatarChange={setAvatarChange} />
-      <Deleteaccount logout={logout}/>
+    <div style={{ display: 'flex', justifyContent: 'center', padding: '2%' }}>
+      <div style={{ boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px', border: '1px solid black', display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
+        <UserInfo userInfo={userInfo} individualUser={individualUser} />
+        <AvatarInput  setAvatarChange={setAvatarChange} />
+      </div>
     </div>
-
+      <div style={editBox}>
+        <AboutMeInput setAvatarChange={setAvatarChange} individualUser={individualUser} />
+      </div>
+      <div>
+        <Deleteaccount logout={logout}/>
+      </div>
+    <div style={{textAlign: 'center', marginTop: '3%'}}>
+        <p>&copy; MAURICO ACOSTA</p>
     </div>
+    </div>
+    </ThemeProvider>
   )
 }
 const parentContainer = {
   display: 'flex',
   flexDirection: 'column',
   flexWrap: 'nowrap',
-  border: '1px solid purple',
   justifyContent: 'center',
-  backgroundColor: '#fbcbd4',
-  paddingBottom: '3%'
+  paddingBottom: '3%',
+  margin: '1.5%',
+  padding: '0 .5rem'
 };
+const header ={
+  display: 'flex',
+  justifyContent: 'center',
+  borderBottom: '3px solid rgb(249, 167, 196)',
+  height: '127px',
+}
 const buttons = {
   border: '3px solid black',
   boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
@@ -98,7 +127,19 @@ const h1 = {
   fontSize: '3rem',
   textAlign: 'center',
   fontFamily: '-webkit-pictograph',
-  borderRadius: '4%'
+  borderRadius: '4%',
+  fontFamily: 'Anton , sans-serif',
 }
+const editBox = {
+  margin: 'auto',
+  padding: '1%',
+  // boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 9px',
+};
+const toggleStyle = {
+  borderRadius: '15px',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+    fontFamily: 'Balsamiq Sans, cursive',
+    fontWeight: '900',
+};
 
 export default Editprofile;

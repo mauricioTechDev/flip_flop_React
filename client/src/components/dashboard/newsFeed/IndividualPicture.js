@@ -5,11 +5,11 @@ import FollowButton from './FollowButton';
 import { ThemeProvider } from 'styled-components';
 import { useOnClickOutside } from '../../../hooks';
 import { GlobalStyles } from '../../../global';
-import { theme } from '../../../theme';
+import { theme, lightTheme } from '../../../theme';
 import { Burger, Menu } from '../burgerMenu';
 import FocusLock from 'react-focus-lock';
 
-const IndividualPicture = ({ setAuth }) => {
+const IndividualPicture = ({ setAuth, currentTheme, toggleTheme  }) => {
 
   const [pictureId, setPictureId] = useState('')
   const [individualPicture, setIndividualPicture] = useState([]);
@@ -161,7 +161,7 @@ const logout = async e => {
 
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={currentTheme === 'dark' ? theme : lightTheme}>
     <Fragment>
     <div style={parentContainer}>
     <GlobalStyles />
@@ -175,9 +175,10 @@ const logout = async e => {
       </div>
       <div >
         <Link to='/dashboard' style={{   textDecoration: 'none' }}>
-          <h1 style={h1} className='text-white' onMouseEnter={changeBackground}
+          <h1 style={h1} onMouseEnter={changeBackground}
           onMouseLeave={changeBackgroundOut}>Flip - Flop: Feed</h1>
         </Link>
+        <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
       </div>
     </headers>
     </div>
@@ -188,7 +189,7 @@ const logout = async e => {
           <div style={userInfoContainer}>
           <Link style={{ display: 'flex', alignItems: 'center' }} to={`/friend/${e.user_id}`}>
             <img style={avatar}key={e.user_id} src={e.profile_img} />
-            <h2 key={e.user_id} style={h2} className='text-white'>{e.first_name}</h2>
+            <h2 key={e.user_id} style={h2}>{e.first_name}</h2>
           </Link>
           <FollowButton individualPicture={individualPicture}/>
 
@@ -234,12 +235,12 @@ const logout = async e => {
               <td>
               {
                 post.first_name &&
-                <Link className="btn btn-warning" to={`/commentReply/${post.comments_id}`} >REPLY</Link>
+                <Link style={replyDelete} className="btn btn-warning" to={`/commentReply/${post.comments_id}`} >REPLY</Link>
               }
               </td>
               <td>
             {  user_account.user_id === post.commenter_user_id &&
-                <button className="btn btn-danger" onClick={() => deleteComment(post.comments_id)} >
+                <button style={replyDelete} className="btn btn-danger" onClick={() => deleteComment(post.comments_id)} >
                   DELETE
                 </button>
             }
@@ -264,28 +265,27 @@ const header ={
   height: '150px'
 }
 const parentContainer = {
-    margin: '0 auto',
-    padding: '0 2rem'
+  margin: '0 auto',
+  padding: '0 2rem'
 };
 const userInfoContainer = {
   display: 'flex',
   flexDirection: 'row',
-    overflow: 'auto',
-    justifyContent: 'center',
-    marginTop: '1rem',
-    marginBottom: '1rem'
+  overflow: 'auto',
+  justifyContent: 'center',
+  marginTop: '1rem',
+  marginBottom: '1rem'
 }
 const avatar = {
-    width: '50px',
-    height: '50px',
-    borderRadius:' 50%',
-    objectFit: 'cover',
-    objectFosition: 'center right',
-    boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px',
-    justifyContent: 'center',
-    alignItems: 'center',
-    // position: 'absolute',
-    // margin: '.5rem'
+  width: '50px',
+  height: '50px',
+  borderRadius:' 50%',
+  objectFit: 'cover',
+  objectFosition: 'center right',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 1px 8px 3px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  border: '2px solid rgb(249, 167, 196)'
 };
 const buttons = {
   border: '3px solid black',
@@ -305,15 +305,27 @@ const h2 = {
   marginLeft: '2%'
 };
 const commentHeartCountStyle = {
-  color: 'white',
   fontSize: '2rem'
-}
+};
 const commentContainer = {
   display: 'flex',
   flexDirection: 'column',
-    overflow: 'auto',
-    justifyContent: 'center'
-}
+  overflow: 'auto',
+  justifyContent: 'center'
+};
+const replyDelete = {
+  border: '3px solid black',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontWeight: '900',
+  borderRadius: '15px',
+};
+const toggleStyle = {
+  borderRadius: '15px',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+    fontFamily: 'Balsamiq Sans, cursive',
+    fontWeight: '900',
+};
 
 
 export default IndividualPicture;

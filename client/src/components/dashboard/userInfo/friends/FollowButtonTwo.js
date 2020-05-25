@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 const FollowButtonTwo = ({ currentUserId, friendsId, unFollowed, setFollowed, setUnFollowed }) => {
   const [buttonText, setButtonText] = useState('')
-  // const [button, setButton] = useState([])
-  console.log('currentUserId', currentUserId);
-  console.log('friendsId', friendsId);
+  // // const [button, setButton] = useState([])
+  // console.log('currentUserId', currentUserId);
+  // console.log('friendsId', friendsId);
   const sendFriendRequest = async () => {
     try {
       const myHeaders = new Headers();
@@ -76,7 +76,7 @@ const FollowButtonTwo = ({ currentUserId, friendsId, unFollowed, setFollowed, se
   }
 
   return (
-    <div className='text-center mb-5'>
+    <div className='text-center'>
     {
       button.length >= 1
       ? button[0]
@@ -88,9 +88,13 @@ const FollowButtonTwo = ({ currentUserId, friendsId, unFollowed, setFollowed, se
 };
 const buttons = {
   border: '3px solid black',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
-  margin: '1%'
+  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+  margin: '.5rem',
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontWeight: '900',
+  borderRadius: '15px'
 };
+
 
 
 export default FollowButtonTwo;

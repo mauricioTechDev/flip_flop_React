@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components';
 import { useOnClickOutside } from '../../hooks';
 import { GlobalStyles } from '../../global';
-import { theme } from '../../theme';
+import { theme, lightTheme } from '../../theme';
 import { Burger, Menu } from './burgerMenu';
 import FocusLock from 'react-focus-lock';
 
-const Followers = ({ logout, setAuth }) =>{
+const Followers = ({ logout, setAuth, toggleTheme, currentTheme }) =>{
   const [individualUser, setIndividualUser] = useState({})
   const [userInfo, setUserInfo] = useState([]);
   const [friendRequest, setFriendRequest] = useState([])
@@ -76,9 +76,18 @@ const Followers = ({ logout, setAuth }) =>{
   const menuId = "main-menu";
   useOnClickOutside(node, () => setOpen(false));
 
+  // const [currentTheme, setTheme] = useState('dark');
+  // const toggleTheme = () => {
+  //   if (currentTheme === 'dark') {
+  //     setTheme('light');
+  //   } else {
+  //     setTheme('dark');
+  //   }
+  // }
+
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={currentTheme === 'dark' ? theme : lightTheme}>
     <div style={parentContainer}>
     <GlobalStyles />
       <headers style={header}>
@@ -88,13 +97,17 @@ const Followers = ({ logout, setAuth }) =>{
               <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
             </FocusLock>
       </div>
-      <div>
+      <div style={{ marginBottom: '1%'}}>
       <Link to='/dashboard' style={{   textDecoration: 'none' }}>
-        <h1 style={h1} className='text-white' onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>Flip - Flop: FOLLOWERS</h1>
+        <h1 style={h1} onMouseEnter={changeBackground}
+        onMouseLeave={changeBackgroundOut}>Flip - Flop: FOLLOWERS
+          <img style={followerIcon} src='/images/followers.png' alt='followers'/>
+        </h1>
       </Link>
+      <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
       </div>
       </headers>
+
 
         <div style={followingContainer}>
           <div style={followingSubContainer}>
@@ -151,6 +164,17 @@ const Followers = ({ logout, setAuth }) =>{
     </ThemeProvider>
   )
 };
+const followerIcon = {
+  width: '50px',
+    height: '50px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '0.5rem',
+    zIndex: '1',
+    transform: 'scale(1.05)',
+}
 const organizeFollowers = {
   display: 'flex',
     flexWrap: 'wrap',
@@ -164,21 +188,24 @@ const parentContainer = {
   flexDirection: 'column',
   flexWrap: 'nowrap',
   justifyContent: 'center',
-  paddingBottom: '3%'
+  paddingBottom: '3%',
+  padding: '0 1rem',
+  // marginTop: '2%'
 };
 const header ={
   display: 'flex',
   flexDirection: 'row',
   borderBottom: '2px solid purple',
   justifyContent: 'center',
-  height: '150px'
+  // height: '150px',
+  borderBottom: '3px solid rgb(249, 167, 196)',
 }
 const following = {
-  fontSize: '1.5rem',
-  color: 'rgb(249, 167, 196)',
+  fontSize: '1.1rem',
+  color: '#ffffff',
   background: 'rgba(0, 0, 0, 0.47)',
   borderRadius: '6%',
-  width: '50%',
+  width: '8.5rem',
   margin: 'auto',
   fontWeight: '900',
 
@@ -194,7 +221,6 @@ const followingContainer = {
 const followingSubContainer = {
   borderRadius: '4%',
   backgroundColor: '#f88807',
-  border: '3px solid black',
   boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 8px',
   margin: '1%',
   padding: '2%',
@@ -207,7 +233,7 @@ const h1 = {
   fontSize: '3rem',
   textAlign: 'center',
   fontFamily: 'Anton , sans-serif',
-  marginTop: '15%'
+  marginTop: '8%'
 };
 const avatar = {
   width: '147px',
@@ -215,15 +241,16 @@ const avatar = {
   borderRadius:' 50%',
   objectFit: 'cover',
   objectFosition: 'center right',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px'
+  boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px',
+  border: '2px solid rgb(249, 167, 196)'
 };
 const gallary = {
   display: 'flex',
     flexWrap: 'wrap',
-    paddingBottom: '3rem',
-    overflow: 'auto',
-    paddingRight: '9.5%',
-    paddingLeft: '9.5%',
+    // paddingBottom: '3rem',
+    // overflow: 'auto',
+    // paddingRight: '9.5%',
+    // paddingLeft: '9.5%',
     justifyContent: 'center'
 };
 const galleryItem = {
@@ -249,8 +276,14 @@ const avatarName = {
     padding: '.5%',
     borderRadius: '9%',
     fontFamily: 'Balsamiq Sans, cursive',
-    color: '#f9a7c4',
+    color: '#ffffff',
     zIndex: '1'
+};
+const toggleStyle = {
+  borderRadius: '15px',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+    fontFamily: 'Balsamiq Sans, cursive',
+    fontWeight: '900',
 }
 
 export default Followers;

@@ -4,12 +4,12 @@ import { Link, useLocation } from "react-router-dom";
 import { ThemeProvider } from 'styled-components';
 import { useOnClickOutside } from '../../../hooks';
 import { GlobalStyles } from '../../../global';
-import { theme } from '../../../theme';
+import { theme, lightTheme } from '../../../theme';
 import { Burger, Menu } from '../burgerMenu';
 import FocusLock from 'react-focus-lock';
 
 
-const NewsFeed = ({ setAuth, logout }) => {
+const NewsFeed = ({ setAuth, logout, currentTheme, toggleTheme  }) => {
   const [userId, setUserId] = useState('')
   const [newsFeed, setNewsFeed] = useState([]);
   const [commentCount, setCommentCount] = useState([]);
@@ -62,7 +62,7 @@ const NewsFeed = ({ setAuth, logout }) => {
   useOnClickOutside(node, () => setOpen(false));
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={currentTheme === 'dark' ? theme : lightTheme}>
     <div style={{ padding: '0 2rem' }}>
     <GlobalStyles />
     <headers style={header}>
@@ -74,9 +74,10 @@ const NewsFeed = ({ setAuth, logout }) => {
       </div>
       <div >
         <Link to='/dashboard' style={{   textDecoration: 'none' }}>
-          <h1 style={h1} className='text-white' onMouseEnter={changeBackground}
+          <h1 style={h1} onMouseEnter={changeBackground}
           onMouseLeave={changeBackgroundOut}>Flip - Flop: Feed</h1>
         </Link>
+        <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
       </div>
     </headers>
     <div style={parentContainer}>
@@ -126,7 +127,8 @@ const avatar = {
     alignItems: 'center',
     position: 'absolute',
     margin: '.5rem',
-    zIndex: '1'
+    zIndex: '1',
+    border: '2px solid rgb(249, 167, 196)'
 };
 const avatarName = {
   width: '35%',
@@ -175,6 +177,12 @@ const galleryImage = {
   width: '100%',
     height: '100%',
     objectFit: 'cover'
-}
+};
+const toggleStyle = {
+  borderRadius: '15px',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+    fontFamily: 'Balsamiq Sans, cursive',
+    fontWeight: '900',
+};
 
 export default NewsFeed;

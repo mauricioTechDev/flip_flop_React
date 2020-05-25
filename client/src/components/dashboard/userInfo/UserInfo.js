@@ -39,14 +39,14 @@ const h1 = {
   textAlign: 'center',
   fontFamily: 'Balsamiq Sans, cursive',
   borderRadius: '4%',
-  color: '#f9a7c4'
+  // color: '#ffffff'
 };
 const h2 = {
   fontSize: '1.5rem',
 textAlign: 'center',
 fontFamily: 'Balsamiq Sans, cursive',
 margin: 'auto',
-color: '#f9a7c4'
+// color: '#ffffff'
 };
 
 export default UserInfo;

@@ -80,10 +80,12 @@ const FollowButton = ({ individualPicture }) => {
   )
 };
 const buttons = {
+  margin:' 9% 4% 2% 15%',
   border: '3px solid black',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
-  margin: '9% 4% 2% 15%',
-  borderRadius: '13%'
+  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontWeight: '900',
+  borderRadius: '15px'
 };
 
 

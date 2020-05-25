@@ -3,7 +3,7 @@ import FollowButton from '../../newsFeed/FollowButton'
 
 const UnfollowButton = ({ friendsId, setUnFollowed, followed, setFollowed }) => {
   const [buttonText, setButtonText] = useState('')
-console.log('firednsif', friendsId);
+
   const unFollow = async () => {
     try {
       const myHeaders = new Headers();
@@ -24,7 +24,6 @@ console.log('firednsif', friendsId);
       }
       setUnFollowed(true)
       setFollowed(false)
-      // setButtonText('Sent')
     } catch (err) {
         console.error(err.message);
     }
@@ -33,9 +32,6 @@ console.log('firednsif', friendsId);
   const [allFollowers, setFollowers] = useState([])
   const [myFollowers, setMyFollowers] = useState([])
   const [whoImFollowing, setWhoImFollowing] = useState([])
-  // console.log('allFollowers', allFollowers);
-  // console.log('myFollowers', myFollowers);
-  console.log('whoImFollowing', whoImFollowing);
 
   useEffect(() => {
     getFollowers()
@@ -43,6 +39,7 @@ console.log('firednsif', friendsId);
   useEffect(() => {
     getFollowers()
   },[followed])
+
   const getFollowers = async () => {
     try {
       const res = await fetch("/dashboard/getFollowers", {
@@ -51,7 +48,6 @@ console.log('firednsif', friendsId);
       });
 
       const parseData = await res.json();
-      // console.log('FOLLOWER', parseData);
       setFollowers(parseData.allFollowers)
       setMyFollowers(parseData.myFollowers)
       setWhoImFollowing(parseData.whoImFollowing)
@@ -69,8 +65,8 @@ console.log('firednsif', friendsId);
   const changeBackgroundOut = (e) => {
     e.target.style.transform = ''
   }
+
   const button =[]
-  console.log('button',button);
   for(let i = 0; i < whoImFollowing.length; i++){
     if(whoImFollowing[i].addresseeid === friendsId){
       button.push(<div></div>)
@@ -93,10 +89,14 @@ console.log('firednsif', friendsId);
 
   )
 };
+
 const buttons = {
   border: '3px solid black',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
-  margin: '1%'
+  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+  margin: '.5rem',
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontWeight: '900',
+  borderRadius: '15px'
 };
 
 

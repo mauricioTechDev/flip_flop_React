@@ -64,6 +64,15 @@ function App() {
     }
   };
 
+  const [currentTheme, setTheme] = useState('dark');
+  const toggleTheme = () => {
+    if (currentTheme === 'dark') {
+      setTheme('light');
+    } else {
+      setTheme('dark');
+    }
+  }
+
 
 
   return (
@@ -75,7 +84,7 @@ function App() {
               path="/"
               render={props =>
                 !isAuthenticated ? (
-                  <Landing {...props} />
+                  <Landing {...props} toggleTheme={toggleTheme} currentTheme={currentTheme} />
                 ) : (
                   <Redirect to="/dashboard" />
                 )
@@ -86,7 +95,7 @@ function App() {
               path="/login"
               render={props =>
                 !isAuthenticated ? (
-                  <Login {...props} setAuth={setAuth} />
+                  <Login {...props} setAuth={setAuth} toggleTheme={toggleTheme} currentTheme={currentTheme}   />
                 ) : (
                   <Redirect to="/dashboard" />
                 )
@@ -97,7 +106,7 @@ function App() {
               path="/register"
               render={props =>
                 !isAuthenticated ? (
-                  <Register {...props} setAuth={setAuth} />
+                  <Register {...props} setAuth={setAuth} toggleTheme={toggleTheme} currentTheme={currentTheme} />
                 ) : (
                   <Redirect to="/dashboard" />
                 )
@@ -108,7 +117,7 @@ function App() {
               path="/confirmation/:id"
               render={props =>
                 !isAuthenticated ? (
-                  <Confirmation {...props} setAuth={setAuth} />
+                  <Confirmation {...props} setAuth={setAuth} toggleTheme={toggleTheme} currentTheme={currentTheme} />
                 ) : (
                   <Redirect to="/dashboard" />
                 )
@@ -119,7 +128,7 @@ function App() {
               path="/dashboard"
               render={props =>
                 isAuthenticated ? (
-                  <Dashboard {...props} setAuth={setAuth} logout={logout} />
+                  <Dashboard {...props} setAuth={setAuth} logout={logout} toggleTheme={toggleTheme} currentTheme={currentTheme}  />
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -130,7 +139,7 @@ function App() {
               path="/editprofile"
               render={props =>
                 isAuthenticated ? (
-                  <Editprofile {...props} setAuth={setAuth} logout={logout}/>
+                  <Editprofile {...props} setAuth={setAuth} logout={logout} toggleTheme={toggleTheme} currentTheme={currentTheme}/>
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -141,7 +150,7 @@ function App() {
               path='/followers/:id'
               render={props =>
                 isAuthenticated ? (
-                  <Followers {...props} setAuth={setAuth} logout={logout}/>
+                  <Followers {...props} setAuth={setAuth} logout={logout} toggleTheme={toggleTheme} currentTheme={currentTheme}/>
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -152,7 +161,7 @@ function App() {
               path="/dashboard/:imgId"
               render={props =>
                 isAuthenticated ? (
-                  <IndividualUserPostedImg {...props} setAuth={setAuth} />
+                  <IndividualUserPostedImg {...props} setAuth={setAuth} toggleTheme={toggleTheme} currentTheme={currentTheme} />
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -163,7 +172,7 @@ function App() {
               path="/dashboard/newsfeed/:id"
               render={props =>
                 isAuthenticated ? (
-                  <NewsFeed {...props} setAuth={setAuth} logout={logout} />
+                  <NewsFeed {...props} setAuth={setAuth} logout={logout} toggleTheme={toggleTheme} currentTheme={currentTheme} />
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -174,7 +183,7 @@ function App() {
               path="/individualPicture/:imgId"
               render={props =>
                 isAuthenticated ? (
-                  <IndividualPicture {...props} setAuth={setAuth} />
+                  <IndividualPicture {...props} setAuth={setAuth} toggleTheme={toggleTheme} currentTheme={currentTheme} />
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -185,7 +194,7 @@ function App() {
               path="/commentReply/:comments_id"
               render={props =>
                 isAuthenticated ? (
-                  <CommentReplies {...props} setAuth={setAuth} />
+                  <CommentReplies {...props} setAuth={setAuth} toggleTheme={toggleTheme} currentTheme={currentTheme} />
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -196,7 +205,7 @@ function App() {
               path="/friend/:friendId"
               render={props =>
                 isAuthenticated ? (
-                  <FriendsPage {...props} setAuth={setAuth} logout={logout} />
+                  <FriendsPage {...props} setAuth={setAuth} logout={logout} toggleTheme={toggleTheme} currentTheme={currentTheme} />
                 ) : (
                   <Redirect to="/login" />
                 )

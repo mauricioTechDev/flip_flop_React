@@ -36,18 +36,17 @@ const AboutMeInput = ({ setAvatarChange }) => {
     <div style={parentContainer}>
     <div style={inputContainer}>
       <span
-        style={{ fontSize: '1.5rem',fontFamily: '-webkit-pictograph', marginBottom: '1%' }}
-        className='text-white'>
-          Customize your about me 💪 😎 👇
+        style={{ fontSize: '1.5rem',fontFamily: '-webkit-pictograph', marginBottom: '1%', fontFamily: 'Balsamiq Sans, cursive', }}>
+          About me 💪 😎 👇
       </span>
       <form onSubmit={onSubmitForm}>
         <input
           value={aboutMe}
           onChange={e => setAbout(e.target.value)}
-          style={{ height: '36px', borderRadius: '2px' }}
+          style={{ height: '36px', borderRadius: '20px' }}
           placeHolder=' About Me' >
         </input>
-        <button className="btn btn-success ">SUBMIT</button>
+        <button style={button} className="btn btn-success ">SUBMIT</button>
       </form>
       </div>
       </div>
@@ -59,20 +58,25 @@ const parentContainer = {
   flexDirection: 'column',
   flexWrap: 'nowrap',
   justifyContent: 'center',
-  backgroundColor: '#fbcbd4',
   textAlign: 'center'
 };
 
 const inputContainer = {
-  border: '3px solid black',
-    width: '60%',
-    marginLeft: '20%',
-    padding: '1%',
-    backgroundColor: 'rgb(244, 186, 0)',
-    boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
-    borderRadius: '2%',
-    marginTop: '3%',
-    marginBottom: '2%'
+  padding: '1%',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
+  border: '1px solid black',
+  borderRadius: '2%',
+  width: '59rem',
+  margin: 'auto',
 }
+const button = {
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontWeight: '900',
+  zIndex: '1',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+  marginLeft: '4%',
+  borderRadius: '15px'
+}
+
 
 export default AboutMeInput;

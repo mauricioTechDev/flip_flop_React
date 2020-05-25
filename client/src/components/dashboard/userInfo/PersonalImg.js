@@ -12,7 +12,7 @@ const PersonalImg = ({ userInfo }) => {
   return (
     <Fragment>
     <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <h1 style={{borderTop: '1px solid white', width: '43%', paddingTop: '.5rem'}}>🌐 POSTS</h1>
+      <h1 style={{borderTop: '1px solid #fffffff2', width: '43%', paddingTop: '.5rem', fontSize: '1rem'}}>🌐 POSTS</h1>
     </div>
     <div style={gallary}>
           {userInfo.length !== 0 &&
@@ -66,7 +66,7 @@ const avatarName = {
     borderRadius: '9%',
     fontFamily: 'Balsamiq Sans, cursive',
     color: '#f9a7c4',
-    zIndex: '1'
+    zIndex: '1',
 }
 
 export default PersonalImg;

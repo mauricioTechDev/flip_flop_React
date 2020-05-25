@@ -110,7 +110,7 @@ const IndividualUserPostedImg = ({ setAuth, logout }) =>{
       <div >
         <Link to='/dashboard' style={{   textDecoration: 'none' }}>
           <h1 style={h1} className='text-white' onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>Flip - Flop: Home</h1>
+          onMouseLeave={changeBackgroundOut}>Flip - Flop</h1>
         </Link>
       </div>
       </header>
@@ -118,7 +118,7 @@ const IndividualUserPostedImg = ({ setAuth, logout }) =>{
     <div style={userInfoContainer}>
     Caption:  { caption }
       <div>
-      <button className="btn btn-danger mb-5 mt-5" onClick={deletePicture} >
+      <button style={buttons} className="btn btn-danger mb-5 mt-5" onClick={deletePicture} >
         DELETE PICTURE
       </button>
       </div>
@@ -126,7 +126,7 @@ const IndividualUserPostedImg = ({ setAuth, logout }) =>{
       <div className="text-center">
         {
           img &&
-          <img src={img.img } key={img.img_post_id} className="img-thumbnail rounded w-50"  alt='user posted picture'/>
+          <img src={img.img } key={img.img_post_id} className="img-thumbnail rounded" style={{width: '40rem'}}  alt='user posted picture'/>
         }
 
       </div>
@@ -159,8 +159,10 @@ const parentContainer = {
 };
 const buttons = {
   border: '3px solid black',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
-  margin: '1%'
+  boxShadow: 'rgba(128, 128, 128, 0.45) 2px 2px 1px 1px',
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontWeight: '900',
+  borderRadius: '15px',
 };
 const h1 = {
   fontSize: '3rem',

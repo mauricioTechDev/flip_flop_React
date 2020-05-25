@@ -16,6 +16,7 @@ export const StyledMenu = styled.nav`
   width: 50%;
   text-align: center;
    z-index: 2;
+   border-radius: 15px;
   @media (max-width: ${({ theme }) => theme.mobile}) {
       width: 100%;
     }
@@ -33,8 +34,9 @@ export const StyledMenu = styled.nav`
       text-align: center;
     }
     &:hover {
-      color: ${({ theme }) => theme.primaryHover};
+      /* color: ${({ theme }) => theme.primaryHover}; */
       transform: scale(1.4);
+      color: #4e618b;
       transform-origin: center
 
     }

@@ -1,9 +1,16 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import { Link, useLocation } from 'react-router-dom'
 import UnfollowButton from './UnfollowButton'
 import FollowButtonTwo from './FollowButtonTwo'
 
-const FriendsPage = ({ logout, userInfo }) => {
+import { ThemeProvider } from 'styled-components';
+import { useOnClickOutside } from '../../../../hooks';
+import { GlobalStyles } from '../../../../global';
+import { theme, lightTheme } from '../../../../theme';
+import { Burger, Menu } from '../../burgerMenu';
+import FocusLock from 'react-focus-lock';
+
+const FriendsPage = ({ logout, userInfo, setAuth, currentTheme, toggleTheme }) => {
   const [friend, setFriend] = useState([])
   const [friendsPicture, setFriendsPicture] = useState([])
   const [commentCount, seCommentCount] = useState([])
@@ -58,36 +65,42 @@ const FriendsPage = ({ logout, userInfo }) => {
   const changeBackgroundOut = (e) => {
     e.target.style.transform = ''
   }
+  //FOR BURGER
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  const menuId = "main-menu";
+  useOnClickOutside(node, () => setOpen(false));
 
   return (
+    <ThemeProvider theme={currentTheme === 'dark' ? theme : lightTheme}>
     <div style={parentContainer}>
-    <div>
-      <header style={{ textAlign: 'center', borderBottom: '2px solid gray' }}>
-        <div>
-          <h1 style={h1} className='text-white'>Flip - Flop</h1>
-        </div>
-        <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>HOME</Link>
-        <Link to={`/dashboard/newsfeed/${currentUserId}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FEED</Link>
-        <Link to={`/followers/${currentUserId}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
-        <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
-        <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-        onMouseLeave={changeBackgroundOut}>LOG OUT</button>
-      </header>
-    </div>
-    <div style={parentContainer}>
-        <h1 style={h1} className='h1 text-white'> {friend.first_name} </h1>
-
+    <GlobalStyles />
+    <headers style={header}>
+      <div ref={node}>
+            <FocusLock disabled={!open}>
+              <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+              <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
+            </FocusLock>
+      </div>
+      <div >
+        <Link to='/dashboard' style={{   textDecoration: 'none' }}>
+          <h1 style={h1}onMouseEnter={changeBackground}
+          onMouseLeave={changeBackgroundOut}>Flip - Flop</h1>
+        </Link>
+        <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
+      </div>
+    </headers>
+    <div style={userInfoContainer}>
         { friend.profile_img
           ? <span><img src={friend.profile_img} alt='User Profile' style={avatar}
           onMouseEnter={changeBackground}
           onMouseLeave={changeBackgroundOut}/></span>
           : <span><img src='https://via.placeholder.com/150' alt='User Profile' style={avatar}/></span>
         }
-        <h2 style={h2} className='h2 text-white'>{ friend.about_me }</h2>
+        <div style={{ alignSelf: 'center' }}>
+          <h2 style={h2} className='h1'> {friend.first_name} </h2>
+          <h3 style={h3} className='h2'>{ friend.about_me }</h3>
+        </div>
 
         <UnfollowButton friendsId={friendsId} setUnFollowed={setUnFollowed} followed={followed} setFollowed={setFollowed} />
         <FollowButtonTwo currentUserId={currentUserId} friendsId={friendsId} unFollowed={unFollowed} setFollowed={setFollowed} setUnFollowed={setUnFollowed}/>
@@ -107,28 +120,46 @@ const FriendsPage = ({ logout, userInfo }) => {
             <p>&copy; MAURICO ACOSTA</p>
         </div>
     </div>
+    </ThemeProvider>
   )
 };
 const parentContainer = {
   display: 'flex',
   flexDirection: 'column',
-  flexWrap: 'nowrap',
   justifyContent: 'center',
-  backgroundColor: '#fbcbd4',
-  paddingBottom: '3%',
-  textAlign: 'center'
+  padding: '0 2rem',
+  marginTop: '2%'
 };
+const userInfoContainer ={
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  padding: '0 2rem',
+  marginTop: '2%',
+  alignItems: 'center'
+}
+const header ={
+  display: 'flex',
+  flexDirection: 'row',
+  borderBottom: '2px solid purple',
+  justifyContent: 'center',
+  height: '150px',
+  borderBottom: '3px solid rgb(249, 167, 196)',
+}
 const buttons = {
   border: '3px solid black',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
-  margin: '1%'
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontWeight: '900',
+  borderRadius: '15px',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+  margin: '8%'
 };
 const h1 = {
   marginTop: '25px',
   fontSize: '3rem',
   textAlign: 'center',
-  fontFamily: '-webkit-pictograph',
-  borderRadius: '4%'
+  borderRadius: '4%',
+  fontFamily: 'Anton , sans-serif',
 };
 
 const avatar = {
@@ -138,16 +169,25 @@ const avatar = {
   margin: '20px',
   objectFit: 'cover',
   objectFosition: 'center right',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px'
+  boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px',
+  border: '2px solid rgb(249, 167, 196)'
 };
 
 const h2 = {
+  fontSize: '3rem',
+  textAlign: 'center',
+  // marginLeft: '15%',
+  // marginRight: '16%',
+  // borderRadius: '4%',
+  fontFamily: 'Balsamiq Sans, cursive',
+};
+const h3 = {
   fontSize: '2rem',
   textAlign: 'center',
   marginLeft: '15%',
   marginRight: '16%',
-  fontFamily: '-webkit-pictograph',
-  borderRadius: '4%'
+  borderRadius: '4%',
+  fontFamily: 'Balsamiq Sans, cursive',
 };
 const gallary = {
   display: 'flex',
@@ -187,6 +227,12 @@ const avatarName = {
     color: '#f9a7c4',
     zIndex: '1',
     width: '14%'
-}
+};
+const toggleStyle = {
+  borderRadius: '15px',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+    fontFamily: 'Balsamiq Sans, cursive',
+    fontWeight: '900',
+};
 
 export default FriendsPage;

@@ -1,8 +1,16 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useRef } from 'react';
 import { Link, useLocation } from "react-router-dom";
 
 
-const CommentReplies = ({ setAuth }) => {
+import { ThemeProvider } from 'styled-components';
+import { useOnClickOutside } from '../../../hooks';
+import { GlobalStyles } from '../../../global';
+import { theme, lightTheme } from '../../../theme';
+import { Burger, Menu } from '../burgerMenu';
+import FocusLock from 'react-focus-lock';
+
+
+const CommentReplies = ({ setAuth, currentTheme, toggleTheme  }) => {
   const [reply, setReply] = useState('')
   const [commentRepliedToId, setCommentRepliedToId] = useState('')
   const [comment, setComment] = useState([])
@@ -114,36 +122,42 @@ const logout = async e => {
     console.error(err.message);
   }
 };
-console.log('COMMENT',comment);
-console.log('USERNAME', userName);
+
+  //FOR BURGER
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  const menuId = "main-menu";
+  useOnClickOutside(node, () => setOpen(false));
+
   return (
+    <ThemeProvider theme={currentTheme === 'dark' ? theme : lightTheme}>
     <Fragment>
     <div style={parentContainer}>
       <div>
-        <header style={{ textAlign: 'center', marginBottom: '6%', borderBottom: '2px solid gray' }}>
-          <div>
-            <h1 style={h1} className='text-white'>Flip - Flop</h1>
-            <h1 style={h1} className="text-white">REPLY</h1>
-          </div>
-          <Link to='/dashboard' className="btn btn-warning btn-lg" to='/' style={buttons} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>HOME</Link>
-          <Link to={`/dashboard/newsfeed/${user_account.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>FEED</Link>
-          <Link to={`/followers/${user_account.user_id}`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>FOLLOWERS</Link>
-          <Link to={`/editprofile`} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>EDIT PROFILE</Link>
-          <button onClick={e => logout(e)} className="btn btn-warning btn-lg" style={buttons} onMouseEnter={changeBackground}
-          onMouseLeave={changeBackgroundOut}>LOG OUT</button>
-        </header>
+      <GlobalStyles />
+      <headers style={header}>
+        <div ref={node}>
+              <FocusLock disabled={!open}>
+                <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+                <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
+              </FocusLock>
+        </div>
+        <div style={{marginBottom: '1%'}}>
+          <Link to='/dashboard'>
+            <h1 style={h1} onMouseEnter={changeBackground}
+            onMouseLeave={changeBackgroundOut}>Flip - Flop: Home</h1>
+          </Link>
+          <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
+        </div>
+      </headers>
       </div>
       <div style={originalCommentContainer}>
       {
         userName.map(name => (
           name.user_id === comment.commenter_user_id &&
           <div>
-            <h1 style={h1}>{name.first_name}:</h1>
-            <h1 style={h1}>{comment.comment}</h1>
+            <h2 style={h2}>{name.first_name}:</h2>
+            <h2 style={h2}>{comment.comment}</h2>
           </div>
         ))
       }
@@ -158,17 +172,17 @@ console.log('USERNAME', userName);
           value={reply}
           onChange={e => setReply(e.target.value)}
         />
-        <button className="btn btn-success ">REPLY</button>
+        <button className="btn btn-success" style={{fontFamily: 'Balsamiq Sans, cursive',}}>REPLY</button>
       </form>
       <table className="table table-dark">
       <tbody>
         {fullReplyInfo .length !== 0 &&
           fullReplyInfo.map(post => (
             <tr key={post.comments_id}>
-              <td className="font-weight-bold" key={post.comments_id}>{post.first_name}: {post.reply}</td>
+              <td className="font-weight-bold" key={post.comments_id} style={{fontFamily: 'Balsamiq Sans, cursive',}}>{post.first_name}: {post.reply}</td>
               <td>
             {  user_account.user_id === post.user_id &&
-                <button key={post.comments_id} className="btn btn-danger" onClick={() => deleteComment(post.comment_reply_id)} >
+                <button key={post.comments_id} className="btn btn-danger" style={buttons} onClick={() => deleteComment(post.comment_reply_id)} >
                   DELETE
                 </button>
             }
@@ -180,25 +194,42 @@ console.log('USERNAME', userName);
       </div>
       </div>
     </Fragment>
+    </ThemeProvider>
   )
 };
+const header ={
+  display: 'flex',
+  justifyContent: 'center',
+  borderBottom: '3px solid rgb(249, 167, 196)',
+  // height: '127px',
+}
 const parentContainer = {
-  backgroundColor: 'rgb(251, 203, 212)',
+  // backgroundColor: 'rgb(251, 203, 212)',
   margin: '0px auto',
   padding:' 0px 2rem',
   // height: '780px'
 };
 const buttons = {
+  textDecoration: 'none',
   border: '3px solid black',
-  boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 2px',
-  margin: '1%'
+  boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontWeight: '900',
+  borderRadius: '15px',
 };
 const h1 = {
   fontSize: '3rem',
   textAlign: 'center',
-  fontFamily: '-webkit-pictograph',
-  borderRadius: '4%'
+  fontFamily: 'Anton , sans-serif',
+  borderRadius: '4%',
+  marginTop: '15%'
 };
+const h2 = {
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontSize: '3rem',
+  textAlign: 'center',
+  borderRadius: '4%'
+}
 const originalCommentContainer = {
   border: '3px solid black',
     width: '60%',
@@ -215,6 +246,12 @@ const commentContainer = {
   overflow: 'auto',
   justifyContent: 'center',
   height: '500px'
+};
+const toggleStyle = {
+  borderRadius: '15px',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+    fontFamily: 'Balsamiq Sans, cursive',
+    fontWeight: '900',
 };
 
 export default CommentReplies;

@@ -12,11 +12,11 @@ import PersonalImg from './userInfo/PersonalImg'
 import { ThemeProvider } from 'styled-components';
 import { useOnClickOutside } from '../../hooks';
 import { GlobalStyles } from '../../global';
-import { theme } from '../../theme';
+import { theme, lightTheme } from '../../theme';
 import { Burger, Menu } from './burgerMenu';
 import FocusLock from 'react-focus-lock';
 
-const Dashboard = ({ setAuth, logout }) => {
+const Dashboard = ({ setAuth, logout, currentTheme, toggleTheme }) => {
   const [individualUser, setIndividualUser] = useState({})
   const [userInfo, setUserInfo] = useState([]);
   const [friendRequest, setFriendRequest] = useState([])
@@ -69,8 +69,17 @@ const Dashboard = ({ setAuth, logout }) => {
   const menuId = "main-menu";
   useOnClickOutside(node, () => setOpen(false));
 
+  // const [currentTheme, setTheme] = useState('dark');
+  // const toggleTheme = () => {
+  //   if (currentTheme === 'dark') {
+  //     setTheme('light');
+  //   } else {
+  //     setTheme('dark');
+  //   }
+  // }
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={currentTheme === 'dark' ? theme : lightTheme}>
     <div style={parentContainer}>
       <GlobalStyles />
       <headers style={header}>
@@ -80,15 +89,18 @@ const Dashboard = ({ setAuth, logout }) => {
                 <Menu open={open} setOpen={setOpen} id={menuId} setAuth={setAuth} />
               </FocusLock>
         </div>
-        <div >
+        <div style={{marginBottom: '1%'}}>
           <Link to='/dashboard' style={{   textDecoration: 'none' }}>
-            <h1 style={h1} className='text-white' onMouseEnter={changeBackground}
+            <h1 style={h1} onMouseEnter={changeBackground}
             onMouseLeave={changeBackgroundOut}>Flip - Flop: Home</h1>
           </Link>
+            <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
         </div>
+
       </headers>
       <div style={topChildContainer}>
-        <div style={{ boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 9px', display: 'flex' }}>
+        <div style={{ boxShadow: 'rgba(128, 128, 128, 0.45) 3px 3px 7px 9px', display: 'flex',flexDirection: 'row',
+        flexWrap: 'nowrap', }}>
             <UserInfo userInfo={userInfo} individualUser={individualUser} />
             <ImgFeedInput setUploadNewImg={setUploadNewImg} />
         </div>
@@ -105,7 +117,7 @@ const header ={
   display: 'flex',
   justifyContent: 'center',
   borderBottom: '3px solid rgb(249, 167, 196)',
-  height: '127px',
+  // height: '127px',
 }
 const parentContainer = {
   display: 'flex',
@@ -123,12 +135,18 @@ const topChildContainer = {
   justifyContent: 'center',
   padding: '2%',
   flexWrap: 'wrap'
-}
+};
 const h1 = {
   fontSize: '3rem',
   textAlign: 'center',
   fontFamily: 'Anton , sans-serif',
   marginTop: '7%'
-}
+};
+const toggleStyle = {
+  borderRadius: '15px',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+    fontFamily: 'Balsamiq Sans, cursive',
+    fontWeight: '900',
+};
 
 export default Dashboard;

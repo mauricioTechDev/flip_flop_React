@@ -43,14 +43,22 @@ const Caption = ({ setCaption }) => {
 
   return (
     <Fragment>
-    <span className='text-white'>Add/Edit caption</span>
-    <form onSubmit={onSubmitForm}>
+    <span className='text-white' style={{fontFamily: 'Balsamiq Sans, cursive'}}>Add/Edit caption</span>
+    <form style={form} onSubmit={onSubmitForm}>
       <input value={caption} style={inputStyle} onChange={e => setNewCaption(e.target.value)} ></input>
       <button style={button} className="btn btn-success btn-block">SUBMIT</button>
     </form>
     </Fragment>
   )
 };
+const form = {
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'row',
+  textAlign: '-webkit-center',
+  width: '21rem',
+  margin: 'auto',
+}
 const inputStyle = {
   height: 'calc(1.5em + .75rem + 2px)',
   padding: '.375rem .75rem',
@@ -64,8 +72,14 @@ const inputStyle = {
   borderRadius: '.25rem',
 }
 const button = {
-  width: '7%',
-  display: 'inline'
+  width: '11rem',
+  display: 'inline',
+  borderRadius: '10px',
+  // marginTop: '1rem',
+  border: '3px solid black',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 2px 2px 1px 1px',
+  fontFamily: 'Balsamiq Sans, cursive',
+  fontWeight: '900',
 }
 
 
