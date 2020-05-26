@@ -5,12 +5,12 @@ import Caption from './Caption'
 import { ThemeProvider } from 'styled-components';
 import { useOnClickOutside } from '../../../hooks';
 import { GlobalStyles } from '../../../global';
-import { theme } from '../../../theme';
+import { theme, lightTheme } from '../../../theme';
 import { Burger, Menu } from '../burgerMenu';
 import FocusLock from 'react-focus-lock';
 
 
-const IndividualUserPostedImg = ({ setAuth, logout }) =>{
+const IndividualUserPostedImg = ({ setAuth, logout, currentTheme, toggleTheme }) =>{
   const [imgId, setImgId] = useState('')
   const [img, setImg] = useState({})
   const [commentCount, setCommentCount] = useState('')
@@ -95,7 +95,7 @@ const IndividualUserPostedImg = ({ setAuth, logout }) =>{
     useOnClickOutside(node, () => setOpen(false));
 
   return(
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={currentTheme === 'dark' ? theme : lightTheme}>
     <Fragment>
     <div style={parentContainer}>
     <div>
@@ -109,9 +109,10 @@ const IndividualUserPostedImg = ({ setAuth, logout }) =>{
       </div>
       <div >
         <Link to='/dashboard' style={{   textDecoration: 'none' }}>
-          <h1 style={h1} className='text-white' onMouseEnter={changeBackground}
+          <h1 style={h1} onMouseEnter={changeBackground}
           onMouseLeave={changeBackgroundOut}>Flip - Flop</h1>
         </Link>
+        <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
       </div>
       </header>
     </div>
@@ -130,7 +131,7 @@ const IndividualUserPostedImg = ({ setAuth, logout }) =>{
         }
 
       </div>
-      <div className="text-center text-white">
+      <div className="text-center">
       {
         img &&
         <span>{img.img_likes}❤️</span>
@@ -152,7 +153,7 @@ const header ={
   justifyContent: 'center',
   borderBottom: '3px solid rgb(249, 167, 196)',
   height: '150px'
-}
+};
 const parentContainer = {
     margin: '0 auto',
     padding: '0 2rem'
@@ -177,6 +178,11 @@ const userInfoContainer = {
     textAlign: 'center',
     marginTop: '1%',
     fontFamily: "Balsamiq Sans, cursive"
-}
-
+};
+const toggleStyle = {
+  borderRadius: '15px',
+    boxShadow: 'rgba(128, 128, 128, 0.45) 1px 2px 2px 2px',
+    fontFamily: 'Balsamiq Sans, cursive',
+    fontWeight: '900',
+};
 export default IndividualUserPostedImg;

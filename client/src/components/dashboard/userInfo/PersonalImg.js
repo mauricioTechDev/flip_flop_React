@@ -37,8 +37,6 @@ const gallary = {
     flexWrap: 'wrap',
     paddingBottom: '3rem',
     overflow: 'auto',
-    // paddingRight: '9.5%',
-    // paddingLeft: '9.5%',
 };
 const galleryItem = {
     flex: '1 0 22rem',
@@ -47,27 +45,26 @@ const galleryItem = {
     cursor: 'pointer'
 };
 const galleryImage = {
-  // width: '100%',
   width: '19rem',
-    height: '100%',
-    objectFit: 'cover',
-    boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 2px 3px'
+  height: '100%',
+  objectFit: 'cover',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 2px 3px'
 };
 const avatarName = {
   textAlign: 'center',
-    objectFit: 'cover',
-    boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    marginLeft: '4rem',
-    marginTop: '1rem',
-    background: '#00000078',
-    padding: '1%',
-    borderRadius: '9%',
-    fontFamily: 'Balsamiq Sans, cursive',
-    color: '#f9a7c4',
-    zIndex: '1',
+  objectFit: 'cover',
+  boxShadow: 'rgba(128, 128, 128, 0.45) 5px 3px 11px 6px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'absolute',
+  marginLeft: '4rem',
+  marginTop: '1rem',
+  background: '#00000078',
+  padding: '1%',
+  borderRadius: '9%',
+  fontFamily: 'Balsamiq Sans, cursive',
+  color: '#f9a7c4',
+  zIndex: '1',
 }
 
 export default PersonalImg;

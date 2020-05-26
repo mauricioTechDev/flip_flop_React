@@ -79,7 +79,7 @@ const Editprofile = ({ logout, setAuth, currentTheme, toggleTheme }) => {
         <div >
           <Link to='/dashboard' style={{   textDecoration: 'none' }}>
             <h1 style={h1}  onMouseEnter={changeBackground}
-            onMouseLeave={changeBackgroundOut}>Flip - Flop: Home</h1>
+            onMouseLeave={changeBackgroundOut}>Flip - Flop</h1>
           </Link>
           <button style={toggleStyle} onClick={toggleTheme}>{currentTheme === 'dark' ? 'LIGHT ☀️' : '🌚 DARK'}</button>
         </div>
