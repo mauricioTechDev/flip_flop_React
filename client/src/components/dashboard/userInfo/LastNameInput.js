@@ -37,7 +37,7 @@ const LastNameInput = ({ setAvatarChange }) => {
     {/*<div style={inputContainer}>*/}
       <span
         style={{ fontSize: '1.5rem', marginBottom: '1%', fontFamily: 'Balsamiq Sans, cursive', }}>
-          First Name
+          Last Name
       </span>
       <form style={form} onSubmit={onSubmitForm}>
         <input
